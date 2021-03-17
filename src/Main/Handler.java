@@ -2,6 +2,7 @@ package Main;
 
 import EntitySystem.Ghost;
 import EntitySystem.Player;
+import Input.Input;
 import PackmanUi.Window;
 import States.GameState;
 import States.MenuState;
@@ -44,5 +45,8 @@ public class Handler {
     }
     public MenuState getMenuState() {
         return game.getMenuState();
+    }
+    public Input getInput() {
+        return game.getInput();
     }
 }

@@ -64,7 +64,7 @@ public class MenuState extends State implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("Action Performed");
+//        System.out.println("Action Performed");
         if(e.getSource() == play) {
 //            System.out.println("[Button] play");
             State.changeState(Game.gameState);

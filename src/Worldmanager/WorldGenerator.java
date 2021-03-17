@@ -2,6 +2,8 @@ package Worldmanager;
 
 import Main.Handler;
 import Tiles.Tile;
+import Tiles.TileManager;
+import Tiles.Tiles;
 import Utility.CustomFileReader;
 
 import java.awt.*;
@@ -13,6 +15,7 @@ public class WorldGenerator {
     private int ghostSpawnX, ghostSpawnY;
     private int ghostCount;
     private Handler handler;
+    private Tiles tiles;
     private PowerupManager powerupManager;
     public static int upperWall = 1;
     public static int rightWall = 2;
@@ -30,9 +33,11 @@ public class WorldGenerator {
     public static int rightleftTunnel = 15;
     public static int groundTile = 0;
     public static int allWall = 13;
+
     /////////////////////////////////////////////////////////Class
     public WorldGenerator(String path, Handler handler){
         this.handler = handler;
+        tiles = new Tiles();
         genWorld(path);
         powerupManager = new PowerupManager(this, handler);
     }
@@ -58,9 +63,9 @@ public class WorldGenerator {
 
     }
     public Tile getTile (int x ,int y){
-         Tile t =Tile.tiles[worldGrid[x][y]];
+        Tile t = TileManager.TILES.get(worldGrid[x][y]);
          if (t == null ){
-             return Tile.groundTile;
+             return TileManager.TILES.get(groundTile);
          }
          return t;
     }
@@ -155,7 +160,7 @@ public class WorldGenerator {
             }else if (pattern.equals( "0000")) {
                 return allWall;
             }
-          return 0;
+          return groundTile;
         }
 
 

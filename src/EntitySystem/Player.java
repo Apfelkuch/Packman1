@@ -7,7 +7,7 @@ import States.GameState;
 import Tiles.Tile;
 
 import java.awt.*;
-import java.util.ArrayList;
+import java.awt.event.KeyEvent;
 
 public class Player extends Creature {
     //Attributes for the Dots
@@ -116,26 +116,26 @@ public class Player extends Creature {
         super.yMoveOLD = super.yMove;
         super.xMoveOLD = super.xMove;
         // set Move to the new Input and reset the other Move
-        if (Input.UP) {
+        if (handler.getInput().keyJustPressed_PressedBased(KeyEvent.VK_W)) { // UP
             super.yMove = -super.SPEED;
             super.xMove = 0;
         }
-        if (Input.DOWN) {
+        if (handler.getInput().keyJustPressed_PressedBased(KeyEvent.VK_S)) { // DOWN
             super.yMove = super.SPEED;
             super.xMove = 0;
         }
-        if (Input.RIGHT) {
+        if (handler.getInput().keyJustPressed_PressedBased(KeyEvent.VK_D)) { // RIGHT
             super.xMove = super.SPEED;
             super.yMove = 0;
         }
-        if (Input.LEFT) {
+        if (handler.getInput().keyJustPressed_PressedBased(KeyEvent.VK_A)) { // LEFT
             super.xMove = -super.SPEED;
             super.yMove = 0;
         }
     }
 
     public void win() {
-        System.out.println(handler.getWorld().getPowerupManager().getDotCount());
+//        System.out.println(handler.getWorld().getPowerupManager().getDotCount());
         if(handler.getWorld().getPowerupManager().getDotCount() == 0) {
             System.out.println("help");
             handler.getGameState().gameOver(GameState.WIN);

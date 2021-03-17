@@ -19,7 +19,8 @@ public class Game {
     public static MenuState menuState;
     public static GameState gameState;
     Handler handler;
-    private MListener mListener;
+    private final Input input;
+    private final MListener mListener;
 
     public  static int fps = 60;
     //////////////////////////////////////////////////////////////////////
@@ -27,6 +28,7 @@ public class Game {
         window = new Window();
         handler = new Handler(this);
         mListener = new MListener(handler);
+        input = new Input();
         gameLoop();
     }
     public void gameLoop(){
@@ -63,7 +65,7 @@ public class Game {
         menuState = new MenuState(handler);
         State.changeState(menuState);
         Assets.init();
-        window.getCanvas().addKeyListener(new Input());
+        window.getCanvas().addKeyListener(input);
         window.getCanvas().addMouseListener(mListener);
     }
     public void render() {
@@ -86,6 +88,7 @@ public class Game {
         if(State.getState()!= null && State.getState().isDoneLoading()){
             State.getState().tick();
         }
+        input.tick();
     }
 
     //GETTER & SETTER
@@ -100,5 +103,8 @@ public class Game {
     }
     public MListener getmListener() {
         return mListener;
+    }
+    public Input getInput() {
+        return input;
     }
 }
