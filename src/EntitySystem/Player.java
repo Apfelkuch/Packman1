@@ -1,10 +1,10 @@
 package EntitySystem;
 
 import ImageLoad.Assets;
-import Input.Input;
 import Main.Handler;
 import States.GameState;
 import Tiles.Tile;
+import Text.Text;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -37,7 +37,7 @@ public class Player extends Creature {
         }
         //DotCounter on Sreen
         g.setColor(Color.YELLOW);
-        g.setFont(new Font("Arial",Font.BOLD,36));
+        g.setFont(Text.DOTFONT);
         g.drawString("" + this.dotCounter,(handler.getWorld().getWitdh() - 2) * Tile.TILEWIDTH,(int) (Tile.TILEHEIGHT * 0.80));
         /* //CollisionBOX showing
         {
@@ -59,7 +59,14 @@ public class Player extends Creature {
         this.move();
         this.win();
         this.eatDot();
-        //TODO player eating ghosts
+        for(Ghost g : handler.getGhosts()) {
+            if(g != null) {
+                if (this.creatureInFront(g)) { // player eats the ghost if the player will intersect in the next move with the ghost.
+                    eatGhost(g);
+                    System.out.println("ghost eat");
+                }
+            }
+        }
     }
 
     /**
@@ -139,6 +146,17 @@ public class Player extends Creature {
         if(handler.getWorld().getPowerupManager().getDotCount() == 0) {
             System.out.println("help");
             handler.getGameState().gameOver(GameState.WIN);
+        }
+    }
+
+    public void eatGhost(Ghost g) {
+        if(g == null) return;
+        this.killCount++;
+        for(int i=0;i<handler.getGhosts().length;i++) {
+            if(handler.getGhosts()[i] == g) {
+                handler.getGhosts()[i] = null;
+                return;
+            }
         }
     }
 }

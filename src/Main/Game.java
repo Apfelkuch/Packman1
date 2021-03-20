@@ -7,9 +7,13 @@ import PackmanUi.Window;
 import States.GameState;
 import States.MenuState;
 import States.State;
+import Text.Text;
+import Tiles.Tile;
+import Tiles.TileManager;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.io.Console;
 
 public class Game {
     private Window window;
@@ -21,6 +25,7 @@ public class Game {
     Handler handler;
     private final Input input;
     private final MListener mListener;
+    private final Text text;
 
     public  static int fps = 60;
     //////////////////////////////////////////////////////////////////////
@@ -29,6 +34,8 @@ public class Game {
         handler = new Handler(this);
         mListener = new MListener(handler);
         input = new Input();
+        text = new Text();
+
         gameLoop();
     }
     public void gameLoop(){

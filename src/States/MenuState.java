@@ -4,6 +4,7 @@ import Componts.Button;
 import ImageLoad.Assets;
 import Main.Game;
 import Main.Handler;
+import Text.Text;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,12 +25,7 @@ public class MenuState extends State implements ActionListener {
     private Button option;
     private Button exit;
 
-    // messages
-    private String titel = "Packmann";
-    private String exitMessage = "Do you want to exit the Game!";
 
-    private Font menuTitelFont = new Font(Font.MONOSPACED,Font.BOLD,100);
-    private Font menuButtonFont = new Font(Font.MONOSPACED,Font.BOLD,30);
 
     public MenuState(Handler handler) {
         super(handler);
@@ -52,9 +48,9 @@ public class MenuState extends State implements ActionListener {
 
         //titel
         g.setColor(Color.BLACK);
-        g.setFont(menuTitelFont);
-        int stringwidth = g.getFontMetrics().stringWidth(titel);
-        g.drawString(titel,handler.getWindow().getCanvas().getSize().width / 2 - stringwidth / 2,handler.getWindow().getCanvas().getSize().height / 4);
+        g.setFont(Text.MENUTITLEFONT);
+        int stringwidth = g.getFontMetrics().stringWidth(Text.TITLE);
+        g.drawString(Text.TITLE,handler.getWindow().getCanvas().getSize().width / 2 - stringwidth / 2,handler.getWindow().getCanvas().getSize().height / 4);
 
         //button
         play.render(g);
@@ -72,7 +68,7 @@ public class MenuState extends State implements ActionListener {
 //            System.out.println("[Button] option");
         } else if(e.getSource() == exit) {
 //            System.out.println("[Button] exit");
-            int answer = JOptionPane.showOptionDialog(null, exitMessage, "Exit", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+            int answer = JOptionPane.showOptionDialog(null, Text.EXITMASSAGE, Text.EXIT, JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
             if(answer == JOptionPane.YES_OPTION) {
                 System.exit(1);
             }
@@ -95,15 +91,14 @@ public class MenuState extends State implements ActionListener {
 
     private void initButton() {
         // Play
-        play = new Button(this,handler,"Play",ButtonPosX,handler.getWindow().getCanvas().getSize().height - ButtondifferenceY * 3,ButtonWidth,ButtonHeight);
-        play.setFont(menuButtonFont);
-        // Option
-        option = new Button(this,handler,"Option",ButtonPosX,handler.getWindow().getCanvas().getSize().height - ButtondifferenceY * 2,ButtonWidth,ButtonHeight);
-        option.setFont(menuButtonFont);
+        play = new Button(this,handler, Text.ButtonPlay,ButtonPosX,handler.getWindow().getCanvas().getSize().height - ButtondifferenceY * 3,ButtonWidth,ButtonHeight);
+        play.setFont(Text.MENUBUTTONFONT);
+        // Option //TODO
+        option = new Button(this,handler,Text.ButtonOption,ButtonPosX,handler.getWindow().getCanvas().getSize().height - ButtondifferenceY * 2,ButtonWidth,ButtonHeight);
+        option.setFont(Text.MENUBUTTONFONT);
         // Exit
-        //TODO
-        exit = new Button(this,handler,"Exit",ButtonPosX,handler.getWindow().getCanvas().getSize().height - ButtondifferenceY,ButtonWidth,ButtonHeight);
-        exit.setFont(menuButtonFont);
+        exit = new Button(this,handler,Text.ButtonExit,ButtonPosX,handler.getWindow().getCanvas().getSize().height - ButtondifferenceY,ButtonWidth,ButtonHeight);
+        exit.setFont(Text.MENUBUTTONFONT);
 //        System.out.println("initButton finished");
     }
 }

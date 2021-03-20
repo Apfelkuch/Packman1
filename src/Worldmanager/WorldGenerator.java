@@ -63,11 +63,14 @@ public class WorldGenerator {
 
     }
     public Tile getTile (int x ,int y){
+        if(TileManager.TILES.size() == 0) {
+            System.out.println("[WorldGenerator/getTile] Tile-List-size = 0");
+        }
         Tile t = TileManager.TILES.get(worldGrid[x][y]);
-         if (t == null ){
-             return TileManager.TILES.get(groundTile);
-         }
-         return t;
+        if (t == null ) {
+            return TileManager.TILES.get(groundTile);
+        }
+        return t;
     }
     public void render(Graphics g){
         for (int y = 0 ; y< height; y++){
@@ -78,6 +81,7 @@ public class WorldGenerator {
         powerupManager.render(g);
     }
     public void modifyWorld(int[][] world) {
+        // 1 = wall // 0 = free
         String pattern = "";//LEFT RIGHT UP DOWN
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < witdh; x++) {
@@ -158,9 +162,9 @@ public class WorldGenerator {
             } else if (pattern.equals( "1111")) {
                 return allWall;
             }else if (pattern.equals( "0000")) {
-                return allWall;
+                return groundTile;
             }
-          return groundTile;
+          return -1;
         }
 
 

@@ -3,44 +3,47 @@ package EntitySystem;
 import Main.Handler;
 import Tiles.Tile;
 
+import java.awt.*;
+
 public abstract class Creature extends Entity{
     protected int width, height;
     // Attributes for the Movement
-    protected static float SPEED;
+    protected float SPEED;
     protected float xMove; // +/- SPEED
     protected float yMove; // +/- SPEED
     protected float xMoveOLD; // +/- SPEED
     protected float yMoveOLD; // +/- SPEED
     // Attributes for the looking
-    protected int currentLooking;
-    protected int currentLookingBack;
+    protected int currentLooking; // view direction
+    protected int currentLookingBack; // revers view direction
     protected final int lookingUP = 0;
     protected final int lookingRIGHT = 1;
     protected final int lookingDOWN = 2;
     protected final int lookingLEFT = 3;
-    // collision returns
-    public static int NoCollision = 0;
-    public static int TopCollision = 1;
-    public static int DownCollision = 2;
-    public static int LeftCollision = 3;
-    public static int RightCollision = 4;
+    // collision constant returns
+    protected static final int NoCollision = 0;
+    protected static final int TopCollision = 1;
+    protected static final int DownCollision = 2;
+    protected static final int LeftCollision = 3;
+    protected static final int RightCollision = 4;
     // extras
     protected boolean alive;
     protected boolean killedCreature;
+    protected int killCount;
 
 
     public Creature(Handler handler, float posX, float posY, int CBwidth, int CBheight, float speed){
-        super(handler,posX,posY,(int) (CBwidth - SPEED),(int) (CBheight - SPEED));
+        super(handler,posX,posY,(int) (CBwidth - speed),(int) (CBheight - speed));
         this.SPEED = speed;
-        this.width = (int) (Tile.TILEWIDTH - SPEED);
-        this.height = (int) (Tile.TILEHEIGHT - SPEED);
+        this.width = (int) (Tile.TILEWIDTH - speed);
+        this.height = (int) (Tile.TILEHEIGHT - speed);
         this.alive = true;
         this.killedCreature = false;
     }
 
     /**
-     * Test if Packman is colliding in the next move
-     * @return true if Packman collide, otherwise false
+     * Test if Entity is colliding in the next move
+     * @return true if Entity collide, otherwise false
      */
     protected int collide(float XMOVE, float YMOVE) {
         if(XMOVE > 0) { // if collide when moving right
@@ -101,8 +104,52 @@ public abstract class Creature extends Entity{
     /**
      * is called when the creature is died
      */
-    protected void die(Creature killer) {
+    protected void die(Creature c) {
         this.alive = false;
         this.killedCreature = true;
+
+    }
+
+    /**
+     * test if a Creature(c) is in front of the current Creature and the current Creature will intersect in the next move with the other Creature(c).
+     * @return true: Creature is in front && false: Creature is not in front
+     */
+    protected boolean creatureInFront(Creature c) {
+        switch (this.currentLooking) {
+            case lookingUP:
+                if(c.collisionBOX.intersects(new Rectangle((int) (this.posX), (int) (this.posY - SPEED), width, height)) && c.currentLooking == lookingUP)
+                    return true;
+                break;
+            case lookingRIGHT:
+                if(c.collisionBOX.intersects(new Rectangle((int) (this.posX + SPEED), (int) (this.posY), width, height)) && c.currentLooking == lookingRIGHT)
+                    return true;
+                break;
+            case lookingDOWN:
+                if(c.collisionBOX.intersects(new Rectangle((int) (this.posX), (int) (this.posY + SPEED), width, height)) && c.currentLooking == lookingDOWN)
+                    return true;
+                break;
+            case lookingLEFT:
+                if(c.collisionBOX.intersects(new Rectangle((int) (this.posX - SPEED), (int) (this.posY), width, height)) && c.currentLooking == lookingLEFT)
+                    return true;
+                break;
+        }
+        return false;
+    }
+
+    // GETTER && SETTER
+    public float getSPEED() {
+        return SPEED;
+    }
+    public int getCurrentLooking() {
+        return currentLooking;
+    }
+    public int getCurrentLookingBack() {
+        return currentLookingBack;
+    }
+    public boolean isAlive() {
+        return alive;
+    }
+    public boolean isKilledCreature() {
+        return killedCreature;
     }
 }

@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 
 public class Assets {
 
+    //width and
     private static final int width = 50, height = 50;
     //Game
     public static BufferedImage packman_UP, packman_DOWN, packman_LEFT, packman_RIGHT;

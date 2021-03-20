@@ -10,9 +10,6 @@ public abstract class State {
     protected final Handler handler;
     private static boolean doneLoading = false;
 
-    public static void setState (State state){
-        currentState = state;
-    }
     public static State getState(){
         return currentState;
     }

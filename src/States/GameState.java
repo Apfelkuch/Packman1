@@ -6,12 +6,15 @@ import EntitySystem.Player;
 import ImageLoad.Assets;
 import Main.Game;
 import Main.Handler;
+import Text.Text;
+import Tiles.TileManager;
 import Worldmanager.WorldGenerator;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.util.Arrays;
 
 public class GameState extends State implements ActionListener {
 
@@ -34,9 +37,6 @@ public class GameState extends State implements ActionListener {
     public static int WIN = 0;
     public static int LOST = 1;
     private int gameOverStatus;
-    private Font gameOverFont = new Font(Font.MONOSPACED,Font.BOLD,50);
-    private String win = "You Win!!";
-    private String lost = "You Lost!";
 
     public GameState(Handler handler){
         super(handler);
@@ -45,9 +45,11 @@ public class GameState extends State implements ActionListener {
     @Override
     public boolean initState() {
         world = new WorldGenerator("res/worlds/World1.txt",handler);
-        player = new Player(handler, world.getSpawnX(),world.getSpawnY(),3.0f);
+        player = new Player(handler, world.getSpawnX(),world.getSpawnY(),4.0f);
         ghosts = new Ghost[world.getGhostCount()];
-        ghosts[0] = new Ghost(handler, world.getGhostSpawnX(), world.getGhostSpawnY(),3.0f);
+        for(int i=0;i<ghosts.length;i++) {
+            ghosts[i] = new Ghost(handler, world.getGhostSpawnX(), world.getGhostSpawnY(), 3.0f);
+        }
         gameOver = false;
         initGameOverWindow();
         return true;
@@ -59,9 +61,12 @@ public class GameState extends State implements ActionListener {
             world.tick();
             player.tick();
             for (Ghost ghost : ghosts) {
-                ghost.tick();
+                if(ghost != null) {
+                    ghost.tick();
+                }
             }
         }
+        System.out.println(TileManager.TILES.size());
     }
 
     @Override
@@ -69,8 +74,9 @@ public class GameState extends State implements ActionListener {
         world.render(g);
         player.render(g);
         for (Ghost ghost : ghosts) {
-            ghost.render(g);
-
+            if(ghost != null) {
+                ghost.render(g);
+            }
         }
         if(gameOver) {
             g.drawImage(Assets.gameOverWindow,windowX,windowY,null);
@@ -79,13 +85,13 @@ public class GameState extends State implements ActionListener {
 
             //titel
             g.setColor(Color.WHITE);
-            g.setFont(gameOverFont);
+            g.setFont(Text.GAMEOVERFONT);
             if(gameOverStatus == WIN) {
-                int stringwidth = g.getFontMetrics().stringWidth(win);
-                g.drawString(win,windowX + windowWidth / 2 - stringwidth / 2,windowY + buttondifYInWindow / 2 + buttonHeight);
+                int stringwidth = g.getFontMetrics().stringWidth(Text.WIN);
+                g.drawString(Text.WIN,windowX + windowWidth / 2 - stringwidth / 2,windowY + buttondifYInWindow / 2 + buttonHeight);
             } else if(gameOverStatus == LOST) {
-                int stringwidth = g.getFontMetrics().stringWidth(lost);
-                g.drawString(lost,windowX + windowHeight / 2 -stringwidth / 2,windowY + buttondifYInWindow / 2 + buttonHeight);
+                int stringwidth = g.getFontMetrics().stringWidth(Text.LOST);
+                g.drawString(Text.LOST,windowX + windowHeight / 2 -stringwidth / 2,windowY + buttondifYInWindow / 2 + buttonHeight);
             } else {
                 System.out.println("[ERROR] invalid gameOverStatus");
             }
@@ -121,8 +127,8 @@ public class GameState extends State implements ActionListener {
         windowHeight = 300;
         windowX = handler.getWindow().getCanvas().getWidth() / 2 - windowWidth / 2;
         windowY = handler.getWindow().getCanvas().getHeight() / 2 - windowHeight / 2;
-        play = new Button(this,handler,"play",windowX + buttonXInWindow,windowY + buttondifYInWindow + buttondifYInWindow / 2 - buttonHeight / 2,buttonWidth,buttonHeight);
-        exit = new Button(this,handler,"exit",windowX + buttonXInWindow,windowY + 2 * buttondifYInWindow + buttondifYInWindow / 2 - buttonHeight / 2,buttonWidth,buttonHeight);
+        play = new Button(this,handler,Text.ButtonPlay,windowX + buttonXInWindow,windowY + buttondifYInWindow + buttondifYInWindow / 2 - buttonHeight / 2,buttonWidth,buttonHeight);
+        exit = new Button(this,handler,Text.ButtonExit,windowX + buttonXInWindow,windowY + 2 * buttondifYInWindow + buttondifYInWindow / 2 - buttonHeight / 2,buttonWidth,buttonHeight);
     }
 
     public void gameOver(int gameOverStatus) {

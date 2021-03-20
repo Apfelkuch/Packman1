@@ -37,7 +37,7 @@ public class Ghost extends Creature {
     public void tick() {
         setMove();
         move();
-        if (this.collisionBOX.intersects(handler.getGame().getGameState().getPlayer().collisionBOX))
+        if (this.collisionBOX.intersects(handler.getPlayer().collisionBOX)) // ghost eat the player, if the player and the ghost intersect.
             eatPlayer();
     }
 
@@ -251,7 +251,6 @@ public class Ghost extends Creature {
      * set the game to gameOver and call the GameOverWindow
      */
     public void eatPlayer() {
-        //System.exit(999);
         System.out.println("YOU HAVE LOST");
         handler.getGameState().gameOver(GameState.LOST);
     }
