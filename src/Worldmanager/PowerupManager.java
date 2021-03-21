@@ -3,6 +3,7 @@ package Worldmanager;
 import EntitySystem.Dot;
 import EntitySystem.Item;
 import Main.Handler;
+import Tiles.Tile;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ public class PowerupManager {
     private ArrayList<Item> items;
     private ArrayList<Item> emptyPlaces;
     private WorldGenerator world;
-    private ArrayList<String> emptyTiles; //xCordinate + " " + yCordinate
+    private ArrayList<Vektor2D> emptyTiles;
     private Handler handler;
     private int dotCount = 0;
     private int powerUpCout = 0;
@@ -19,7 +20,7 @@ public class PowerupManager {
     public PowerupManager(WorldGenerator world, Handler handler) {
         this.world = world;
         this.handler = handler;
-        emptyTiles = new ArrayList<String>();
+        emptyTiles = new ArrayList<Vektor2D>();
         items = new ArrayList<Item>();
         emptyPlaces = new ArrayList<Item>();
 
@@ -28,12 +29,8 @@ public class PowerupManager {
     }
 
     public void initDots(){
-        for (String i:emptyTiles){
-            String[] Tile = i.split(" ");
-            int x,y;
-            x= Integer.parseInt(Tile[0]);
-            y = Integer.parseInt(Tile[1]);
-            items.add(new Dot(handler,x * Tiles.Tile.TILEWIDTH + Tiles.Tile.TILEWIDTH / 2, y * Tiles.Tile.TILEHEIGHT + Tiles.Tile.TILEHEIGHT / 2, 'D'));
+        for (Vektor2D v : emptyTiles){
+            items.add(new Dot(handler,v.getX() * Tile.TILEHEIGHT + Tile.TILEWIDTH / 2, v.getY() * Tile.TILEHEIGHT + Tile.TILEHEIGHT / 2, 'D'));
             dotCount++;
         }
     }
@@ -43,7 +40,7 @@ public class PowerupManager {
         for (int x = 0; x < world.getWitdh(); x++) {
             for (int y = 0; y <world.getHeight() ; y++) {
                 if(world.getWorldGrid()[x][y] ==  0){
-                   emptyTiles.add(x+" "+y);
+                   emptyTiles.add(new Vektor2D(x, y));
                 }
             }
         }

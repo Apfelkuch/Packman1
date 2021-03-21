@@ -21,7 +21,7 @@ public class TileManager {
         if(TILES == null || name == null || img == null) return false; // check if tiles & the Tile is creatable
 
         for (Tile t : TILES) { // check if the id or the name is already used
-            if (t.name == name)
+            if (t.name.equals(name))
                 return false;
         }
 

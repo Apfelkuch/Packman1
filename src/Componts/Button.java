@@ -18,8 +18,10 @@ public class Button {
     Handler handler;
 
     //graphic data
-    private Color backgroundColor = Color.RED;
+    private Color backgroundColor = Color.pink;
     private Color pressedColor = backgroundColor.darker();
+
+    private int cornerrounds;
 
     private boolean enabled;
     private boolean pressed;
@@ -36,6 +38,7 @@ public class Button {
         this.y = y;
         this.width = width;
         this.height = height;
+        this.cornerrounds = 0;
         enabled = true;
     }
 
@@ -47,7 +50,7 @@ public class Button {
         }
 
         if (enabled) {
-            g.fillRect(x,y,width,height);
+            g.fillRoundRect(x, y, width, height, cornerrounds, cornerrounds);
             g.setFont(font);
             g.setColor(Color.BLACK);
             int stringwidth = g.getFontMetrics().stringWidth(text);
@@ -70,7 +73,7 @@ public class Button {
         if(enabled && pressed) {
             pressed = false;
             if(isPressed(e.getX(),e.getY())) {
-                listener.actionPerformed(new ActionEvent(this, 0, "Buttonaction in the Menu"));
+                listener.actionPerformed(new ActionEvent(this, 0, "Buttonaction"));
             }
         }
     }
@@ -78,6 +81,9 @@ public class Button {
     // GETTER && SETTER
     public boolean isEnabled() {
         return enabled;
+    }
+    public int getCornerrounds() {
+        return cornerrounds;
     }
     public Color getBackgroundColor() {
         return backgroundColor;
@@ -91,6 +97,9 @@ public class Button {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+    public void setCornerrounds(int cornerrounds) {
+        this.cornerrounds = cornerrounds;
     }
     public void setBackgroundColor(Color backgroundColor) {
         this.backgroundColor = backgroundColor;

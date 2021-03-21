@@ -5,10 +5,10 @@ import java.awt.image.BufferedImage;
 public class Assets {
 
     //width and
-    private static final int width = 50, height = 50;
+    public static final int width = 48, height =48;
     //Game
     public static BufferedImage packman_UP, packman_DOWN, packman_LEFT, packman_RIGHT;
-    public static BufferedImage ghost1, ghost2;
+    public static BufferedImage ghost1, ghost2, ghost3, ghost4, ghost5, ghost6;
     public static BufferedImage upperWall, rightWall, leftWall, lowerWall;
     public static BufferedImage upperU, rightU, leftU, lowerU;
     public static BufferedImage rightUpperCorner, rightLowerCorner, leftUpperCorner, leftLowerCorner;
@@ -26,9 +26,13 @@ public class Assets {
         packman_UP = allPackman.getTile(width * 2,0,width,height);
         packman_LEFT = allPackman.getTile(width * 3,0,width,height);
         //GEISTER
-        Spritsheet allGeister = new Spritsheet(ImageLoader.loadImage("/textures/geister.png"));
-        ghost1 = allGeister.getTile(0,0,width,height);
-        ghost2 = allGeister.getTile(width,0,width,height);
+        Spritsheet allGhosts = new Spritsheet(ImageLoader.loadImage("/textures/ghost.png"));
+        ghost1 = allGhosts.getTile(0,0,width,height);
+        ghost2 = allGhosts.getTile(width,0,width,height);
+        ghost3 = allGhosts.getTile(width * 2,0,width,height);
+        ghost4 = allGhosts.getTile(width * 3,0,width,height);
+        ghost5 = allGhosts.getTile(width * 4,0,width,height);
+        ghost6 = allGhosts.getTile(width * 5,0,width,height);
         //BACKGROUND
         Spritsheet background = new Spritsheet(ImageLoader.loadImage("/textures/background.png"));
         upperWall = background.getTile(0,0,width,height);
@@ -49,7 +53,7 @@ public class Assets {
         ground = background.getTile(width * 2,height * 3,width,height);
         allWall = background.getTile(width * 3,height*3,width,height);
 
-        gameOverWindow = ImageLoader.loadImage("/textures/gameOverWindow.png");
+        gameOverWindow = ImageLoader.loadImage("/textures/GameOverWindow.png");
 
         //MenuBackground
         menuBackground = ImageLoader.loadImage("/textures/menuBackground.png");

@@ -6,6 +6,7 @@ import States.GameState;
 import Tiles.Tile;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.Random;
 
 public class Ghost extends Creature {
@@ -14,6 +15,7 @@ public class Ghost extends Creature {
         Up, Right, Down, Left
     }
     private Edirections direction;
+    private BufferedImage img;
 
     //CONTROL VARIABLES
 //    int u = 0, r = 0, d = 0, l = 0; // u=0,r=1,d=2,l=3
@@ -22,10 +24,31 @@ public class Ghost extends Creature {
     public Ghost(Handler handler, float posX, float posY, float pSPEED) {
         super(handler, posX, posY, Tile.TILEWIDTH, Tile.TILEHEIGHT, pSPEED);
         direction = Edirections.Down;
+        int r = (int) (Math.random() * 6);
+        switch (r) {
+            case 1:
+                img = Assets.ghost1;
+                break;
+            case 2:
+                img = Assets.ghost2;
+                break;
+            case 3:
+                img = Assets.ghost3;
+                break;
+            case 4:
+                img = Assets.ghost4;
+                break;
+            case 5:
+                img = Assets.ghost5;
+                break;
+            case 6:
+                img = Assets.ghost6;
+                break;
+        }
     }
 
     public void render(Graphics g) {
-        g.drawImage(Assets.ghost1, (int) posX, (int) posY, width, height, null);
+        g.drawImage(img, (int) posX, (int) posY, width, height, null);
         /*
         { //collisionBOX
             g.setColor(Color.MAGENTA);
@@ -251,8 +274,7 @@ public class Ghost extends Creature {
      * set the game to gameOver and call the GameOverWindow
      */
     public void eatPlayer() {
-        System.out.println("YOU HAVE LOST");
-        handler.getGameState().gameOver(GameState.LOST);
+        handler.getGameState().setGameStatus(GameState.LOST);
     }
 
 }

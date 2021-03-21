@@ -8,12 +8,9 @@ import States.GameState;
 import States.MenuState;
 import States.State;
 import Text.Text;
-import Tiles.Tile;
-import Tiles.TileManager;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
-import java.io.Console;
 
 public class Game {
     private Window window;

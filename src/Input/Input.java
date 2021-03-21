@@ -2,7 +2,6 @@ package Input;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.security.Key;
 
 public class Input implements KeyListener {
 
@@ -21,6 +20,7 @@ public class Input implements KeyListener {
                 justPressed[i] = true;
             }
         }
+
     }
 
     /**

@@ -7,23 +7,21 @@ import ImageLoad.Assets;
 import Main.Game;
 import Main.Handler;
 import Text.Text;
-import Tiles.TileManager;
 import Worldmanager.WorldGenerator;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.util.Arrays;
 
 public class GameState extends State implements ActionListener {
 
     private Player player;
     private WorldGenerator world;
     private Ghost[] ghosts;
-    private boolean gameOver;
 
-    //GameOverwWindow
+    //GameOverWindow
     private int windowWidth = 300;
     private int windowHeight = 300;
     private int windowX = handler.getWindow().getCanvas().getWidth() / 2 - windowWidth / 2;
@@ -34,9 +32,12 @@ public class GameState extends State implements ActionListener {
     private int buttondifYInWindow = windowHeight / 3; // usedAreas(Title, Button(play), Button(exit))
     private Button play;
     private Button exit;
-    public static int WIN = 0;
-    public static int LOST = 1;
-    private int gameOverStatus;
+    private Button proceed;
+    private int gameStatus;
+    public static int PLAY = 0;
+    public static int WIN = 1;
+    public static int LOST = 2;
+    public static int BREAK = 3;
 
     public GameState(Handler handler){
         super(handler);
@@ -50,14 +51,17 @@ public class GameState extends State implements ActionListener {
         for(int i=0;i<ghosts.length;i++) {
             ghosts[i] = new Ghost(handler, world.getGhostSpawnX(), world.getGhostSpawnY(), 3.0f);
         }
-        gameOver = false;
-        initGameOverWindow();
+        gameStatus = PLAY;
+        initGameWindow();
         return true;
     }
 
     @Override
     public void tick() {
-        if(!gameOver) {
+        if(handler.getInput().keyJustPressed_TickBased(KeyEvent.VK_ESCAPE)) {
+            this.gameStatus = BREAK;
+        }
+        if(gameStatus == PLAY) {
             world.tick();
             player.tick();
             for (Ghost ghost : ghosts) {
@@ -66,7 +70,6 @@ public class GameState extends State implements ActionListener {
                 }
             }
         }
-        System.out.println(TileManager.TILES.size());
     }
 
     @Override
@@ -78,7 +81,19 @@ public class GameState extends State implements ActionListener {
                 ghost.render(g);
             }
         }
-        if(gameOver) {
+        if(gameStatus == BREAK) {
+            g.drawImage(Assets.gameOverWindow, windowX,windowY,null);
+            proceed.render(g);
+            exit.render(g);
+
+            // title
+            g.setColor(Color.WHITE);
+            g.setFont(Text.BREAKFONT);
+
+            int stringwidth = g.getFontMetrics().stringWidth(Text.BREAK);
+            g.drawString(Text.BREAK,windowX + windowWidth / 2 - stringwidth / 2,windowY + buttondifYInWindow / 2 + buttonHeight);
+        }
+        if(gameStatus == WIN || gameStatus == LOST) {
             g.drawImage(Assets.gameOverWindow,windowX,windowY,null);
             play.render(g);
             exit.render(g);
@@ -86,12 +101,13 @@ public class GameState extends State implements ActionListener {
             //titel
             g.setColor(Color.WHITE);
             g.setFont(Text.GAMEOVERFONT);
-            if(gameOverStatus == WIN) {
+            
+            if(gameStatus == WIN) {
                 int stringwidth = g.getFontMetrics().stringWidth(Text.WIN);
                 g.drawString(Text.WIN,windowX + windowWidth / 2 - stringwidth / 2,windowY + buttondifYInWindow / 2 + buttonHeight);
-            } else if(gameOverStatus == LOST) {
+            } else if(gameStatus == LOST) {
                 int stringwidth = g.getFontMetrics().stringWidth(Text.LOST);
-                g.drawString(Text.LOST,windowX + windowHeight / 2 -stringwidth / 2,windowY + buttondifYInWindow / 2 + buttonHeight);
+                g.drawString(Text.LOST,windowX + windowHeight / 2 - stringwidth / 2,windowY + buttondifYInWindow / 2 + buttonHeight);
             } else {
                 System.out.println("[ERROR] invalid gameOverStatus");
             }
@@ -104,37 +120,48 @@ public class GameState extends State implements ActionListener {
             State.changeState(Game.gameState);
         } else  if(e.getSource() == exit) {
             State.changeState(Game.menuState);
+        } else if (e.getSource() == proceed) {
+            gameStatus = PLAY;
         }
     }
 
     //mouse Inpus
     @Override
     public void mousePressed(MouseEvent e) {
-        play.mousePressed(e);
-        exit.mousePressed(e);
+        if(gameStatus == WIN || gameStatus == LOST)
+            play.mousePressed(e);
+        if(gameStatus != PLAY)
+           exit.mousePressed(e);
+        if(gameStatus == BREAK)
+            proceed.mousePressed(e);
     }
     @Override
     public void mouseReleased(MouseEvent e) {
-        play.mouseReleased(e);
-        exit.mouseReleased(e);
+        if(gameStatus == WIN || gameStatus == LOST)
+            play.mouseReleased(e);
+        if(gameStatus != PLAY)
+            exit.mouseReleased(e);
+        if(gameStatus == BREAK)
+            proceed.mouseReleased(e);
     }
 
     /**
      * initialized the gameOverWindow
      */
-    private void initGameOverWindow() {
+    private void initGameWindow() {
         windowWidth = 300;
         windowHeight = 300;
         windowX = handler.getWindow().getCanvas().getWidth() / 2 - windowWidth / 2;
         windowY = handler.getWindow().getCanvas().getHeight() / 2 - windowHeight / 2;
+        int cornerrounds = 20;
         play = new Button(this,handler,Text.ButtonPlay,windowX + buttonXInWindow,windowY + buttondifYInWindow + buttondifYInWindow / 2 - buttonHeight / 2,buttonWidth,buttonHeight);
+        play.setCornerrounds(cornerrounds);
+        proceed = new Button(this,handler,Text.ButtonContinue,windowX + buttonXInWindow,windowY + buttondifYInWindow +buttondifYInWindow / 2 - buttonHeight / 2, buttonWidth, buttonHeight);
+        proceed.setCornerrounds(cornerrounds);
         exit = new Button(this,handler,Text.ButtonExit,windowX + buttonXInWindow,windowY + 2 * buttondifYInWindow + buttondifYInWindow / 2 - buttonHeight / 2,buttonWidth,buttonHeight);
+        exit.setCornerrounds(cornerrounds);
     }
 
-    public void gameOver(int gameOverStatus) {
-        this.gameOverStatus = gameOverStatus;
-        gameOver = true;
-    }
 
     //GETTER & SETTER
     public Player getPlayer() {
@@ -146,4 +173,9 @@ public class GameState extends State implements ActionListener {
     public WorldGenerator getWorld() {
         return world;
     }
+
+    public void setGameStatus(int gameStatus) {
+        this.gameStatus = gameStatus;
+    }
+
 }

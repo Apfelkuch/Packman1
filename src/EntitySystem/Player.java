@@ -63,7 +63,6 @@ public class Player extends Creature {
             if(g != null) {
                 if (this.creatureInFront(g)) { // player eats the ghost if the player will intersect in the next move with the ghost.
                     eatGhost(g);
-                    System.out.println("ghost eat");
                 }
             }
         }
@@ -145,7 +144,7 @@ public class Player extends Creature {
 //        System.out.println(handler.getWorld().getPowerupManager().getDotCount());
         if(handler.getWorld().getPowerupManager().getDotCount() == 0) {
             System.out.println("help");
-            handler.getGameState().gameOver(GameState.WIN);
+            handler.getGameState().setGameStatus(GameState.WIN);
         }
     }
 
