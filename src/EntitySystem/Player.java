@@ -3,7 +3,6 @@ package EntitySystem;
 import ImageLoad.Assets;
 import Main.Handler;
 import States.GameState;
-import Tiles.Tile;
 import Text.Text;
 
 import java.awt.*;
@@ -14,7 +13,7 @@ public class Player extends Creature {
     private int dotCounter = 0;
 
     public Player(Handler handler,int spawnX, int spwanY, float pSPEED) {
-        super(handler, spawnX, spwanY, Tile.TILEWIDTH, Tile.TILEHEIGHT, pSPEED);
+        super(handler, spawnX, spwanY, Assets.TILEWIDTH, Assets.TILEHEIGHT, 48, 48, pSPEED);
         currentLooking = lookingRIGHT; // starting view direction
     }
 
@@ -38,19 +37,11 @@ public class Player extends Creature {
         //DotCounter on Sreen
         g.setColor(Color.YELLOW);
         g.setFont(Text.DOTFONT);
-        g.drawString("" + this.dotCounter,(handler.getWorld().getWitdh() - 2) * Tile.TILEWIDTH,(int) (Tile.TILEHEIGHT * 0.80));
-        /* //CollisionBOX showing
-        {
-            // collisionBox Packman
-            g.setColor(Color.RED);
-            g.drawRect(collisionBOX.x,collisionBOX.y,collisionBOX.width,collisionBOX.height);
-            // collisionBox Dots
-            for (Item d : handler.getWorld().getPowerupManager().getDots()) {
-                g.setColor(Color.GREEN);
-                g.drawOval(d.collisionBOX.x,d.collisionBOX.y,d.collisionBOX.width,d.collisionBOX.height);
-            }
-        }
-        */
+        g.drawString("" + this.dotCounter,(handler.getWorld().getWidth() - 2) * Assets.TILEWIDTH,(int) (Assets.TILEHEIGHT * 0.80));
+
+//        //collisionBox Packman
+//        g.setColor(Color.RED);
+//        g.drawRect(collisionBOX.x,collisionBOX.y,collisionBOX.width,collisionBOX.height);
     }
 
     @Override
@@ -110,7 +101,8 @@ public class Player extends Creature {
         // change the position with xMove and yMove
         super.posX += super.xMove;
         super.posY += super.yMove;
-        super.collisionBOX.setLocation((int) posX,(int) posY);
+        //adjust collisionBOX
+        super.adjustCollisionBOX();
     }
 
     /**
@@ -141,7 +133,6 @@ public class Player extends Creature {
     }
 
     public void win() {
-//        System.out.println(handler.getWorld().getPowerupManager().getDotCount());
         if(handler.getWorld().getPowerupManager().getDotCount() == 0) {
             System.out.println("help");
             handler.getGameState().setGameStatus(GameState.WIN);

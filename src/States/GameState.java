@@ -7,8 +7,10 @@ import ImageLoad.Assets;
 import Main.Game;
 import Main.Handler;
 import Text.Text;
+import Tiles.TileManager;
 import Worldmanager.WorldGenerator;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,6 +22,9 @@ public class GameState extends State implements ActionListener {
     private Player player;
     private WorldGenerator world;
     private Ghost[] ghosts;
+    private int ghostSpawnDelay;
+    private int currentGhostSpawnDelay;
+    private int ghostCount;
 
     //GameOverWindow
     private int windowWidth = 300;
@@ -46,11 +51,13 @@ public class GameState extends State implements ActionListener {
     @Override
     public boolean initState() {
         world = new WorldGenerator("res/worlds/World1.txt",handler);
+        System.out.println(world.getWidth() * Assets.TILEWIDTH + " , " +  world.getHeight() * Assets.TILEHEIGHT);
+        handler.getWindow().setSize(new Dimension(world.getWidth() * Assets.TILEWIDTH + 16, world.getHeight() * Assets.TILEHEIGHT + 39));
         player = new Player(handler, world.getSpawnX(),world.getSpawnY(),4.0f);
         ghosts = new Ghost[world.getGhostCount()];
-        for(int i=0;i<ghosts.length;i++) {
-            ghosts[i] = new Ghost(handler, world.getGhostSpawnX(), world.getGhostSpawnY(), 3.0f);
-        }
+        ghostSpawnDelay = 2;
+        currentGhostSpawnDelay = 0;
+        ghostCount = ghosts.length;
         gameStatus = PLAY;
         initGameWindow();
         return true;
@@ -68,6 +75,21 @@ public class GameState extends State implements ActionListener {
                 if(ghost != null) {
                     ghost.tick();
                 }
+            }
+        }
+    }
+
+    @Override
+    public void sectick() {
+        if(ghostCount > 0) {
+            if(currentGhostSpawnDelay > 0) {
+                currentGhostSpawnDelay --;
+            }
+            if(currentGhostSpawnDelay == 0) {
+                System.out.println("sec");
+                currentGhostSpawnDelay = ghostSpawnDelay;
+                ghostCount--;
+                spawnGhost(ghostCount);
             }
         }
     }
@@ -125,7 +147,9 @@ public class GameState extends State implements ActionListener {
         }
     }
 
-    //mouse Inpus
+    /**
+     * mouse Input
+     */
     @Override
     public void mousePressed(MouseEvent e) {
         if(gameStatus == WIN || gameStatus == LOST)
@@ -135,6 +159,7 @@ public class GameState extends State implements ActionListener {
         if(gameStatus == BREAK)
             proceed.mousePressed(e);
     }
+
     @Override
     public void mouseReleased(MouseEvent e) {
         if(gameStatus == WIN || gameStatus == LOST)
@@ -162,6 +187,9 @@ public class GameState extends State implements ActionListener {
         exit.setCornerrounds(cornerrounds);
     }
 
+    public void spawnGhost(int index) {
+        ghosts[index] = new Ghost(handler, world.getGhostSpawnX(), world.getGhostSpawnY(), 3.0f);
+    }
 
     //GETTER & SETTER
     public Player getPlayer() {
@@ -172,6 +200,15 @@ public class GameState extends State implements ActionListener {
     }
     public WorldGenerator getWorld() {
         return world;
+    }
+    public int getGhostCount() {
+        return ghostCount;
+    }
+    public int getCurrentGhostSpawnDelay() {
+        return currentGhostSpawnDelay;
+    }
+    public int getGhostSpawnDelay() {
+        return ghostSpawnDelay;
     }
 
     public void setGameStatus(int gameStatus) {

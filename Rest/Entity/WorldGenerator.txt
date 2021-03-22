@@ -1,0 +1,41 @@
+constants
+
+public static int upperWall = 1;
+public static int rightWall = 2;
+public static int leftWall = 3;
+public static int lowerWall = 4;
+public static int upperU = 9;
+public static int rightU = 10;
+public static int leftU = 11;
+public static int lowerU = 12;
+public static int rightUpperCorner = 5;
+public static int rightLowerCorner = 6;
+public static int leftUpperCorner = 7;
+public static int leftLowerCorner = 8;
+public static int updownTunnel = 14;
+public static int rightleftTunnel = 15;
+public static int groundTile = 0;
+public static int allWall = 13;
+
+Methods
+
+    public int getIdFromPattern (String pattern){
+        //wall = LEFT RIGHT UP DOWN
+        if (pattern.equals("1000")) { return rightU;
+        } else if (pattern.equals("0100")) { return leftU;
+        } else if (pattern.equals("0010")) { return lowerU;
+        } else if (pattern.equals("0001")) { return upperU;
+        } else if (pattern.equals("1100")) { return rightleftTunnel;
+        } else if (pattern.equals("1010")) { return rightLowerCorner;
+        } else if (pattern.equals("1001")) { return rightUpperCorner;
+        } else if (pattern.equals("0011")) { return updownTunnel;
+        } else if (pattern.equals("0101")) { return leftUpperCorner;
+        } else if (pattern.equals("0110")) { return leftLowerCorner;
+        } else if (pattern.equals("1110")) { return lowerWall;
+        } else if (pattern.equals("1101")) { return upperWall;
+        } else if (pattern.equals("1011")) { return rightWall;
+        } else if (pattern.equals("0111")) { return leftWall;
+        } else if (pattern.equals("1111")) { return allWall;
+        } else if (pattern.equals("0000")) { return groundTile;
+        } else return -1;
+    }

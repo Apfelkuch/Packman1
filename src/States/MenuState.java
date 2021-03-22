@@ -48,6 +48,10 @@ public class MenuState extends State implements ActionListener {
     }
 
     @Override
+    public void sectick() {
+    }
+
+    @Override
     public void render(Graphics g) {
         //background
         g.drawImage(Assets.menuBackground,0,0,null);

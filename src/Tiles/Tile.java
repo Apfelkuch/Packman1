@@ -1,10 +1,11 @@
 package Tiles;
 
+import ImageLoad.Assets;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Tile {
-    public static final int TILEWIDTH = 50, TILEHEIGHT = 50;
 
     protected String name;
     protected final int id;
@@ -22,7 +23,7 @@ public class Tile {
 
     }
     public void render (Graphics g, int x, int y){
-        g.drawImage(texture,x,y, TILEWIDTH,TILEHEIGHT,null);
+        g.drawImage(texture,x,y, Assets.TILEWIDTH,Assets.TILEHEIGHT,null);
     }
 
     // GETTER & SETTER

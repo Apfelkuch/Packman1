@@ -51,11 +51,15 @@ public class Input implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+        if(e.getKeyCode() < 0 || e.getKeyCode() > keys.length)
+            return;
         keys[e.getKeyCode()] = true;
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
+        if(e.getKeyCode() < 0 || e.getKeyCode() > keys.length)
+            return;
         keys[e.getKeyCode()] = false;
     }
 }

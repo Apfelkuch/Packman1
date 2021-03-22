@@ -2,6 +2,7 @@ package Worldmanager;
 
 import EntitySystem.Dot;
 import EntitySystem.Item;
+import ImageLoad.Assets;
 import Main.Handler;
 import Tiles.Tile;
 
@@ -17,6 +18,9 @@ public class PowerupManager {
     private int dotCount = 0;
     private int powerUpCout = 0;
 
+    // itemType
+    private final char Dot = 'D';
+
     public PowerupManager(WorldGenerator world, Handler handler) {
         this.world = world;
         this.handler = handler;
@@ -30,14 +34,14 @@ public class PowerupManager {
 
     public void initDots(){
         for (Vektor2D v : emptyTiles){
-            items.add(new Dot(handler,v.getX() * Tile.TILEHEIGHT + Tile.TILEWIDTH / 2, v.getY() * Tile.TILEHEIGHT + Tile.TILEHEIGHT / 2, 'D'));
+            items.add(new Dot(handler,v.getX() * Assets.TILEHEIGHT + Assets.TILEWIDTH / 2, v.getY() * Assets.TILEHEIGHT + Assets.TILEHEIGHT / 2, Dot));
             dotCount++;
         }
     }
 
 
     public void findEmptySpaces(){
-        for (int x = 0; x < world.getWitdh(); x++) {
+        for (int x = 0; x < world.getWidth(); x++) {
             for (int y = 0; y <world.getHeight() ; y++) {
                 if(world.getWorldGrid()[x][y] ==  0){
                    emptyTiles.add(new Vektor2D(x, y));
@@ -49,6 +53,11 @@ public class PowerupManager {
     public void render(Graphics g) {
         for (Item i : items) {
             i.render(g);
+//            // collisionBox Dots
+//            if(i.getItemType() == Dot) {
+//                g.setColor(Color.RED);
+//                g.drawRect(i.getCollisionBOX().x, i.getCollisionBOX().y, i.getCollisionBOX().width, i.getCollisionBOX().height);
+//            }
         }
     }
 

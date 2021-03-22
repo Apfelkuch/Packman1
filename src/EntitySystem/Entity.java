@@ -21,6 +21,18 @@ public abstract class Entity {
 
     public abstract void render (Graphics g);
 
-
     public abstract void tick();
+
+    // GETTER & SETTER
+
+    public float getPosX() {
+        return posX;
+    }
+    public float getPosY() {
+        return posY;
+    }
+    public Rectangle getCollisionBOX() {
+        return collisionBOX;
+    }
 }
+

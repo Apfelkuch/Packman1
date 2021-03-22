@@ -56,6 +56,7 @@ public class Game {
             }
             if(timer >= 1000000000) {
                 System.out.println("Ticks and Frames: " + ticks);
+                sectick();
                 ticks = 0;
                 timer = 0;
 
@@ -71,7 +72,13 @@ public class Game {
         Assets.init();
         window.getCanvas().addKeyListener(input);
         window.getCanvas().addMouseListener(mListener);
+
+        // TODO music
+        // TODO graphics
+        // TODO level
+        // TODO screen size
     }
+
     public void render() {
         bs = window.getCanvas().getBufferStrategy();
         if(window.getCanvas().getBufferStrategy() == null){
@@ -93,6 +100,12 @@ public class Game {
             State.getState().tick();
         }
         input.tick();
+    }
+
+    public void sectick() {
+        if(State.getState() != null && State.getState().isDoneLoading()) {
+            State.getState().sectick();
+        }
     }
 
     //GETTER & SETTER

@@ -4,8 +4,8 @@ import java.awt.image.BufferedImage;
 
 public class Assets {
 
-    //width and
-    public static final int width = 48, height =48;
+    //width and height
+    public static final int TILEWIDTH = 48, TILEHEIGHT =48;
     //Game
     public static BufferedImage packman_UP, packman_DOWN, packman_LEFT, packman_RIGHT;
     public static BufferedImage ghost1, ghost2, ghost3, ghost4, ghost5, ghost6;
@@ -21,37 +21,37 @@ public class Assets {
     public static void init(){
         //PACKMAN
         Spritsheet allPackman = new Spritsheet(ImageLoader.loadImage("/textures/packman.png"));
-        packman_RIGHT = allPackman.getTile(0,0,width,height);
-        packman_DOWN = allPackman.getTile(width,0,width,height);
-        packman_UP = allPackman.getTile(width * 2,0,width,height);
-        packman_LEFT = allPackman.getTile(width * 3,0,width,height);
+        packman_RIGHT = allPackman.getTile(0,0, TILEWIDTH, TILEHEIGHT);
+        packman_DOWN = allPackman.getTile(TILEWIDTH,0, TILEWIDTH, TILEHEIGHT);
+        packman_UP = allPackman.getTile(TILEWIDTH * 2,0, TILEWIDTH, TILEHEIGHT);
+        packman_LEFT = allPackman.getTile(TILEWIDTH * 3,0, TILEWIDTH, TILEHEIGHT);
         //GEISTER
         Spritsheet allGhosts = new Spritsheet(ImageLoader.loadImage("/textures/ghost.png"));
-        ghost1 = allGhosts.getTile(0,0,width,height);
-        ghost2 = allGhosts.getTile(width,0,width,height);
-        ghost3 = allGhosts.getTile(width * 2,0,width,height);
-        ghost4 = allGhosts.getTile(width * 3,0,width,height);
-        ghost5 = allGhosts.getTile(width * 4,0,width,height);
-        ghost6 = allGhosts.getTile(width * 5,0,width,height);
+        ghost1 = allGhosts.getTile(0,0, TILEWIDTH, TILEHEIGHT);
+        ghost2 = allGhosts.getTile(TILEWIDTH,0, TILEWIDTH, TILEHEIGHT);
+        ghost3 = allGhosts.getTile(TILEWIDTH * 2,0, TILEWIDTH, TILEHEIGHT);
+        ghost4 = allGhosts.getTile(TILEWIDTH * 3,0, TILEWIDTH, TILEHEIGHT);
+        ghost5 = allGhosts.getTile(TILEWIDTH * 4,0, TILEWIDTH, TILEHEIGHT);
+        ghost6 = allGhosts.getTile(TILEWIDTH * 5,0, TILEWIDTH, TILEHEIGHT);
         //BACKGROUND
         Spritsheet background = new Spritsheet(ImageLoader.loadImage("/textures/background.png"));
-        upperWall = background.getTile(0,0,width,height);
-        rightWall = background.getTile(width,0 ,width,height);
-        leftWall = background.getTile(width * 2,0,width,height);
-        lowerWall = background.getTile(width * 3,0,width,height);
-        upperU = background.getTile(0,height,width,height);
-        rightU = background.getTile(width,height,width,height);
-        leftU = background.getTile(width * 2,height,width,height);
-        lowerU = background.getTile(width * 3,height,width,height);
-        rightUpperCorner = background.getTile(0,height * 2,width,height);
-        rightLowerCorner = background.getTile(width,height * 2,width,height);
-        leftUpperCorner = background.getTile(width * 2,height * 2,width,height);
-        leftLowerCorner = background.getTile(width * 3,height * 2,width,height);
-        rightleftTunnel = background.getTile(0,height * 3,width,height);
-        updowntunnel = background.getTile(0,height * 3,width,height);
-        rightleftTunnel = background.getTile(width,height * 3,width,height);
-        ground = background.getTile(width * 2,height * 3,width,height);
-        allWall = background.getTile(width * 3,height*3,width,height);
+        upperWall = background.getTile(0,0, TILEWIDTH, TILEHEIGHT);
+        rightWall = background.getTile(TILEWIDTH,0 , TILEWIDTH, TILEHEIGHT);
+        leftWall = background.getTile(TILEWIDTH * 2,0, TILEWIDTH, TILEHEIGHT);
+        lowerWall = background.getTile(TILEWIDTH * 3,0, TILEWIDTH, TILEHEIGHT);
+        upperU = background.getTile(0, TILEHEIGHT, TILEWIDTH, TILEHEIGHT);
+        rightU = background.getTile(TILEWIDTH, TILEHEIGHT, TILEWIDTH, TILEHEIGHT);
+        leftU = background.getTile(TILEWIDTH * 2, TILEHEIGHT, TILEWIDTH, TILEHEIGHT);
+        lowerU = background.getTile(TILEWIDTH * 3, TILEHEIGHT, TILEWIDTH, TILEHEIGHT);
+        rightUpperCorner = background.getTile(0, TILEHEIGHT * 2, TILEWIDTH, TILEHEIGHT);
+        rightLowerCorner = background.getTile(TILEWIDTH, TILEHEIGHT * 2, TILEWIDTH, TILEHEIGHT);
+        leftUpperCorner = background.getTile(TILEWIDTH * 2, TILEHEIGHT * 2, TILEWIDTH, TILEHEIGHT);
+        leftLowerCorner = background.getTile(TILEWIDTH * 3, TILEHEIGHT * 2, TILEWIDTH, TILEHEIGHT);
+        rightleftTunnel = background.getTile(0, TILEHEIGHT * 3, TILEWIDTH, TILEHEIGHT);
+        updowntunnel = background.getTile(0, TILEHEIGHT * 3, TILEWIDTH, TILEHEIGHT);
+        rightleftTunnel = background.getTile(TILEWIDTH, TILEHEIGHT * 3, TILEWIDTH, TILEHEIGHT);
+        ground = background.getTile(TILEWIDTH * 2, TILEHEIGHT * 3, TILEWIDTH, TILEHEIGHT);
+        allWall = background.getTile(TILEWIDTH * 3, TILEHEIGHT *3, TILEWIDTH, TILEHEIGHT);
 
         gameOverWindow = ImageLoader.loadImage("/textures/GameOverWindow.png");
 

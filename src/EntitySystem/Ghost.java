@@ -3,7 +3,6 @@ package EntitySystem;
 import ImageLoad.Assets;
 import Main.Handler;
 import States.GameState;
-import Tiles.Tile;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -16,32 +15,48 @@ public class Ghost extends Creature {
     }
     private Edirections direction;
     private BufferedImage img;
-
-    //CONTROL VARIABLES
-//    int u = 0, r = 0, d = 0, l = 0; // u=0,r=1,d=2,l=3
+    private int imgID;
 
     //////////////////////////////////
     public Ghost(Handler handler, float posX, float posY, float pSPEED) {
-        super(handler, posX, posY, Tile.TILEWIDTH, Tile.TILEHEIGHT, pSPEED);
+        super(handler, posX, posY, Assets.TILEWIDTH, Assets.TILEHEIGHT, 40, 40, pSPEED);
         direction = Edirections.Down;
-        int r = (int) (Math.random() * 6);
+
+        int r = 1;
+        if(handler.getGameState().getGhostCount() >= (handler.getGhosts().length - 6)) {
+            boolean possible = false;
+            while (!possible) {
+                possible = true;
+                r = (int) (Math.random() * 6);
+                for (Ghost g : handler.getGhosts()) {
+                    if (g == null) continue;
+                    if (r == g.getImgID()) possible = false;
+                }
+            }
+            System.out.println("1");
+        } else {
+            r = (int) (Math.random() * 6);
+            System.out.println("2");
+        }
+
+        imgID = r;
         switch (r) {
-            case 1:
+            case 0:
                 img = Assets.ghost1;
                 break;
-            case 2:
+            case 1:
                 img = Assets.ghost2;
                 break;
-            case 3:
+            case 2:
                 img = Assets.ghost3;
                 break;
-            case 4:
+            case 3:
                 img = Assets.ghost4;
                 break;
-            case 5:
+            case 4:
                 img = Assets.ghost5;
                 break;
-            case 6:
+            case 5:
                 img = Assets.ghost6;
                 break;
         }
@@ -49,12 +64,10 @@ public class Ghost extends Creature {
 
     public void render(Graphics g) {
         g.drawImage(img, (int) posX, (int) posY, width, height, null);
-        /*
-        { //collisionBOX
-            g.setColor(Color.MAGENTA);
-            g.fillRect(collisionBOX.x, collisionBOX.y, collisionBOX.width, collisionBOX.height);
-        }
-        */
+
+//        //collisionBOX
+//        g.setColor(Color.MAGENTA);
+//        g.drawRect(collisionBOX.x, collisionBOX.y, collisionBOX.width, collisionBOX.height);
     }
 
     public void tick() {
@@ -90,20 +103,14 @@ public class Ghost extends Creature {
      * generating a random direction based on the forerunner direction
      */
     private int generatingDirection(int maxDirections, int forerunnerDirection) {
-//        System.out.println("max directions: " + maxDirections);
         int dir = (new Random().nextInt(maxDirections) - 1);
-//        System.out.println("next direction: " + dir);
-//        System.out.println("before direction: " + forerunnerDirection);
-//        System.out.println("new direction: " + (forerunnerDirection + dir));
         dir = forerunnerDirection + dir;
-//        System.out.println("normalized direction: " + dir);
         if(dir == -1) {
             dir = 3;
         }
         if(dir == 4) {
             dir = 0;
         }
-//        System.out.println("final direction: " + dir);
         return dir;
     }
 
@@ -112,7 +119,6 @@ public class Ghost extends Creature {
      */
     public void setDirection(boolean motionZero) {
         if(motionZero) {
-//            System.out.println("Collide in the direction.");
             int collide = 0;
             boolean[] freeSpaces = new boolean[4];
             if(collide(0,-SPEED) == NoCollision) { // Up
@@ -131,29 +137,10 @@ public class Ghost extends Creature {
                 collide++;
                 freeSpaces[3] = true;
             }
-/*
-            { // print the freeSpaces-Array to the console
-                System.out.print("freeSpaces-Array: ");
-                for (boolean fs : freeSpaces) {
-                    System.out.print(fs + " | ");
-                }
-                System.out.println();
-            }
-*/
             // remove current direction from freeSpaces
-//            System.out.println("current backward looking : " + currentLookingBack);
-//            System.out.println("current backward direction in freeSpaces: " + freeSpaces[currentLookingBack]);
             freeSpaces[currentLookingBack] = false;
             collide--;
-//            System.out.println("current backward direction in freeSpaces: " + freeSpaces[currentLookingBack]);
-/*
-            // print the freeSpaces-Array to the console
-            System.out.print("freeSpaces-Array: ");
-            for (boolean fs : freeSpaces) {
-                System.out.print(fs + " | ");
-            }
-            System.out.println();
-*/
+
             if (collide == 1) { // if only one possible direction
                 // set direction to the only free direction
                 for(int i=0;i< freeSpaces.length;i++) {
@@ -161,16 +148,16 @@ public class Ghost extends Creature {
                         direction = dirInEdirection(i);
                     }
                 }
+            } else if (collide == -1) {
+                direction = Edirections.Down;
+                resetMove();
             } else {
-//                System.out.println("More than one possible direction");
                 // generating direction
                 int dir = generatingDirection(collide, direction.ordinal());
                 // set direction to the new direction
                 direction = dirInEdirection(dir);
             }
-//            System.out.println("new generated direction: " + direction.name());
         } else {
-//            System.out.println("Change direction after turning.");
             // generating direction
             int dir = generatingDirection(3,direction.ordinal());
             // set direction to the new direction
@@ -188,7 +175,6 @@ public class Ghost extends Creature {
     public void move() {
         // collision
         if (super.collide(xMove, yMove) != NoCollision) { //test if collision
-//            System.out.println("COLLIDE");
             if (super.xMove == super.xMoveOLD) // canceling xMove, if collide
                 super.xMove = 0;
             else // set xMove to xMoveOLD, if collision was not on the x-Axis
@@ -200,14 +186,11 @@ public class Ghost extends Creature {
                 super.yMove = super.yMoveOLD;
 
         }
-//        System.out.println("xM: " + xMove + ", yM: " + yMove + ", xMO: " + xMoveOLD + ", yMO: " + yMoveOLD);
         if (collide(xMoveOLD, yMoveOLD) != NoCollision) {
             xMove = 0;
             yMove = 0;
         }
         if (xMove == 0 && yMove == 0 && xMoveOLD == 0 && yMoveOLD == 0) { // detect if direction is not possible and change the direction to a possible direction
-//            System.out.println("xM: " + xMove + ", yM: " + yMove);
-//            System.out.println("change dir(move)");
             setDirection(true);
             return;
         }
@@ -216,7 +199,8 @@ public class Ghost extends Creature {
         // change the position with xMove and yMove
         posX += xMove;
         posY += yMove;
-        super.collisionBOX.setLocation((int) posX, (int) posY);
+        //adjust collisionBOX
+        super.adjustCollisionBOX();
     }
 
     /**
@@ -230,8 +214,6 @@ public class Ghost extends Creature {
         super.yMoveOLD = super.yMove;
 
         // setDir
-//        System.out.println("Dir: " + direction);
-        //          the direction          &&   move
         if (direction.equals(Edirections.Up) && yMove < 0) {
             setDirection(false);
             return;
@@ -277,4 +259,21 @@ public class Ghost extends Creature {
         handler.getGameState().setGameStatus(GameState.LOST);
     }
 
+    /**
+     * set all Move-Attributes to 0
+     */
+    public void resetMove() {
+        xMove = 0;
+        xMoveOLD = 0;
+        yMove = 0;
+        yMoveOLD = 0;
+    }
+
+    // GETTER && SETTER
+    public BufferedImage getImg() {
+        return img;
+    }
+    public int getImgID() {
+        return imgID;
+    }
 }

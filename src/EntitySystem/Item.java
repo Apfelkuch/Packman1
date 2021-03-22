@@ -8,4 +8,9 @@ public abstract class Item extends Entity {
         super(handler, posX, posY, CBwidth, CBheight);
         this.itemType = itemType;
     }
+
+    // GETTER && SETTER
+    public char getItemType() {
+        return itemType;
+    }
 }

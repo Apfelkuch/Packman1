@@ -1,7 +1,7 @@
 package EntitySystem;
 
+import ImageLoad.Assets;
 import Main.Handler;
-import Tiles.Tile;
 
 import java.awt.*;
 
@@ -32,13 +32,14 @@ public abstract class Creature extends Entity{
     protected int killCount;
 
 
-    public Creature(Handler handler, float posX, float posY, int CBwidth, int CBheight, float speed){
-        super(handler,posX,posY,(int) (CBwidth - speed),(int) (CBheight - speed));
+    public Creature(Handler handler, float posX, float posY, int width, int height, int CBwidth, int CBheight, float speed){
+        super(handler,posX,posY,(CBwidth - 1),(CBheight- 1));
         this.SPEED = speed;
-        this.width = (int) (Tile.TILEWIDTH - speed);
-        this.height = (int) (Tile.TILEHEIGHT - speed);
+        this.width =(width - 1);
+        this.height =(height - 1);
         this.alive = true;
         this.killedCreature = false;
+        adjustCollisionBOX();
     }
 
     /**
@@ -47,32 +48,32 @@ public abstract class Creature extends Entity{
      */
     protected int collide(float XMOVE, float YMOVE) {
         if(XMOVE > 0) { // if collide when moving right
-            if((posX + width + SPEED) >= (handler.getGame().getGameState().getWorld().getWitdh() * Tile.TILEWIDTH)) // leaving on the right
+            if((posX + width + SPEED) >= (handler.getGame().getGameState().getWorld().getWidth() * Assets.TILEWIDTH)) // leaving on the right
                 return RightCollision;
-            else if((handler.getGame().getGameState().getWorld().getTile((int)((posX + width + SPEED) / Tile.TILEWIDTH),   (int) ((posY) / Tile.TILEHEIGHT))).isSolid()) // if solid-Tile right-up
+            else if((handler.getGame().getGameState().getWorld().getTile((int)((posX + width + SPEED) / Assets.TILEWIDTH),   (int) ((posY) / Assets.TILEHEIGHT))).isSolid()) // if solid-Tile right-up
                 return RightCollision;
-            else if((handler.getGame().getGameState().getWorld().getTile((int)((posX + width + SPEED) / Tile.TILEWIDTH),   (int) ((posY + height) / Tile.TILEHEIGHT))).isSolid()) // if solid-Tile right-up
+            else if((handler.getGame().getGameState().getWorld().getTile((int)((posX + width + SPEED) / Assets.TILEWIDTH),   (int) ((posY + height) / Assets.TILEHEIGHT))).isSolid()) // if solid-Tile right-up
                 return RightCollision;
         } else if (XMOVE < 0) { // if collide when moving left
             if(posX <= 0) // leaving on the left
                 return LeftCollision;
-            else if((handler.getGame().getGameState().getWorld().getTile((int)((posX - SPEED) / Tile.TILEWIDTH),           (int)((posY) / Tile.TILEHEIGHT))).isSolid()) // if solid-Tile left-up
+            else if((handler.getGame().getGameState().getWorld().getTile((int)((posX - SPEED) / Assets.TILEWIDTH),           (int)((posY) / Assets.TILEHEIGHT))).isSolid()) // if solid-Tile left-up
                 return LeftCollision;
-            else if((handler.getGame().getGameState().getWorld().getTile((int)((posX - SPEED) / Tile.TILEWIDTH),           (int)((posY + height) / Tile.TILEHEIGHT))).isSolid()) // if solid-Tile left-down
+            else if((handler.getGame().getGameState().getWorld().getTile((int)((posX - SPEED) / Assets.TILEWIDTH),           (int)((posY + height) / Assets.TILEHEIGHT))).isSolid()) // if solid-Tile left-down
                 return LeftCollision;
         } else if (YMOVE > 0) { // if collide when moving down
-            if((posY + height + SPEED) >= (handler.getGame().getGameState().getWorld().getHeight() * Tile.TILEHEIGHT)) // leaving on the bottom
+            if((posY + height + SPEED) >= (handler.getGame().getGameState().getWorld().getHeight() * Assets.TILEHEIGHT)) // leaving on the bottom
                 return DownCollision;
-            else if((handler.getGame().getGameState().getWorld().getTile((int)((posX) / Tile.TILEWIDTH),                   (int)((posY + height + SPEED) / Tile.TILEHEIGHT))).isSolid()) // if solid-Tile bottom-left
+            else if((handler.getGame().getGameState().getWorld().getTile((int)((posX) / Assets.TILEWIDTH),                   (int)((posY + height + SPEED) / Assets.TILEHEIGHT))).isSolid()) // if solid-Tile bottom-left
                 return DownCollision;
-            else if((handler.getGame().getGameState().getWorld().getTile((int)((posX + width) / Tile.TILEWIDTH),           (int)((posY + height + SPEED) / Tile.TILEHEIGHT))).isSolid()) // if solid-Tile bottom-right
+            else if((handler.getGame().getGameState().getWorld().getTile((int)((posX + width) / Assets.TILEWIDTH),           (int)((posY + height + SPEED) / Assets.TILEHEIGHT))).isSolid()) // if solid-Tile bottom-right
                 return DownCollision;
         } else if (YMOVE < 0) { // if collide when moving up
             if(posY <= 0) // leaving on the top
                 return TopCollision;
-            else if((handler.getGame().getGameState().getWorld().getTile((int)((posX) / Tile.TILEWIDTH),                   (int)((posY - SPEED) / Tile.TILEHEIGHT))).isSolid()) // if solid-Tile top-left
+            else if((handler.getGame().getGameState().getWorld().getTile((int)((posX) / Assets.TILEWIDTH),                   (int)((posY - SPEED) / Assets.TILEHEIGHT))).isSolid()) // if solid-Tile top-left
                 return TopCollision;
-            else if((handler.getGame().getGameState().getWorld().getTile((int)((posX + width) / Tile.TILEWIDTH),           (int)((posY - SPEED) / Tile.TILEHEIGHT))).isSolid()) // if solid-Tile top-right
+            else if((handler.getGame().getGameState().getWorld().getTile((int)((posX + width) / Assets.TILEWIDTH),           (int)((posY - SPEED) / Assets.TILEHEIGHT))).isSolid()) // if solid-Tile top-right
                 return TopCollision;
         }
         return NoCollision;
@@ -99,6 +100,13 @@ public abstract class Creature extends Entity{
             currentLooking = lookingLEFT;
             currentLookingBack = lookingRIGHT;
         }
+    }
+
+    /**
+     * adjust collisionBOX
+     */
+    public void adjustCollisionBOX() {
+        collisionBOX.setLocation((int) (posX + (width - collisionBOX.width) / 2), (int) (posY + (height - collisionBOX.height) / 2));
     }
 
     /**
