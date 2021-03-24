@@ -33,10 +33,8 @@ public class Ghost extends Creature {
                     if (r == g.getImgID()) possible = false;
                 }
             }
-            System.out.println("1");
         } else {
             r = (int) (Math.random() * 6);
-            System.out.println("2");
         }
 
         imgID = r;

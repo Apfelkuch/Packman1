@@ -8,6 +8,7 @@ import States.GameState;
 import States.MenuState;
 import States.State;
 import Text.Text;
+import music.Sound;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -23,6 +24,7 @@ public class Game {
     private final Input input;
     private final MListener mListener;
     private final Text text;
+    private Sound sound;
 
     public  static int fps = 60;
     //////////////////////////////////////////////////////////////////////
@@ -32,9 +34,11 @@ public class Game {
         mListener = new MListener(handler);
         input = new Input();
         text = new Text();
+        sound = new Sound();
 
         gameLoop();
     }
+
     public void gameLoop(){
         init();
         double timePerTick = 1000000000/fps;
@@ -74,6 +78,10 @@ public class Game {
         window.getCanvas().addMouseListener(mListener);
 
         // TODO music
+        if(!sound.isPlay()) {
+            sound.playSound(Sound.BACKGROUND_MUSIC);
+        }
+
         // TODO graphics
         // TODO level
         // TODO screen size

@@ -51,7 +51,7 @@ public class GameState extends State implements ActionListener {
     @Override
     public boolean initState() {
         world = new WorldGenerator("res/worlds/World1.txt",handler);
-        System.out.println(world.getWidth() * Assets.TILEWIDTH + " , " +  world.getHeight() * Assets.TILEHEIGHT);
+//        System.out.println(world.getWidth() * Assets.TILEWIDTH + " , " +  world.getHeight() * Assets.TILEHEIGHT);
         handler.getWindow().setSize(new Dimension(world.getWidth() * Assets.TILEWIDTH + 16, world.getHeight() * Assets.TILEHEIGHT + 39));
         player = new Player(handler, world.getSpawnX(),world.getSpawnY(),4.0f);
         ghosts = new Ghost[world.getGhostCount()];
@@ -86,7 +86,6 @@ public class GameState extends State implements ActionListener {
                 currentGhostSpawnDelay --;
             }
             if(currentGhostSpawnDelay == 0) {
-                System.out.println("sec");
                 currentGhostSpawnDelay = ghostSpawnDelay;
                 ghostCount--;
                 spawnGhost(ghostCount);
