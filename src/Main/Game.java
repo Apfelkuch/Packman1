@@ -77,10 +77,8 @@ public class Game {
         window.getCanvas().addKeyListener(input);
         window.getCanvas().addMouseListener(mListener);
 
-        // TODO music
-        if(!sound.isPlay()) {
-            sound.playSound(Sound.BACKGROUND_MUSIC);
-        }
+        // TODO music volume
+        sound.playSound(Sound.BACKGROUND_MUSIC);
 
         // TODO graphics
         // TODO level
@@ -104,6 +102,11 @@ public class Game {
     }
 
     public void tick() {
+        // MUSIC
+        if(!sound.isPlay()) {
+            sound.playSound(Sound.BACKGROUND_MUSIC);
+        }
+
         if(State.getState()!= null && State.getState().isDoneLoading()){
             State.getState().tick();
         }

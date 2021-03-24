@@ -8,20 +8,15 @@ public class Sound {
 
     public static String BACKGROUND_MUSIC = "res/sound/background.wav";
 
-    private boolean play;
-
-    public Sound() {
-        play = false;
-    }
+    private Clip clip = null;
 
     public void playSound(String soundFile) {
         try {
             File f = new File(soundFile);
             AudioInputStream audioIn = AudioSystem.getAudioInputStream(f.toURI().toURL());
-            Clip clip = AudioSystem.getClip();
+            clip = AudioSystem.getClip();
             clip.open(audioIn);
             clip.start();
-            play = true;
         } catch (LineUnavailableException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -31,7 +26,11 @@ public class Sound {
         }
     }
 
+    // GETTER && SETTER
     public boolean isPlay() {
-        return play;
+        return clip.isRunning();
+    }
+    public Clip getClip() {
+        return clip;
     }
 }
