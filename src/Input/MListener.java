@@ -3,7 +3,10 @@ package Input;
 import java.awt.event.*;
 import Main.Handler;
 
-public class MListener implements MouseListener {
+import javax.swing.event.MouseInputListener;
+
+
+public class MListener implements MouseInputListener {
 
     private Handler handler;
 
@@ -34,5 +37,15 @@ public class MListener implements MouseListener {
     @Override
     public void mouseExited(MouseEvent e) {
         handler.getState().mouseExited(e);
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        handler.getState().mouseDragged(e);
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        handler.getState().mouseMoved(e);
     }
 }

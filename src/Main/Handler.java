@@ -9,6 +9,7 @@ import States.MenuState;
 import States.State;
 import Worldmanager.WorldGenerator;
 import Input.MListener;
+import music.Sound;
 
 public class Handler {
 
@@ -35,7 +36,7 @@ public class Handler {
         return game.getWindow();
     }
     public MListener getmListener() {
-        return game.getmListener();
+        return game.getMListener();
     }
     public State getState() {
         return State.getState();
@@ -48,5 +49,8 @@ public class Handler {
     }
     public Input getInput() {
         return game.getInput();
+    }
+    public Sound getSound() {
+        return game.getSound();
     }
 }

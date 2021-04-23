@@ -7,13 +7,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class Button {
-
-    //Position data
-    private final int x;
-    private final int y;
-    private final int width;
-    private final int height;
+public class Button extends object{
 
     Handler handler;
 
@@ -21,7 +15,7 @@ public class Button {
     private Color backgroundColor = Color.pink;
     private Color pressedColor = backgroundColor.darker();
 
-    private int cornerrounds;
+    private int CornerRounds;
 
     private boolean enabled;
     private boolean pressed;
@@ -38,7 +32,7 @@ public class Button {
         this.y = y;
         this.width = width;
         this.height = height;
-        this.cornerrounds = 0;
+        this.CornerRounds = 0;
         enabled = true;
     }
 
@@ -50,7 +44,7 @@ public class Button {
         }
 
         if (enabled) {
-            g.fillRoundRect(x, y, width, height, cornerrounds, cornerrounds);
+            g.fillRoundRect(x, y, width, height, CornerRounds, CornerRounds);
             g.setFont(font);
             g.setColor(Color.BLACK);
             int stringwidth = g.getFontMetrics().stringWidth(text);
@@ -82,8 +76,8 @@ public class Button {
     public boolean isEnabled() {
         return enabled;
     }
-    public int getCornerrounds() {
-        return cornerrounds;
+    public int getCornerRounds() {
+        return CornerRounds;
     }
     public Color getBackgroundColor() {
         return backgroundColor;
@@ -98,8 +92,8 @@ public class Button {
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
-    public void setCornerrounds(int cornerrounds) {
-        this.cornerrounds = cornerrounds;
+    public void setCornerRounds(int cornerRounds) {
+        this.CornerRounds = cornerRounds;
     }
     public void setBackgroundColor(Color backgroundColor) {
         this.backgroundColor = backgroundColor;

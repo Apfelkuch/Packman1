@@ -7,8 +7,8 @@ public class Text {
     // MENU
     public static String TITLE = "Packmann";
     public static String OPTION = "Options";
-    public static String EXITMASSAGE = "Do you want to exit the Game!";
-
+    public static String ExitMassage = "Do you want to exit the Game!";
+    public static String VOLUME = "volume";
 
     // GAME
     public static String WIN = "You Win!!";
@@ -25,12 +25,13 @@ public class Text {
     public static String ButtonContinue = "continue";
 
     // FONTS GAME
-    public static Font GAMEOVERFONT = new Font(Font.MONOSPACED,Font.BOLD,50);
-    public static Font BREAKFONT = new Font(Font.MONOSPACED,Font.BOLD,50);
-    public static Font DOTFONT = new Font("Arial",Font.BOLD,36);
+    public static Font GameOverFont = new Font(Font.MONOSPACED,Font.BOLD,50);
+    public static Font BreakFont = new Font(Font.MONOSPACED,Font.BOLD,50);
+    public static Font DotFont = new Font("Arial",Font.BOLD,36);
     // FONTS MENU
-    public static Font MENUTITLEFONTMAIN = new Font(Font.MONOSPACED,Font.BOLD,100);
-    public static Font MENUTITLEFONTOPTION = new Font(Font.MONOSPACED,Font.BOLD,50);
-    public static Font MENUTITLEFONTEXIT = new Font(Font.MONOSPACED,Font.BOLD,50);
-    public static Font MENUBUTTONFONT = new Font(Font.MONOSPACED,Font.BOLD,30);
+    public static Font MenuTitleFontMain = new Font(Font.MONOSPACED,Font.BOLD,100);
+    public static Font MenuTitleFontOption = new Font(Font.MONOSPACED,Font.BOLD,50);
+    public static Font MenuTitleFontExit = new Font(Font.MONOSPACED,Font.BOLD,50);
+    public static Font MenuButtonFont = new Font(Font.MONOSPACED,Font.BOLD,30);
+    public static Font MenuTextFont = new Font(Font.MONOSPACED, Font.BOLD,30);
 }

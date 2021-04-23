@@ -1,6 +1,7 @@
 package States;
 
 import Componts.Button;
+import Componts.Slider;
 import ImageLoad.Assets;
 import Main.Game;
 import Main.Handler;
@@ -13,16 +14,14 @@ import java.awt.event.MouseEvent;
 
 public class MenuState extends State implements ActionListener {
 
-    private int ButtonWidth = 200;
-    private int ButtonHeight = 50;
-
-    // Buttons MENU
+    // MENU UI
     private Button play;
     private Button option;
     private Button exit;
-    // Buttons OPTION
+    // OPTION UI
     private Button back;
-    // Button EXIT
+    private Slider soundVolume;
+    // EXIT UI
     private Button yes;
     private Button no;
 
@@ -38,49 +37,59 @@ public class MenuState extends State implements ActionListener {
 
     @Override
     public boolean initState() {
-        initButton();
+        initUI();
         this.menuStatus = MENU;
         return true;
     }
 
     @Override
     public void tick() {
+        if(menuStatus == MENU) {
+        } else if (menuStatus == OPTION) {
+            handler.getSound().setVolume(soundVolume.getValue());
+        } else if (menuStatus == EXIT) {
+        }
     }
 
     @Override
     public void sectick() {
+        if(menuStatus == MENU) {
+        } else if (menuStatus == OPTION) {
+        } else if (menuStatus == EXIT) {
+        }
     }
 
     @Override
     public void render(Graphics g) {
-        //background
+        // background
         g.drawImage(Assets.menuBackground,0,0,null);
 
 
         if(this.menuStatus == MENU) {
-            //titel
+            // title
             g.setColor(Color.BLACK);
-            g.setFont(Text.MENUTITLEFONTMAIN);
-            int stringwidth = g.getFontMetrics().stringWidth(Text.TITLE);
-            g.drawString(Text.TITLE,handler.getWindow().getCanvas().getSize().width / 2 - stringwidth / 2,handler.getWindow().getCanvas().getSize().height / 4);
-            //button
+            g.setFont(Text.MenuTitleFontMain);
+            int stringWidth = g.getFontMetrics().stringWidth(Text.TITLE);
+            g.drawString(Text.TITLE,handler.getWindow().getCanvas().getSize().width / 2 - stringWidth / 2,handler.getWindow().getCanvas().getSize().height / 4);
+            // button
             play.render(g);
             option.render(g);
             exit.render(g);
         } else if (this.menuStatus == OPTION) {
-            //titel
+            // title
             g.setColor(Color.BLACK);
-            g.setFont(Text.MENUTITLEFONTOPTION);
-            int stringwidth = g.getFontMetrics().stringWidth(Text.OPTION);
-            g.drawString(Text.OPTION,handler.getWindow().getCanvas().getSize().width / 2 - stringwidth / 2,handler.getWindow().getCanvas().getSize().height / 4);
-            //button
+            g.setFont(Text.MenuTitleFontOption);
+            int stringWidth = g.getFontMetrics().stringWidth(Text.OPTION);
+            g.drawString(Text.OPTION,handler.getWindow().getCanvas().getSize().width / 2 - stringWidth / 2,handler.getWindow().getCanvas().getSize().height / 4);
+            // button
             back.render(g);
+            soundVolume.render(g);
         } else if (this.menuStatus == EXIT) {
             g.setColor(Color.BLACK);
-            g.setFont(Text.MENUTITLEFONTEXIT);
-            int stringwidth = g.getFontMetrics().stringWidth(Text.EXITMASSAGE);
-            g.drawString(Text.EXITMASSAGE,handler.getWindow().getCanvas().getSize().width / 2 - stringwidth / 2,handler.getWindow().getCanvas().getSize().height / 2);
-            //button
+            g.setFont(Text.MenuTitleFontExit);
+            int stringWidth = g.getFontMetrics().stringWidth(Text.ExitMassage);
+            g.drawString(Text.ExitMassage,handler.getWindow().getCanvas().getSize().width / 2 - stringWidth / 2,handler.getWindow().getCanvas().getSize().height / 2);
+            // button
             yes.render(g);
             no.render(g);
         }
@@ -88,15 +97,11 @@ public class MenuState extends State implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-//        System.out.println("Action Performed");
         if (e.getSource() == play) {
-//            System.out.println("[Button] play");
             State.changeState(Game.gameState);
         } else if (e.getSource() == option) {
-//            System.out.println("[Button] option");
             this.menuStatus = OPTION;
         } else if (e.getSource() == exit) {
-//            System.out.println("[Button] exit");
             this.menuStatus = EXIT;
         } else if (e.getSource() == back) {
             this.menuStatus = MENU;
@@ -107,7 +112,7 @@ public class MenuState extends State implements ActionListener {
         }
     }
 
-    // mouse input handeling
+    // mouse input handling
     @Override
     public void mousePressed(MouseEvent e) {
         if(menuStatus == MENU) {
@@ -116,6 +121,7 @@ public class MenuState extends State implements ActionListener {
             exit.mousePressed(e);
         } else if (menuStatus == OPTION) {
             back.mousePressed(e);
+            soundVolume.mousePressed(e);
         } else if (menuStatus == EXIT) {
             yes.mousePressed(e);
             no.mousePressed(e);
@@ -129,48 +135,67 @@ public class MenuState extends State implements ActionListener {
             exit.mouseReleased(e);
         } else if (menuStatus == OPTION) {
             back.mouseReleased(e);
+            soundVolume.mouseReleased(e);
         } else if (menuStatus == EXIT) {
             yes.mouseReleased(e);
             no.mouseReleased(e);
         }
     }
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        if(menuStatus == MENU) {
+        } else if (menuStatus == OPTION) {
+            soundVolume.mouseDragged(e);
+        } else if (menuStatus == EXIT) {
+        }
+    }
 
-    private void initButton() {
-        int cornerrounds = 20;
-        // MENU
+    private void initUI() {
+        int ButtonWidth = 200;
+        int ButtonHeight = 50;
+        int sliderWidth = 600;
+        int sliderHeight = 50;
+        int cornerRounds = 20;
+        //// MENU
         int ButtonPosX = (handler.getWindow().getCanvas().getSize().width / 2) - (ButtonWidth / 2);
-        int ButtondifferenceY = ((handler.getWindow().getCanvas().getSize().height / 2) / 3);
+        int ButtonDifferenceY = ((handler.getWindow().getCanvas().getSize().height / 2) / 3);
         // Play
-        play = new Button(this,handler, Text.ButtonPlay,ButtonPosX,handler.getWindow().getCanvas().getSize().height - ButtondifferenceY * 3,ButtonWidth,ButtonHeight);
-        play.setFont(Text.MENUBUTTONFONT);
-        play.setCornerrounds(cornerrounds);
+        play = new Button(this,handler, Text.ButtonPlay,ButtonPosX,handler.getWindow().getCanvas().getSize().height - ButtonDifferenceY * 3,ButtonWidth,ButtonHeight);
+        play.setFont(Text.MenuButtonFont);
+        play.setCornerRounds(cornerRounds);
         // Option
-        option = new Button(this,handler,Text.ButtonOption,ButtonPosX,handler.getWindow().getCanvas().getSize().height - ButtondifferenceY * 2,ButtonWidth,ButtonHeight);
-        option.setFont(Text.MENUBUTTONFONT);
-        option.setCornerrounds(cornerrounds);
+        option = new Button(this,handler,Text.ButtonOption,ButtonPosX,handler.getWindow().getCanvas().getSize().height - ButtonDifferenceY * 2,ButtonWidth,ButtonHeight);
+        option.setFont(Text.MenuButtonFont);
+        option.setCornerRounds(cornerRounds);
         // Exit
-        exit = new Button(this,handler,Text.ButtonExit,ButtonPosX,handler.getWindow().getCanvas().getSize().height - ButtondifferenceY,ButtonWidth,ButtonHeight);
-        exit.setFont(Text.MENUBUTTONFONT);
-        exit.setCornerrounds(cornerrounds);
+        exit = new Button(this,handler,Text.ButtonExit,ButtonPosX,handler.getWindow().getCanvas().getSize().height - ButtonDifferenceY,ButtonWidth,ButtonHeight);
+        exit.setFont(Text.MenuButtonFont);
+        exit.setCornerRounds(cornerRounds);
 
-        //OPTION
+        ////OPTION
         ButtonPosX = (handler.getWindow().getCanvas().getSize().width / 2) - (ButtonWidth / 2);
-        ButtondifferenceY = (handler.getWindow().getCanvas().getSize().height / 2) / 3;
-        back = new Button(this, handler, Text.ButtonBack, ButtonPosX, handler.getWindow().getCanvas().getSize().height - ButtondifferenceY, ButtonWidth, ButtonHeight);
-        back.setFont(Text.MENUBUTTONFONT);
-        back.setCornerrounds(cornerrounds);
+        ButtonDifferenceY = (handler.getWindow().getCanvas().getSize().height / 2) / 3;
+        // back
+        back = new Button(this, handler, Text.ButtonBack, ButtonPosX, handler.getWindow().getCanvas().getSize().height - ButtonDifferenceY, ButtonWidth, ButtonHeight);
+        back.setFont(Text.MenuButtonFont);
+        back.setCornerRounds(cornerRounds);
+        // sound volume slider
+        int sliderPosX = (handler.getWindow().getCanvas().getSize().width / 2) - (sliderWidth / 2);
+        soundVolume = new Slider(handler, Text.VOLUME, handler.getSound().getCurrentPercent(), sliderPosX,handler.getWindow().getCanvas().getSize().height - ButtonDifferenceY * 3,sliderWidth,sliderHeight);
+        soundVolume.setCornerRounds(10);
+        soundVolume.setTextFont(Text.MenuTextFont);
 
-        // EXIT
+        //// EXIT
         ButtonPosX = (handler.getWindow().getCanvas().getSize().width / 3) - (ButtonWidth / 2);
-        ButtondifferenceY = (handler.getWindow().getCanvas().getSize().height / 3);
+        ButtonDifferenceY = (handler.getWindow().getCanvas().getSize().height / 3);
         // yes
-        yes = new Button(this, handler, Text.ButtonYes, ButtonPosX, handler.getWindow().getCanvas().getSize().height - ButtondifferenceY, ButtonWidth, ButtonHeight);
-        yes.setFont(Text.MENUBUTTONFONT);
-        yes.setCornerrounds(cornerrounds);
+        yes = new Button(this, handler, Text.ButtonYes, ButtonPosX, handler.getWindow().getCanvas().getSize().height - ButtonDifferenceY, ButtonWidth, ButtonHeight);
+        yes.setFont(Text.MenuButtonFont);
+        yes.setCornerRounds(cornerRounds);
         // no
-        no = new Button(this, handler, Text.ButtonNo, ButtonPosX * 2, handler.getWindow().getCanvas().getSize().height - ButtondifferenceY, ButtonWidth, ButtonHeight);
-        no.setFont(Text.MENUBUTTONFONT);
-        no.setCornerrounds(cornerrounds);
+        no = new Button(this, handler, Text.ButtonNo, ButtonPosX * 2, handler.getWindow().getCanvas().getSize().height - ButtonDifferenceY, ButtonWidth, ButtonHeight);
+        no.setFont(Text.MenuButtonFont);
+        no.setCornerRounds(cornerRounds);
 
     }
 }

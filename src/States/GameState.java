@@ -7,10 +7,8 @@ import ImageLoad.Assets;
 import Main.Game;
 import Main.Handler;
 import Text.Text;
-import Tiles.TileManager;
 import Worldmanager.WorldGenerator;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -109,7 +107,7 @@ public class GameState extends State implements ActionListener {
 
             // title
             g.setColor(Color.WHITE);
-            g.setFont(Text.BREAKFONT);
+            g.setFont(Text.BreakFont);
 
             int stringwidth = g.getFontMetrics().stringWidth(Text.BREAK);
             g.drawString(Text.BREAK,windowX + windowWidth / 2 - stringwidth / 2,windowY + buttondifYInWindow / 2 + buttonHeight);
@@ -121,7 +119,7 @@ public class GameState extends State implements ActionListener {
 
             //titel
             g.setColor(Color.WHITE);
-            g.setFont(Text.GAMEOVERFONT);
+            g.setFont(Text.GameOverFont);
             
             if(gameStatus == WIN) {
                 int stringwidth = g.getFontMetrics().stringWidth(Text.WIN);
@@ -179,11 +177,11 @@ public class GameState extends State implements ActionListener {
         windowY = handler.getWindow().getCanvas().getHeight() / 2 - windowHeight / 2;
         int cornerrounds = 20;
         play = new Button(this,handler,Text.ButtonPlay,windowX + buttonXInWindow,windowY + buttondifYInWindow + buttondifYInWindow / 2 - buttonHeight / 2,buttonWidth,buttonHeight);
-        play.setCornerrounds(cornerrounds);
+        play.setCornerRounds(cornerrounds);
         proceed = new Button(this,handler,Text.ButtonContinue,windowX + buttonXInWindow,windowY + buttondifYInWindow +buttondifYInWindow / 2 - buttonHeight / 2, buttonWidth, buttonHeight);
-        proceed.setCornerrounds(cornerrounds);
+        proceed.setCornerRounds(cornerrounds);
         exit = new Button(this,handler,Text.ButtonExit,windowX + buttonXInWindow,windowY + 2 * buttondifYInWindow + buttondifYInWindow / 2 - buttonHeight / 2,buttonWidth,buttonHeight);
-        exit.setCornerrounds(cornerrounds);
+        exit.setCornerRounds(cornerrounds);
     }
 
     public void spawnGhost(int index) {

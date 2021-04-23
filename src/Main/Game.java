@@ -60,25 +60,26 @@ public class Game {
             }
             if(timer >= 1000000000) {
                 System.out.println("Ticks and Frames: " + ticks);
-                sectick();
+                secTick();
                 ticks = 0;
                 timer = 0;
 
-                //ÜBERPRÜFUNG
+                // Test
             }
         }
     }
 
     private void init(){
+        // TODO music volume
+        sound.playSound(Sound.BACKGROUND_MUSIC);
+
         gameState = new GameState(handler);
         menuState = new MenuState(handler);
         State.changeState(menuState);
         Assets.init();
         window.getCanvas().addKeyListener(input);
         window.getCanvas().addMouseListener(mListener);
-
-        // TODO music volume
-        sound.playSound(Sound.BACKGROUND_MUSIC);
+        window.getCanvas().addMouseMotionListener(mListener);
 
         // TODO graphics
         // TODO level
@@ -113,7 +114,7 @@ public class Game {
         input.tick();
     }
 
-    public void sectick() {
+    public void secTick() {
         if(State.getState() != null && State.getState().isDoneLoading()) {
             State.getState().sectick();
         }
@@ -129,10 +130,13 @@ public class Game {
     public MenuState getMenuState() {
         return menuState;
     }
-    public MListener getmListener() {
+    public MListener getMListener() {
         return mListener;
     }
     public Input getInput() {
         return input;
+    }
+    public Sound getSound() {
+        return sound;
     }
 }

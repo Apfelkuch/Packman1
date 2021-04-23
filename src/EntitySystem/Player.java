@@ -36,7 +36,7 @@ public class Player extends Creature {
         }
         //DotCounter on Sreen
         g.setColor(Color.YELLOW);
-        g.setFont(Text.DOTFONT);
+        g.setFont(Text.DotFont);
         g.drawString("" + this.dotCounter,(handler.getWorld().getWidth() - 2) * Assets.TILEWIDTH,(int) (Assets.TILEHEIGHT * 0.80));
 
 //        //collisionBox Packman
