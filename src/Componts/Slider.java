@@ -41,7 +41,7 @@ public class Slider extends object{
         this.height = height;
         this.sliderX = x + width / 3;
         this.sliderWidth = width / 3 * 2;
-        sliderRect = new Rectangle((int) (sliderX + ((((sliderWidth - 20) * startInPercent) / range) + sideDistance)), y,10,height);
+        sliderRect = new Rectangle((int) (sliderX + ((((sliderWidth - 20) * value) / range) + sideDistance)), y,10,height);
     }
 
     private boolean intersect(Rectangle r, Point p) {
@@ -119,6 +119,7 @@ public class Slider extends object{
 
     // GETTER && SETTER
     public float getValue() {
+        System.out.println("slider.getValue " + value);
         return value;
     }
     public Color getColor() {
@@ -138,7 +139,9 @@ public class Slider extends object{
         this.cornerRounds = cornerRounds;
     }
     public void setValue(float value) {
+        System.out.println("slider.setValue " + value);
         this.value = value;
+        sliderRect.x = (int) (sliderX + ((((sliderWidth - 20) * value) / range) + sideDistance));
     }
     public void setColor(Color color) {
         this.color = color;

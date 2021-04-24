@@ -4,6 +4,7 @@ import ImageLoad.Assets;
 import Input.Input;
 import Input.MListener;
 import PackmanUi.Window;
+import Save.Load;
 import States.GameState;
 import States.MenuState;
 import States.State;
@@ -70,8 +71,9 @@ public class Game {
     }
 
     private void init(){
-        // TODO music volume
-        sound.playSound(Sound.BACKGROUND_MUSIC);
+
+        // TODO music volume improvements // music start in the same volume as needed not at a standard volume.
+        handler.getSound().playSound(Sound.BACKGROUND_MUSIC);
 
         gameState = new GameState(handler);
         menuState = new MenuState(handler);
@@ -80,6 +82,12 @@ public class Game {
         window.getCanvas().addKeyListener(input);
         window.getCanvas().addMouseListener(mListener);
         window.getCanvas().addMouseMotionListener(mListener);
+
+        if ((Load.load(handler))) {
+            System.out.println("file exists.");
+        } else {
+            System.out.println("file does not exists.");
+        }
 
         // TODO graphics
         // TODO level

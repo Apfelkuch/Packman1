@@ -1,6 +1,8 @@
 package Text;
 
 import java.awt.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Text {
 
@@ -34,4 +36,7 @@ public class Text {
     public static Font MenuTitleFontExit = new Font(Font.MONOSPACED,Font.BOLD,50);
     public static Font MenuButtonFont = new Font(Font.MONOSPACED,Font.BOLD,30);
     public static Font MenuTextFont = new Font(Font.MONOSPACED, Font.BOLD,30);
+
+    // save path
+    public static String SavePath = "res/save/save.txt";
 }

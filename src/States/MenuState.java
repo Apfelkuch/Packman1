@@ -5,6 +5,7 @@ import Componts.Slider;
 import ImageLoad.Assets;
 import Main.Game;
 import Main.Handler;
+import Save.*;
 import Text.Text;
 
 import java.awt.*;
@@ -104,6 +105,7 @@ public class MenuState extends State implements ActionListener {
         } else if (e.getSource() == exit) {
             this.menuStatus = EXIT;
         } else if (e.getSource() == back) {
+            Save.save(Text.SavePath, SaveObject.getSaveString(handler));
             this.menuStatus = MENU;
         } else if (e.getSource() == yes) {
             System.exit(1);
@@ -197,5 +199,10 @@ public class MenuState extends State implements ActionListener {
         no.setFont(Text.MenuButtonFont);
         no.setCornerRounds(cornerRounds);
 
+    }
+
+    // GETTER && SETTER
+    public Slider getSoundVolume() {
+        return soundVolume;
     }
 }
