@@ -21,6 +21,7 @@ public class Load {
         for (int i=0;i<parts.length;i++) {
             if(parts[i].split(":")[0].equals("class music.Sound")) {
                 handler.getSound().fromString(parts[i]);
+                handler.getSound().playSound(Sound.BACKGROUND_MUSIC);
                 handler.getMenuState().getSoundVolume().setValue(handler.getSound().getCurrentPercent());
             }
         }

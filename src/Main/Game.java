@@ -72,22 +72,23 @@ public class Game {
 
     private void init(){
 
-        // TODO music volume improvements // music start in the same volume as needed not at a standard volume.
-        handler.getSound().playSound(Sound.BACKGROUND_MUSIC);
-
         gameState = new GameState(handler);
         menuState = new MenuState(handler);
         State.changeState(menuState);
-        Assets.init();
-        window.getCanvas().addKeyListener(input);
-        window.getCanvas().addMouseListener(mListener);
-        window.getCanvas().addMouseMotionListener(mListener);
 
+        // TODO music volume improvements // music start in the same volume as needed not at a standard volume.
         if ((Load.load(handler))) {
             System.out.println("file exists.");
         } else {
             System.out.println("file does not exists.");
         }
+//        handler.getSound().playSound(Sound.BACKGROUND_MUSIC);
+
+        Assets.init();
+        window.getCanvas().addKeyListener(input);
+        window.getCanvas().addMouseListener(mListener);
+        window.getCanvas().addMouseMotionListener(mListener);
+
 
         // TODO graphics
         // TODO level

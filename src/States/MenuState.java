@@ -183,7 +183,7 @@ public class MenuState extends State implements ActionListener {
         back.setCornerRounds(cornerRounds);
         // sound volume slider
         int sliderPosX = (handler.getWindow().getCanvas().getSize().width / 2) - (sliderWidth / 2);
-        soundVolume = new Slider(handler, Text.VOLUME, handler.getSound().getCurrentPercent(), sliderPosX,handler.getWindow().getCanvas().getSize().height - ButtonDifferenceY * 3,sliderWidth,sliderHeight);
+        soundVolume = new Slider(handler, Text.VOLUME, 0, sliderPosX,handler.getWindow().getCanvas().getSize().height - ButtonDifferenceY * 3,sliderWidth,sliderHeight);
         soundVolume.setCornerRounds(10);
         soundVolume.setTextFont(Text.MenuTextFont);
 

@@ -119,7 +119,6 @@ public class Slider extends object{
 
     // GETTER && SETTER
     public float getValue() {
-        System.out.println("slider.getValue " + value);
         return value;
     }
     public Color getColor() {
@@ -139,7 +138,6 @@ public class Slider extends object{
         this.cornerRounds = cornerRounds;
     }
     public void setValue(float value) {
-        System.out.println("slider.setValue " + value);
         this.value = value;
         sliderRect.x = (int) (sliderX + ((((sliderWidth - 20) * value) / range) + sideDistance));
     }

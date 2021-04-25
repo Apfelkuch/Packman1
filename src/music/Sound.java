@@ -8,6 +8,10 @@ import java.io.IOException;
 public class Sound {
 
     public static String BACKGROUND_MUSIC = "res/sound/background.wav";
+
+    /**
+     * BACKGROUND_MUSIC = offset: 40
+     */
     private float offset = 0;
 
     private float volume = 0.0f;
@@ -20,7 +24,7 @@ public class Sound {
         try {
             // set offset
             if(soundFile.equals(BACKGROUND_MUSIC))
-                offset = 70;
+                offset = 40;
 
             currentSoundFile = new File(soundFile);
             AudioInputStream audioIn = AudioSystem.getAudioInputStream(currentSoundFile.toURI().toURL());
@@ -39,7 +43,6 @@ public class Sound {
      * @return his.getClass().toString() + ":" + volume
      */
     public String toString() {
-        System.out.println("Sound.toString");
         return this.getClass().toString() + ":" + volume;
     }
 
@@ -50,7 +53,6 @@ public class Sound {
      * @return true, if successful otherwise false.
      */
     public boolean fromString(String s) {
-        System.out.println("Sound.fromString " + Float.parseFloat(s.split(":")[1]));
         if(!s.split(":")[0].equals(this.getClass().toString()))
             return false;
         volume = Float.parseFloat(s.split(":")[1]);
@@ -82,7 +84,6 @@ public class Sound {
         if(floatControl == null) return;
         float diff = floatControl.getMaximum() - floatControl.getMinimum() - offset;
         volume = floatControl.getMinimum() + offset + (diff * percent);
-        System.out.println("sound.setVolume " + volume);
         floatControl.setValue(volume);
     }
 
