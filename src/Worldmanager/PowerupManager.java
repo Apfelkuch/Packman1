@@ -4,7 +4,6 @@ import EntitySystem.Dot;
 import EntitySystem.Item;
 import ImageLoad.Assets;
 import Main.Handler;
-import Tiles.Tile;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -13,7 +12,7 @@ public class PowerupManager {
     private ArrayList<Item> items;
     private ArrayList<Item> emptyPlaces;
     private WorldGenerator world;
-    private ArrayList<Vektor2D> emptyTiles;
+    private ArrayList<Vector2D> emptyTiles;
     private Handler handler;
     private int dotCount = 0;
     private int powerUpCout = 0;
@@ -24,7 +23,7 @@ public class PowerupManager {
     public PowerupManager(WorldGenerator world, Handler handler) {
         this.world = world;
         this.handler = handler;
-        emptyTiles = new ArrayList<Vektor2D>();
+        emptyTiles = new ArrayList<Vector2D>();
         items = new ArrayList<Item>();
         emptyPlaces = new ArrayList<Item>();
 
@@ -33,7 +32,7 @@ public class PowerupManager {
     }
 
     public void initDots(){
-        for (Vektor2D v : emptyTiles){
+        for (Vector2D v : emptyTiles){
             items.add(new Dot(handler,v.getX() * Assets.TILEHEIGHT + Assets.TILEWIDTH / 2, v.getY() * Assets.TILEHEIGHT + Assets.TILEHEIGHT / 2, Dot));
             dotCount++;
         }
@@ -44,7 +43,7 @@ public class PowerupManager {
         for (int x = 0; x < world.getWidth(); x++) {
             for (int y = 0; y <world.getHeight() ; y++) {
                 if(world.getWorldGrid()[x][y] ==  0){
-                   emptyTiles.add(new Vektor2D(x, y));
+                   emptyTiles.add(new Vector2D(x, y));
                 }
             }
         }

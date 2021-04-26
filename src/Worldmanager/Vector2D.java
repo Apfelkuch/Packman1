@@ -1,10 +1,10 @@
 package Worldmanager;
 
-public class Vektor2D {
+public class Vector2D {
     private int x;
     private int y;
 
-    public Vektor2D(int x, int y) {
+    public Vector2D(int x, int y) {
         this.x =x;
         this.y = y;
     }

@@ -12,8 +12,8 @@ public class Player extends Creature {
     //Attributes for the Dots
     private int dotCounter = 0;
 
-    public Player(Handler handler,int spawnX, int spwanY, float pSPEED) {
-        super(handler, spawnX, spwanY, Assets.TILEWIDTH, Assets.TILEHEIGHT, 48, 48, pSPEED);
+    public Player(Handler handler,int spawnX, int spawnY, float pSPEED) {
+        super(handler, spawnX, spawnY, Assets.TILEWIDTH, Assets.TILEHEIGHT, 48, 48, pSPEED);
         currentLooking = lookingRIGHT; // starting view direction
     }
 
@@ -34,12 +34,12 @@ public class Player extends Creature {
                 g.drawImage(Assets.packman_DOWN,(int) posX,(int) posY,width,height,null);
                 break;
         }
-        //DotCounter on Sreen
+        //DotCounter on Screen
         g.setColor(Color.YELLOW);
         g.setFont(Text.DotFont);
         g.drawString("" + this.dotCounter,(handler.getWorld().getWidth() - 2) * Assets.TILEWIDTH,(int) (Assets.TILEHEIGHT * 0.80));
 
-//        //collisionBox Packman
+//        //collisionBox packman
 //        g.setColor(Color.RED);
 //        g.drawRect(collisionBOX.x,collisionBOX.y,collisionBOX.width,collisionBOX.height);
     }
@@ -64,10 +64,10 @@ public class Player extends Creature {
      * otherwise nothing happened
      */
     public void eatDot() {
-        if (super.handler.getWorld().getPowerupManager().getItems() == null)
+        if (super.handler.getWorld().getPowerUpManager().getItems() == null)
             return;
         Dot removedDot = null;
-        for (Item d : super.handler.getWorld().getPowerupManager().getItems()) {
+        for (Item d : super.handler.getWorld().getPowerUpManager().getItems()) {
             if(d.getClass() == Dot.class) {
                 if (this.collisionBOX.intersects(d.collisionBOX)) {
                     this.dotCounter += 1;
@@ -75,7 +75,7 @@ public class Player extends Creature {
                 }
             }
         }
-        handler.getWorld().getPowerupManager().removeItem(removedDot);
+        handler.getWorld().getPowerUpManager().removeItem(removedDot);
     }
 
     /**
@@ -133,7 +133,7 @@ public class Player extends Creature {
     }
 
     public void win() {
-        if(handler.getWorld().getPowerupManager().getDotCount() == 0) {
+        if(handler.getWorld().getPowerUpManager().getDotCount() == 0) {
             System.out.println("help");
             handler.getGameState().setGameStatus(GameState.WIN);
         }

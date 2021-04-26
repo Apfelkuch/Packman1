@@ -21,7 +21,7 @@ public class Game {
     private boolean running = true;
     public static MenuState menuState;
     public static GameState gameState;
-    Handler handler;
+    private Handler handler;
     private final Input input;
     private final MListener mListener;
     private final Text text;
@@ -125,7 +125,7 @@ public class Game {
 
     public void secTick() {
         if(State.getState() != null && State.getState().isDoneLoading()) {
-            State.getState().sectick();
+            State.getState().secTick();
         }
     }
 

@@ -27,8 +27,6 @@ public abstract class Creature extends Entity{
     protected static final int LeftCollision = 3;
     protected static final int RightCollision = 4;
     // extras
-    protected boolean alive;
-    protected boolean killedCreature;
     protected int killCount;
 
 
@@ -37,8 +35,6 @@ public abstract class Creature extends Entity{
         this.SPEED = speed;
         this.width =(width - 1);
         this.height =(height - 1);
-        this.alive = true;
-        this.killedCreature = false;
         adjustCollisionBOX();
     }
 
@@ -110,15 +106,6 @@ public abstract class Creature extends Entity{
     }
 
     /**
-     * is called when the creature is died
-     */
-    protected void die(Creature c) {
-        this.alive = false;
-        this.killedCreature = true;
-
-    }
-
-    /**
      * test if a Creature(c) is in front of the current Creature and the current Creature will intersect in the next move with the other Creature(c).
      * @return true: Creature is in front && false: Creature is not in front
      */
@@ -154,10 +141,7 @@ public abstract class Creature extends Entity{
     public int getCurrentLookingBack() {
         return currentLookingBack;
     }
-    public boolean isAlive() {
-        return alive;
-    }
-    public boolean isKilledCreature() {
-        return killedCreature;
+    public int getKillCount() {
+        return killCount;
     }
 }

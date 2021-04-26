@@ -17,10 +17,11 @@ public class Save {
             fw.write(saveString);
             fw.flush();
             fw.close();
+            return true;
 
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
-        return true;
     }
 }

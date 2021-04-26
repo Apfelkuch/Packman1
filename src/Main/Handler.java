@@ -35,7 +35,7 @@ public class Handler {
     public Window getWindow() {
         return game.getWindow();
     }
-    public MListener getmListener() {
+    public MListener getMListener() {
         return game.getMListener();
     }
     public State getState() {

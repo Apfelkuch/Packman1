@@ -1,8 +1,6 @@
 package Save;
 
 import Main.Handler;
-import States.GameState;
-import States.MenuState;
 import Text.Text;
 import Utility.CustomFileReader;
 import music.Sound;
@@ -27,4 +25,6 @@ public class Load {
         }
         return true;
     }
+
+
 }

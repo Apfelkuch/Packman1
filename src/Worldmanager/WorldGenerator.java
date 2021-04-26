@@ -132,7 +132,7 @@ public class WorldGenerator {
                         }
                     }
                     worldGrid[x][y] = getIdFromPattern(pattern);
-//                    System.out.println("[WorldGenerator/modifyWorld] An der Stelle "+"x="+x+" "+"y="+y+" "+"ist das pattern"+pattern);
+//                    System.out.println("[WorldGenerator/modifyWorld] At x: " + x + ", y: " + y + "is the pattern: " + pattern);
                     pattern ="";
                 }
             }
@@ -171,7 +171,7 @@ public class WorldGenerator {
     public int getHeight() {
         return height;
     }
-    public PowerupManager getPowerupManager() {
+    public PowerupManager getPowerUpManager() {
         return powerupManager;
     }
 }

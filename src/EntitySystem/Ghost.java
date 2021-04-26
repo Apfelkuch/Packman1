@@ -164,11 +164,11 @@ public class Ghost extends Creature {
     }
 
     /**
-     * testing if move is possible,
-     * if it is impossible move is the Motion.
-     * if it is not possible OLDmove is the Motion.
+     * Testing if move is possible,
+     * If it is impossible move is the Motion.
+     * If it is not possible moveOLD is the Motion.
      *
-     * adjust looking
+     * Adjust the looking.
      */
     public void move() {
         // collision
@@ -192,7 +192,7 @@ public class Ghost extends Creature {
             setDirection(true);
             return;
         }
-        //adjust looking
+        // adjust looking
         super.adjustLooking();
         // change the position with xMove and yMove
         posX += xMove;

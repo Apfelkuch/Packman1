@@ -1,6 +1,5 @@
 package music;
 
-import javax.print.DocFlavor;
 import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;

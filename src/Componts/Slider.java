@@ -1,7 +1,6 @@
 package Componts;
 
 import Main.Handler;
-import Text.Text;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -22,7 +21,7 @@ public class Slider extends object{
 
     private int sideDistance = 5;
 
-    private float value = 0;
+    private float value;
     private int range = 1;
 
     private Point prevPoint;
@@ -137,14 +136,33 @@ public class Slider extends object{
     public void setCornerRounds(int cornerRounds) {
         this.cornerRounds = cornerRounds;
     }
+    @Override
+    public void setWidth(int width) {
+        super.setWidth(width);
+        this.sliderX = x + width / 3;
+        this.sliderWidth = width / 3 * 2;
+    }
     public void setValue(float value) {
         this.value = value;
-        sliderRect.x = (int) (sliderX + ((((sliderWidth - 20) * value) / range) + sideDistance));
+        sliderRect = new Rectangle((int) (sliderX + ((((sliderWidth - 20) * value) / range) + sideDistance)), y,10,height);
+    }
+    public void setRange(int range) {
+        this.range = range;
+        sliderRect = new Rectangle((int) (sliderX + ((((sliderWidth - 20) * value) / range) + sideDistance)), y,10,height);
+    }
+    public void setSideDistance(int sideDistance) {
+        this.sideDistance = sideDistance;
+        sliderRect = new Rectangle((int) (sliderX + ((((sliderWidth - 20) * value) / range) + sideDistance)), y,10,height);
+    }
+    @Override
+    public void setHeight(int height) {
+        super.setHeight(height);
+        sliderRect = new Rectangle((int) (sliderX + ((((sliderWidth - 20) * value) / range) + sideDistance)), y,10,height);
     }
     public void setColor(Color color) {
         this.color = color;
     }
-    public void setTestColor(Color textColor) {
+    public void setTextColor(Color textColor) {
         this.textColor = textColor;
     }
     public void setTextFont(Font textFont) {

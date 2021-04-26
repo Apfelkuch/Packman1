@@ -53,7 +53,7 @@ public class MenuState extends State implements ActionListener {
     }
 
     @Override
-    public void sectick() {
+    public void secTick() {
         if(menuStatus == MENU) {
         } else if (menuStatus == OPTION) {
         } else if (menuStatus == EXIT) {

@@ -22,7 +22,7 @@ public class Button extends object{
 
     private String text;
     private Font font = new Font(null,Font.PLAIN,20);
-    private ActionListener listener;
+    private final ActionListener listener;
 
     public Button(ActionListener listener, Handler handler, String text, int x, int y, int width, int height) {
         this.listener = listener;
@@ -47,8 +47,8 @@ public class Button extends object{
             g.fillRoundRect(x, y, width, height, CornerRounds, CornerRounds);
             g.setFont(font);
             g.setColor(Color.BLACK);
-            int stringwidth = g.getFontMetrics().stringWidth(text);
-            g.drawString(text,(x + width / 2) - stringwidth / 2, y + (height / 2) + (font.getSize() / 3));
+            int stringWidth = g.getFontMetrics().stringWidth(text);
+            g.drawString(text,(x + width / 2) - stringWidth / 2, y + (height / 2) + (font.getSize() / 3));
         }
     }
 
@@ -67,7 +67,7 @@ public class Button extends object{
         if(enabled && pressed) {
             pressed = false;
             if(isPressed(e.getX(),e.getY())) {
-                listener.actionPerformed(new ActionEvent(this, 0, "Buttonaction"));
+                listener.actionPerformed(new ActionEvent(this, 0, "ButtonAction"));
             }
         }
     }

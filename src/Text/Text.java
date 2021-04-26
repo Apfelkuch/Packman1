@@ -1,8 +1,6 @@
 package Text;
 
 import java.awt.*;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 public class Text {
 
