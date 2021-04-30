@@ -25,17 +25,15 @@ public class Button extends object{
     private final ActionListener listener;
 
     public Button(ActionListener listener, Handler handler, String text, int x, int y, int width, int height) {
+        super(x, y, width, height);
         this.listener = listener;
         this.handler = handler;
         this.text = text;
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
         this.CornerRounds = 0;
         enabled = true;
     }
 
+    @Override
     public void render(Graphics g) {
         if(pressed) {
             g.setColor(pressedColor);
@@ -57,12 +55,14 @@ public class Button extends object{
                 && y >= this.y && y <= this.y + height;
     }
 
+    @Override
     public void mousePressed(MouseEvent e) {
         if(enabled && isPressed(e.getX(),e.getY())) {
             pressed = true;
         }
     }
 
+    @Override
     public void mouseReleased(MouseEvent e) {
         if(enabled && pressed) {
             pressed = false;

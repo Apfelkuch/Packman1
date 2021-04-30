@@ -2,6 +2,7 @@ package States;
 
 import Componts.Button;
 import Componts.Slider;
+import Componts.TextField;
 import ImageLoad.Assets;
 import Main.Game;
 import Main.Handler;
@@ -16,6 +17,7 @@ import java.awt.event.MouseEvent;
 public class MenuState extends State implements ActionListener {
 
     // MENU UI
+    private TextField title;
     private Button play;
     private Button option;
     private Button exit;
@@ -46,6 +48,7 @@ public class MenuState extends State implements ActionListener {
     @Override
     public void tick() {
         if(menuStatus == MENU) {
+            title.tick();
         } else if (menuStatus == OPTION) {
             handler.getSound().setVolume(soundVolume.getValue());
         } else if (menuStatus == EXIT) {
@@ -68,10 +71,8 @@ public class MenuState extends State implements ActionListener {
 
         if(this.menuStatus == MENU) {
             // title
-            g.setColor(Color.BLACK);
-            g.setFont(Text.MenuTitleFontMain);
-            int stringWidth = g.getFontMetrics().stringWidth(Text.TITLE);
-            g.drawString(Text.TITLE,handler.getWindow().getCanvas().getSize().width / 2 - stringWidth / 2,handler.getWindow().getCanvas().getSize().height / 4);
+            title.render(g);
+
             // button
             play.render(g);
             option.render(g);
@@ -151,6 +152,10 @@ public class MenuState extends State implements ActionListener {
         } else if (menuStatus == EXIT) {
         }
     }
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        title.mouseClicked(e);
+    }
 
     private void initUI() {
         int ButtonWidth = 200;
@@ -159,6 +164,10 @@ public class MenuState extends State implements ActionListener {
         int sliderHeight = 50;
         int cornerRounds = 20;
         //// MENU
+        // Title
+        title = new TextField(handler.getInput(), handler.getWindow().getCanvas().getSize().width / 2, handler.getWindow().getCanvas().getSize().height / 4, Text.TITLE, TextField.CENTER, Text.MenuTitleFontMain, Color.BLACK);
+        title.setEditable(true); // only for test purposes
+
         int ButtonPosX = (handler.getWindow().getCanvas().getSize().width / 2) - (ButtonWidth / 2);
         int ButtonDifferenceY = ((handler.getWindow().getCanvas().getSize().height / 2) / 3);
         // Play
@@ -181,6 +190,7 @@ public class MenuState extends State implements ActionListener {
         back = new Button(this, handler, Text.ButtonBack, ButtonPosX, handler.getWindow().getCanvas().getSize().height - ButtonDifferenceY, ButtonWidth, ButtonHeight);
         back.setFont(Text.MenuButtonFont);
         back.setCornerRounds(cornerRounds);
+
         // sound volume slider
         int sliderPosX = (handler.getWindow().getCanvas().getSize().width / 2) - (sliderWidth / 2);
         soundVolume = new Slider(handler, Text.VOLUME, 0, sliderPosX,handler.getWindow().getCanvas().getSize().height - ButtonDifferenceY * 3,sliderWidth,sliderHeight);

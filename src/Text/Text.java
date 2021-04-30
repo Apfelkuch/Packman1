@@ -1,8 +1,29 @@
 package Text;
 
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 public class Text {
+
+    public Text() {
+        // load custom Fonts
+        GraphicsEnvironment graphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        // load all Fonts from the Font directory "res/font"
+        File files[] = new File("res/font").listFiles();
+        for (File file : files) {
+            try {
+                graphicsEnvironment.registerFont(Font.createFont(Font.TRUETYPE_FONT, file));
+                System.out.println("Font: " + file.getName() + " is loaded.");
+            } catch (FontFormatException e) {
+                System.out.println("Font: " + file.getName() + " is not loaded.");
+                e.printStackTrace();
+            } catch (IOException e) {
+                System.out.println("Font: " + file.getName() + " is not loaded.");
+                e.printStackTrace();
+            }
+        }
+    }
 
     // MENU
     public static String TITLE = "Packmann";
@@ -27,7 +48,7 @@ public class Text {
     // FONTS GAME
     public static Font GameOverFont = new Font(Font.MONOSPACED,Font.BOLD,50);
     public static Font BreakFont = new Font(Font.MONOSPACED,Font.BOLD,50);
-    public static Font DotFont = new Font("Arial",Font.BOLD,36);
+    public static Font DotFont = new Font(Font.MONOSPACED,Font.BOLD,36);
     // FONTS MENU
     public static Font MenuTitleFontMain = new Font(Font.MONOSPACED,Font.BOLD,100);
     public static Font MenuTitleFontOption = new Font(Font.MONOSPACED,Font.BOLD,50);

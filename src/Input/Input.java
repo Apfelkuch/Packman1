@@ -9,6 +9,8 @@ public class Input implements KeyListener {
     private boolean[] justPressed = new boolean[keys.length];
     private boolean[] cantPressed = new boolean[keys.length];
 
+    private KeyEvent keyEvent;
+
     public void tick() {
         for (int i=0;i<keys.length;i++) {
             if(cantPressed[i] && !keys[i]) {
@@ -45,12 +47,19 @@ public class Input implements KeyListener {
         return keys[keyCode];
     }
 
-    @Override
-    public void keyTyped(KeyEvent e) {
+    public KeyEvent getKeyEventTyped() {
+//        System.out.println("Input.getKeyEventTyped: " + keyEvent);
+        KeyEvent kE = keyEvent;
+        keyEvent = null;
+        return kE;
     }
 
     @Override
+    public void keyTyped(KeyEvent e) {}
+
+    @Override
     public void keyPressed(KeyEvent e) {
+        keyEvent = e;
         if(e.getKeyCode() < 0 || e.getKeyCode() > keys.length)
             return;
         keys[e.getKeyCode()] = true;

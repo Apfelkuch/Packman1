@@ -31,22 +31,16 @@ public class Slider extends object{
     private Font textFont;
 
     public Slider(Handler handler, String text, float startInPercent, int x, int y, int width, int height) {
+        super(x, y, width, height);
         this.handler = handler;
         this.text = text;
         this.value = startInPercent;
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
         this.sliderX = x + width / 3;
         this.sliderWidth = width / 3 * 2;
         sliderRect = new Rectangle((int) (sliderX + ((((sliderWidth - 20) * value) / range) + sideDistance)), y,10,height);
     }
 
-    private boolean intersect(Rectangle r, Point p) {
-        return r.contains((int) p .getX(), (int) p.getY());
-    }
-
+    @Override
     public void render(Graphics g) {
 //        {
 //            // box
@@ -67,15 +61,19 @@ public class Slider extends object{
         g.fillOval(sliderRect.x, sliderRect.y, sliderRect.width, sliderRect.height);
     }
 
+    @Override
     public void mousePressed(MouseEvent e) {
         if(intersect(sliderRect, e.getPoint())) {
             prevPoint = e.getPoint();
         }
     }
+
+    @Override
     public void mouseReleased(MouseEvent e) {
         prevPoint = null;
     }
 
+    @Override
     public void mouseDragged(MouseEvent e) {
         if(prevPoint != null) {
             Point currentPoint = e.getPoint();
