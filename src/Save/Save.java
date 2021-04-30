@@ -5,6 +5,12 @@ import java.io.FileWriter;
 
 public class Save {
 
+    /**
+     * Create the file with the path, if the file does not exists and writes the content to it.
+     * @param path The file path.
+     * @param saveString The content which is written to the file.
+     * @return true if the process was successful, otherwise false.
+     */
     public static boolean save(String path, String saveString) {
         try {
             // create the file
@@ -17,8 +23,8 @@ public class Save {
             fw.write(saveString);
             fw.flush();
             fw.close();
-            return true;
 
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
             return false;

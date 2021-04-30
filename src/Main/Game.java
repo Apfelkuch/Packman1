@@ -77,7 +77,7 @@ public class Game {
         State.changeState(menuState);
 
         // TODO music volume improvements // music start in the same volume as needed not at a standard volume.
-        if ((Load.load(handler))) {
+        if ((Load.load(handler, Text.SavePath))) {
             System.out.println("file exists.");
         } else {
             System.out.println("file does not exists.");
