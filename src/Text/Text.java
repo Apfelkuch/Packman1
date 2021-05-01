@@ -14,12 +14,12 @@ public class Text {
         for (File file : files) {
             try {
                 graphicsEnvironment.registerFont(Font.createFont(Font.TRUETYPE_FONT, file));
-                System.out.println("Font: " + file.getName() + " is loaded.");
+//                System.out.println("Font: " + file.getName() + " is loaded.");
             } catch (FontFormatException e) {
-                System.out.println("Font: " + file.getName() + " is not loaded.");
+//                System.out.println("Font: " + file.getName() + " is not loaded.");
                 e.printStackTrace();
             } catch (IOException e) {
-                System.out.println("Font: " + file.getName() + " is not loaded.");
+//                System.out.println("Font: " + file.getName() + " is not loaded.");
                 e.printStackTrace();
             }
         }

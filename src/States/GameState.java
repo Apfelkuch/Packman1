@@ -48,7 +48,7 @@ public class GameState extends State implements ActionListener {
 
     @Override
     public boolean initState() {
-        world = new WorldGenerator("res/worlds/World1.txt",handler);
+        world = new WorldGenerator("res/worlds/world1.txt",handler);
         handler.getWindow().setSize(new Dimension(world.getWidth() * Assets.TILEWIDTH + 16, world.getHeight() * Assets.TILEHEIGHT + 39));
         player = new Player(handler, world.getSpawnX(),world.getSpawnY(),4.0f);
         ghosts = new Ghost[world.getGhostCount()];

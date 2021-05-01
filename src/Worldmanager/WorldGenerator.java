@@ -35,17 +35,17 @@ public class WorldGenerator {
     public void genWorld(String path){
         String file = CustomFileReader.loadFileAsString(path);
         String[] tokens = file.split("\\s+"); // split on one or many whitespaces
-        width = CustomFileReader.parseInt(tokens[0]);
-        height = CustomFileReader.parseInt(tokens[1]);
-        spawnX = CustomFileReader.parseInt(tokens[2]) * Assets.TILEWIDTH;
-        spawnY = CustomFileReader.parseInt(tokens[3]) * Assets.TILEHEIGHT;
-        ghostSpawnX = CustomFileReader.parseInt(tokens[4]) * Assets.TILEWIDTH;
-        ghostSpawnY = CustomFileReader.parseInt(tokens[5]) * Assets.TILEHEIGHT;
-        ghostCount = CustomFileReader.parseInt(tokens[6]);
+        width = Integer.parseInt(tokens[0]);
+        height = Integer.parseInt(tokens[1]);
+        spawnX = Integer.parseInt(tokens[2]) * Assets.TILEWIDTH;
+        spawnY = Integer.parseInt(tokens[3]) * Assets.TILEHEIGHT;
+        ghostSpawnX = Integer.parseInt(tokens[4]) * Assets.TILEWIDTH;
+        ghostSpawnY = Integer.parseInt(tokens[5]) * Assets.TILEHEIGHT;
+        ghostCount = Integer.parseInt(tokens[6]);
         worldGrid = new int[width][height];
         for (int y = 0 ; y< height; y++){
             for (int x = 0; x< width; x++){
-                worldGrid[x][y] = CustomFileReader.parseInt(tokens[(x + y* width)+7]);
+                worldGrid[x][y] = Integer.parseInt(tokens[(x + y* width)+7]);
             }
         }
         modifyWorld(worldGrid);

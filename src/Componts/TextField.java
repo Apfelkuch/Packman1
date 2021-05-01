@@ -14,20 +14,27 @@ public class TextField extends object{
     private Font font;
     private Color color;
     private int arrangement = CENTER;
-    private int offset;
+    private int textOffsetX;
     private boolean changes = false;
     private boolean editable;
     private boolean edit;
 
-    private int textX;
-
+    /**
+     * X is the left boarder of the text.
+     */
     public static final int LEFT = 0;
+    /**
+     * X is in the middle of the text.
+     */
     public static final int CENTER = 1;
+    /**
+     * X is the right boarder of the text.
+     */
     public static final int RIGHT = 2;
 
     public TextField(Input input, int x, int y, String content, int arrangement, Font font, Color color) {
         super(x, y, 0, 0);
-        this.textX = x;
+        this.textOffsetX = x;
         this.input = input;
         this.content = new StringBuilder(content);
         this.arrangement = arrangement;
@@ -70,7 +77,7 @@ public class TextField extends object{
             this.setTextPosition(g);
 
         // draw String
-        g.drawString(content.toString(), textX, y);
+        g.drawString(content.toString(), textOffsetX, y);
 
 //        // draw box
 //        g.setColor(Color.RED);
@@ -86,8 +93,8 @@ public class TextField extends object{
 
         // set offset
         switch (arrangement) {
-            case CENTER -> textX = x - (width / 2);
-            case RIGHT -> textX = x - width;
+            case CENTER -> textOffsetX = x - (width / 2);
+            case RIGHT -> textOffsetX = x - width;
         }
 
         // changes are changed
@@ -96,10 +103,10 @@ public class TextField extends object{
 
     @Override
     public void mouseClicked(MouseEvent e) {
-//        System.out.print("TextField.mouseClicked: ");
+//        System.out.print("TextField.mouseClicked");
         if(!editable) return;
-        edit = intersect(new Rectangle(textX, y - height, width, height), e.getPoint());
-        System.out.println(edit);
+        edit = intersect(new Rectangle(textOffsetX, y - height, width, height), e.getPoint());
+//        System.out.println("TextField.mouseClicked: edit = " + edit);
         input.getKeyEventTyped();
     }
 

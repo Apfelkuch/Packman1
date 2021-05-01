@@ -5,6 +5,12 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class CustomFileReader {
+
+    /**
+     * Load the content from a given path of a file into a String. The structure of the String is identical to the file structure.
+     * @param path The path to the file, which is loaded.
+     * @return A String with the content of the file.
+     */
     public static String loadFileAsString(String path){
         StringBuilder builder = new StringBuilder();
         try{
@@ -18,13 +24,5 @@ public class CustomFileReader {
             e.printStackTrace();
         }
         return builder.toString();
-    }
-    public static int parseInt(String number){
-        try {
-             return Integer.parseInt(number);
-        }catch(NumberFormatException e){
-            e.printStackTrace();
-            return 0;
-        }
     }
 }

@@ -2,11 +2,15 @@ package music;
 
 import javax.sound.sampled.*;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Locale;
 
 public class Sound {
 
     public static String BACKGROUND_MUSIC = "res/sound/background.wav";
+    private ArrayList<Song> songs;
 
     /**
      * BACKGROUND_MUSIC = offset: 40
@@ -18,6 +22,38 @@ public class Sound {
     private File currentSoundFile = null;
     private Clip clip = null;
     private FloatControl floatControl = null;
+
+    public Sound() {
+        // TODO need to be completed.
+        File[] files = new File("res/sound").listFiles(new FileFilter() {
+            @Override
+            public boolean accept(File f) { // accept all files with a wav extension and ignore the rest
+                if (f != null) {
+                    if (f.isDirectory()) {
+                        return true;
+                    }
+                    String fileName = f.getName();
+                    int i = fileName.lastIndexOf('.');
+                    if (i > 0 && i < fileName.length() - 1) {
+                        String desiredExtension = fileName.substring(i+1).toLowerCase(Locale.ENGLISH);
+                        if (desiredExtension.equals("wav")) {
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+        });
+//        System.out.println("Sound.Sound:soundFiles");
+        songs = new ArrayList<Song>();
+        for (File f : files) {
+//            System.out.println(f.getName());
+            if(f != null) {
+                songs.add(new Song(f.getName(), f.getPath()));
+            }
+        }
+
+    }
 
     public void playSound(String soundFile) {
         try {
