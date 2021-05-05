@@ -1,0 +1,1 @@
+class music.Sound:-40.0

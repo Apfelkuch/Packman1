@@ -1,17 +1,12 @@
 package Componts;
 
-import Main.Handler;
-
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class Button extends object{
+public class Button extends Object {
 
-    Handler handler;
-
-    //graphic data
     private Color backgroundColor = Color.pink;
     private Color pressedColor = backgroundColor.darker();
 
@@ -24,10 +19,9 @@ public class Button extends object{
     private Font font = new Font(null,Font.PLAIN,20);
     private final ActionListener listener;
 
-    public Button(ActionListener listener, Handler handler, String text, int x, int y, int width, int height) {
+    public Button(ActionListener listener, String text, int x, int y, int width, int height) {
         super(x, y, width, height);
         this.listener = listener;
-        this.handler = handler;
         this.text = text;
         this.CornerRounds = 0;
         enabled = true;

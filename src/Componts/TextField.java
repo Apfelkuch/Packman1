@@ -6,7 +6,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
-public class TextField extends object{
+public class TextField extends Object {
 
     private final Input input;
 

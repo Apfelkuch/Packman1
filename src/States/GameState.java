@@ -175,11 +175,11 @@ public class GameState extends State implements ActionListener {
         windowX = handler.getWindow().getCanvas().getWidth() / 2 - windowWidth / 2;
         windowY = handler.getWindow().getCanvas().getHeight() / 2 - windowHeight / 2;
         int cornerRounds = 20;
-        play = new Button(this,handler,Text.ButtonPlay,windowX + buttonXInWindow,windowY + buttonDiffYInWindow + buttonDiffYInWindow / 2 - buttonHeight / 2,buttonWidth,buttonHeight);
+        play = new Button(this, Text.ButtonPlay,windowX + buttonXInWindow,windowY + buttonDiffYInWindow + buttonDiffYInWindow / 2 - buttonHeight / 2,buttonWidth,buttonHeight);
         play.setCornerRounds(cornerRounds);
-        proceed = new Button(this,handler,Text.ButtonContinue,windowX + buttonXInWindow,windowY + buttonDiffYInWindow + buttonDiffYInWindow / 2 - buttonHeight / 2, buttonWidth, buttonHeight);
+        proceed = new Button(this, Text.ButtonContinue,windowX + buttonXInWindow,windowY + buttonDiffYInWindow + buttonDiffYInWindow / 2 - buttonHeight / 2, buttonWidth, buttonHeight);
         proceed.setCornerRounds(cornerRounds);
-        exit = new Button(this,handler,Text.ButtonExit,windowX + buttonXInWindow,windowY + 2 * buttonDiffYInWindow + buttonDiffYInWindow / 2 - buttonHeight / 2,buttonWidth,buttonHeight);
+        exit = new Button(this, Text.ButtonExit,windowX + buttonXInWindow,windowY + 2 * buttonDiffYInWindow + buttonDiffYInWindow / 2 - buttonHeight / 2,buttonWidth,buttonHeight);
         exit.setCornerRounds(cornerRounds);
     }
 

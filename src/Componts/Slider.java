@@ -5,7 +5,7 @@ import Main.Handler;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
-public class Slider extends object{
+public class Slider extends Object {
 
     Handler handler;
 
@@ -16,10 +16,13 @@ public class Slider extends object{
 
     private int sliderX;
     private int sliderWidth;
+    public int defaultSliderWidth = 10;
 
     private int cornerRounds = 5;
 
-    private int sideDistance = 5;
+    private final int sideDistance = 10;
+    private int sideDistanceRight = sideDistance;
+    private int sideDistanceLeft = sideDistance;
 
     private float value;
     private int range = 1;
@@ -37,7 +40,8 @@ public class Slider extends object{
         this.value = startInPercent;
         this.sliderX = x + width / 3;
         this.sliderWidth = width / 3 * 2;
-        sliderRect = new Rectangle((int) (sliderX + ((((sliderWidth - 20) * value) / range) + sideDistance)), y,10,height);
+        sliderRect = new Rectangle((int) (sliderX + sideDistanceLeft + (value * (sliderWidth - sideDistanceLeft - sideDistanceRight)) / range), y, defaultSliderWidth, height);
+        // X = offset + value * (possible space / range)
     }
 
     @Override
@@ -82,16 +86,16 @@ public class Slider extends object{
                     0
             );
             // slider position correction
-            if(sliderRect.x < (sliderX + sideDistance - (sliderRect.width) / 2)) {
-                sliderRect.x = (sliderX + sideDistance - (sliderRect.width) / 2);
-            } else if(sliderRect.x > (sliderX + sliderWidth - sideDistance - (sliderRect.width) / 2)) {
-                sliderRect.x = (sliderX + sliderWidth - sideDistance - (sliderRect.width) / 2);
+            if(sliderRect.x < (sliderX + sideDistanceLeft - (sliderRect.width) / 2)) { // constrain left
+                sliderRect.x = (sliderX + sideDistanceLeft - (sliderRect.width) / 2);
+            } else if(sliderRect.x > (sliderX + sliderWidth - sideDistanceRight - (sliderRect.width) / 2)) { // constrain right
+                sliderRect.x = (sliderX + sliderWidth - sideDistanceRight - (sliderRect.width) / 2);
             } else { // if the slider must not be corrected reset drag motion.
                 prevPoint = currentPoint;
             }
             // set the value
-            float a = ((sliderRect.x - this.sliderX - sideDistance) + sliderRect.width / 2);
-            float b = (this.sliderWidth - 2 * sideDistance);
+            float a = (sliderRect.x - this.sliderX - sideDistanceLeft + sliderRect.width / 2);
+            float b = this.sliderWidth - (sideDistanceLeft + sideDistanceRight);
             value = a / b * this.range;
         }
     }
@@ -127,10 +131,23 @@ public class Slider extends object{
     public int getRange() {
         return range;
     }
-    public int getSideDistance() {
+    public int getDefaultSideDistance() {
         return sideDistance;
     }
+    public int getSideDistanceLeft() {
+        return sideDistanceLeft;
+    }
+    public int getSideDistanceRight() {
+        return sideDistanceRight;
+    }
 
+    private void setSliderRect(int x, int y, int width, int height) {
+        if(sliderRect == null) {
+            sliderRect = new Rectangle(x, y, width, height);
+        } else {
+            sliderRect.setBounds(x, y, width, height);
+        }
+    }
     public void setCornerRounds(int cornerRounds) {
         this.cornerRounds = cornerRounds;
     }
@@ -142,20 +159,24 @@ public class Slider extends object{
     }
     public void setValue(float value) {
         this.value = value;
-        sliderRect = new Rectangle((int) (sliderX + ((((sliderWidth - 20) * value) / range) + sideDistance)), y,10,height);
+        setSliderRect((int) (sliderX + sideDistanceLeft - (defaultSliderWidth / 2) + (value * (sliderWidth - sideDistanceLeft - sideDistanceRight)) / range), y,defaultSliderWidth,height);
     }
     public void setRange(int range) {
         this.range = range;
-        sliderRect = new Rectangle((int) (sliderX + ((((sliderWidth - 20) * value) / range) + sideDistance)), y,10,height);
+        setSliderRect((int) (sliderX + sideDistanceLeft + (value * (sliderWidth - sideDistanceLeft - sideDistanceRight)) / range), y,defaultSliderWidth,height);
     }
-    public void setSideDistance(int sideDistance) {
-        this.sideDistance = sideDistance;
-        sliderRect = new Rectangle((int) (sliderX + ((((sliderWidth - 20) * value) / range) + sideDistance)), y,10,height);
+    public void setSideDistanceRight(int sideDistanceRight) {
+        this.sideDistanceRight = sideDistanceRight;
+        setSliderRect((int) (sliderX + sideDistanceLeft + (value * (sliderWidth - sideDistanceLeft - sideDistanceRight)) / range), y,defaultSliderWidth,height);
+    }
+    public void setSideDistanceLeft(int sideDistanceLeft) {
+        this.sideDistanceLeft = sideDistanceLeft;
+        setSliderRect((int) (sliderX + sideDistanceLeft + (value * (sliderWidth - sideDistanceLeft - sideDistanceRight)) / range), y,defaultSliderWidth,height);
     }
     @Override
     public void setHeight(int height) {
         super.setHeight(height);
-        sliderRect = new Rectangle((int) (sliderX + ((((sliderWidth - 20) * value) / range) + sideDistance)), y,10,height);
+        setSliderRect((int) (sliderX + sideDistanceLeft + (value * (sliderWidth - sideDistanceLeft - sideDistanceRight)) / range), y,defaultSliderWidth,height);
     }
     public void setColor(Color color) {
         this.color = color;

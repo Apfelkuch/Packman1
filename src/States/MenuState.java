@@ -6,7 +6,8 @@ import Componts.TextField;
 import ImageLoad.Assets;
 import Main.Game;
 import Main.Handler;
-import Save.*;
+import Save.Save;
+import Save.SaveObject;
 import Text.Text;
 
 import java.awt.*;
@@ -67,7 +68,6 @@ public class MenuState extends State implements ActionListener {
     public void render(Graphics g) {
         // background
         g.drawImage(Assets.menuBackground,0,0,null);
-
 
         if(this.menuStatus == MENU) {
             // title
@@ -171,15 +171,15 @@ public class MenuState extends State implements ActionListener {
         int ButtonPosX = (handler.getWindow().getCanvas().getSize().width / 2) - (ButtonWidth / 2);
         int ButtonDifferenceY = ((handler.getWindow().getCanvas().getSize().height / 2) / 3);
         // Play
-        play = new Button(this,handler, Text.ButtonPlay,ButtonPosX,handler.getWindow().getCanvas().getSize().height - ButtonDifferenceY * 3,ButtonWidth,ButtonHeight);
+        play = new Button(this, Text.ButtonPlay,ButtonPosX,handler.getWindow().getCanvas().getSize().height - ButtonDifferenceY * 3,ButtonWidth,ButtonHeight);
         play.setFont(Text.MenuButtonFont);
         play.setCornerRounds(cornerRounds);
         // Option
-        option = new Button(this,handler,Text.ButtonOption,ButtonPosX,handler.getWindow().getCanvas().getSize().height - ButtonDifferenceY * 2,ButtonWidth,ButtonHeight);
+        option = new Button(this, Text.ButtonOption,ButtonPosX,handler.getWindow().getCanvas().getSize().height - ButtonDifferenceY * 2,ButtonWidth,ButtonHeight);
         option.setFont(Text.MenuButtonFont);
         option.setCornerRounds(cornerRounds);
         // Exit
-        exit = new Button(this,handler,Text.ButtonExit,ButtonPosX,handler.getWindow().getCanvas().getSize().height - ButtonDifferenceY,ButtonWidth,ButtonHeight);
+        exit = new Button(this, Text.ButtonExit,ButtonPosX,handler.getWindow().getCanvas().getSize().height - ButtonDifferenceY,ButtonWidth,ButtonHeight);
         exit.setFont(Text.MenuButtonFont);
         exit.setCornerRounds(cornerRounds);
 
@@ -187,7 +187,7 @@ public class MenuState extends State implements ActionListener {
         ButtonPosX = (handler.getWindow().getCanvas().getSize().width / 2) - (ButtonWidth / 2);
         ButtonDifferenceY = (handler.getWindow().getCanvas().getSize().height / 2) / 3;
         // back
-        back = new Button(this, handler, Text.ButtonBack, ButtonPosX, handler.getWindow().getCanvas().getSize().height - ButtonDifferenceY, ButtonWidth, ButtonHeight);
+        back = new Button(this, Text.ButtonBack, ButtonPosX, handler.getWindow().getCanvas().getSize().height - ButtonDifferenceY, ButtonWidth, ButtonHeight);
         back.setFont(Text.MenuButtonFont);
         back.setCornerRounds(cornerRounds);
 
@@ -201,11 +201,11 @@ public class MenuState extends State implements ActionListener {
         ButtonPosX = (handler.getWindow().getCanvas().getSize().width / 3) - (ButtonWidth / 2);
         ButtonDifferenceY = (handler.getWindow().getCanvas().getSize().height / 3);
         // yes
-        yes = new Button(this, handler, Text.ButtonYes, ButtonPosX, handler.getWindow().getCanvas().getSize().height - ButtonDifferenceY, ButtonWidth, ButtonHeight);
+        yes = new Button(this, Text.ButtonYes, ButtonPosX, handler.getWindow().getCanvas().getSize().height - ButtonDifferenceY, ButtonWidth, ButtonHeight);
         yes.setFont(Text.MenuButtonFont);
         yes.setCornerRounds(cornerRounds);
         // no
-        no = new Button(this, handler, Text.ButtonNo, ButtonPosX * 2, handler.getWindow().getCanvas().getSize().height - ButtonDifferenceY, ButtonWidth, ButtonHeight);
+        no = new Button(this, Text.ButtonNo, ButtonPosX * 2, handler.getWindow().getCanvas().getSize().height - ButtonDifferenceY, ButtonWidth, ButtonHeight);
         no.setFont(Text.MenuButtonFont);
         no.setCornerRounds(cornerRounds);
 
