@@ -3,12 +3,12 @@ package PackmanUi;
 import javax.swing.*;
 import java.awt.*;
 
-public class Window extends JFrame{
+public class Window extends JFrame {
 
     private final Canvas canvas = new Canvas();
 
     public Window() {
-        this.setSize(new Dimension(1200,500));
+        this.setSize(new Dimension(1200, 500));
         this.setResizable(false);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
@@ -19,7 +19,7 @@ public class Window extends JFrame{
     }
 
     // GETTER && SETTER
-    public Canvas getCanvas(){
+    public Canvas getCanvas() {
         return canvas;
     }
 

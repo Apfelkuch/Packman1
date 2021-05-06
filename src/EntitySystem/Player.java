@@ -12,7 +12,7 @@ public class Player extends Creature {
     //Attributes for the Dots
     private int dotCounter = 0;
 
-    public Player(Handler handler,int spawnX, int spawnY, float pSPEED) {
+    public Player(Handler handler, int spawnX, int spawnY, float pSPEED) {
         super(handler, spawnX, spawnY, Assets.TILEWIDTH, Assets.TILEHEIGHT, 48, 48, pSPEED);
         currentLooking = lookingRIGHT; // starting view direction
     }
@@ -22,22 +22,22 @@ public class Player extends Creature {
         // paint packman with his viewing direction (lookingAT)
         switch (currentLooking) {
             case lookingRIGHT:
-                g.drawImage(Assets.packman_RIGHT,(int) posX,(int) posY,width,height,null);
+                g.drawImage(Assets.packman_RIGHT, (int) posX, (int) posY, width, height, null);
                 break;
             case lookingLEFT:
-                g.drawImage(Assets.packman_LEFT,(int) posX,(int) posY,width,height,null);
+                g.drawImage(Assets.packman_LEFT, (int) posX, (int) posY, width, height, null);
                 break;
             case lookingUP:
-                g.drawImage(Assets.packman_UP,(int) posX,(int) posY,width,height,null);
+                g.drawImage(Assets.packman_UP, (int) posX, (int) posY, width, height, null);
                 break;
             case lookingDOWN:
-                g.drawImage(Assets.packman_DOWN,(int) posX,(int) posY,width,height,null);
+                g.drawImage(Assets.packman_DOWN, (int) posX, (int) posY, width, height, null);
                 break;
         }
         //DotCounter on Screen
         g.setColor(Color.YELLOW);
         g.setFont(Text.DotFont);
-        g.drawString("" + this.dotCounter,(handler.getWorld().getWidth() - 2) * Assets.TILEWIDTH,(int) (Assets.TILEHEIGHT * 0.80));
+        g.drawString("" + this.dotCounter, (handler.getWorld().getWidth() - 2) * Assets.TILEWIDTH, (int) (Assets.TILEHEIGHT * 0.80));
 
 //        //collisionBox packman
 //        g.setColor(Color.RED);
@@ -50,8 +50,8 @@ public class Player extends Creature {
         this.move();
         this.win();
         this.eatDot();
-        for(Ghost g : handler.getGhosts()) {
-            if(g != null) {
+        for (Ghost g : handler.getGhosts()) {
+            if (g != null) {
                 if (this.creatureInFront(g)) { // player eats the ghost if the player will intersect in the next move with the ghost.
                     eatGhost(g);
                 }
@@ -68,7 +68,7 @@ public class Player extends Creature {
             return;
         Dot removedDot = null;
         for (Item d : super.handler.getWorld().getPowerUpManager().getItems()) {
-            if(d.getClass() == Dot.class) {
+            if (d.getClass() == Dot.class) {
                 if (this.collisionBOX.intersects(d.collisionBOX)) {
                     this.dotCounter += 1;
                     removedDot = (Dot) d;
@@ -91,7 +91,7 @@ public class Player extends Creature {
             else // set xMove to xMoveOLD, if collision was not on the x-Axis
                 super.xMove = super.xMoveOLD;
 
-            if(super.yMove == super.yMoveOLD) // canceling yMove, if collide
+            if (super.yMove == super.yMoveOLD) // canceling yMove, if collide
                 super.yMove = 0;
             else // set yMove to yMoveOLD, if collision was not on the y-Axis
                 super.yMove = super.yMoveOLD;
@@ -133,17 +133,17 @@ public class Player extends Creature {
     }
 
     public void win() {
-        if(handler.getWorld().getPowerUpManager().getDotCount() == 0) {
+        if (handler.getWorld().getPowerUpManager().getDotCount() == 0) {
             System.out.println("help");
             handler.getGameState().setGameStatus(GameState.WIN);
         }
     }
 
     public void eatGhost(Ghost g) {
-        if(g == null) return;
+        if (g == null) return;
         this.killCount++;
-        for(int i=0;i<handler.getGhosts().length;i++) {
-            if(handler.getGhosts()[i] == g) {
+        for (int i = 0; i < handler.getGhosts().length; i++) {
+            if (handler.getGhosts()[i] == g) {
                 handler.getGhosts()[i] = null;
                 return;
             }

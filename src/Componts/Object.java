@@ -22,30 +22,42 @@ public class Object {
 
     // own Methods
     public boolean intersect(Rectangle r, Point p) {
-        return r.contains((int) p .getX(), (int) p.getY());
+        return r.contains((int) p.getX(), (int) p.getY());
     }
 
     // extra Methods
-    public void tick() {}
-    public void render(Graphics g){}
-    public void mouseClicked(MouseEvent e){}
-    public void mousePressed(MouseEvent e){
+    public void tick() {
+    }
+
+    public void render(Graphics g) {
+    }
+
+    public void mouseClicked(MouseEvent e) {
+    }
+
+    public void mousePressed(MouseEvent e) {
         if (dragDrop) {
             // set the mouse position to the prevPoint if the mouse is above the object.
-            if(intersect(new Rectangle(x, y, width,height), e.getPoint())) {
+            if (intersect(new Rectangle(x, y, width, height), e.getPoint())) {
                 prevPoint = e.getPoint();
             }
         }
     }
-    public void mouseReleased(MouseEvent e){
+
+    public void mouseReleased(MouseEvent e) {
         if (dragDrop) {
             // reset the prevPoint, if the mouse is released
             prevPoint = null;
         }
     }
-    public void mouseEntered(MouseEvent e){}
-    public void mouseExited(MouseEvent e){}
-    public void mouseDragged(MouseEvent e){
+
+    public void mouseEntered(MouseEvent e) {
+    }
+
+    public void mouseExited(MouseEvent e) {
+    }
+
+    public void mouseDragged(MouseEvent e) {
         if (dragDrop) {
             if (prevPoint != null) {
                 // get the currentPoint mouse position
@@ -58,12 +70,15 @@ public class Object {
             }
         }
     }
-    public void mouseMoved(MouseEvent e){}
+
+    public void mouseMoved(MouseEvent e) {
+    }
 
     // ACTIVE && DEACTIVATE
     public void activateDragDrop() {
         dragDrop = true;
     }
+
     public void deactivateDragDrop() {
         dragDrop = false;
     }
@@ -72,15 +87,19 @@ public class Object {
     public int getX() {
         return x;
     }
+
     public int getY() {
         return y;
     }
+
     public int getWidth() {
         return width;
     }
+
     public int getHeight() {
         return height;
     }
+
     public Rectangle getBodyRectangle() {
         return new Rectangle(x, y, width, height);
     }
@@ -88,12 +107,15 @@ public class Object {
     public void setX(int x) {
         this.x = x;
     }
+
     public void setY(int y) {
         this.y = y;
     }
+
     public void setWidth(int width) {
         this.width = width;
     }
+
     public void setHeight(int height) {
         this.height = height;
     }

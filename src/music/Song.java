@@ -13,6 +13,7 @@ public class Song {
     public String getName() {
         return name;
     }
+
     public String getPath() {
         return path;
     }

@@ -5,8 +5,8 @@ import Main.Handler;
 import java.awt.*;
 
 public abstract class Entity {
-    protected float posX,posY;
-    protected int CBwidth,CBheight;
+    protected float posX, posY;
+    protected int CBwidth, CBheight;
     protected Rectangle collisionBOX;
     protected Handler handler;
 
@@ -16,10 +16,10 @@ public abstract class Entity {
         this.posY = posY;
         this.CBwidth = CBwidth;
         this.CBheight = CBheight;
-        this.collisionBOX = new Rectangle((int) posX,(int) posY,CBwidth,CBheight);
+        this.collisionBOX = new Rectangle((int) posX, (int) posY, CBwidth, CBheight);
     }
 
-    public abstract void render (Graphics g);
+    public abstract void render(Graphics g);
 
     public abstract void tick();
 
@@ -28,9 +28,11 @@ public abstract class Entity {
     public float getPosX() {
         return posX;
     }
+
     public float getPosY() {
         return posY;
     }
+
     public Rectangle getCollisionBOX() {
         return collisionBOX;
     }

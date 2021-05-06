@@ -16,7 +16,7 @@ public class Button extends Object {
     private boolean pressed;
 
     private String text;
-    private Font font = new Font(null,Font.PLAIN,20);
+    private Font font = new Font(null, Font.PLAIN, 20);
     private final ActionListener listener;
 
     public Button(ActionListener listener, String text, int x, int y, int width, int height) {
@@ -29,7 +29,7 @@ public class Button extends Object {
 
     @Override
     public void render(Graphics g) {
-        if(pressed) {
+        if (pressed) {
             g.setColor(pressedColor);
         } else {
             g.setColor(backgroundColor);
@@ -40,7 +40,7 @@ public class Button extends Object {
             g.setFont(font);
             g.setColor(Color.BLACK);
             int stringWidth = g.getFontMetrics().stringWidth(text);
-            g.drawString(text,(x + width / 2) - stringWidth / 2, y + (height / 2) + (font.getSize() / 3));
+            g.drawString(text, (x + width / 2) - stringWidth / 2, y + (height / 2) + (font.getSize() / 3));
         }
     }
 
@@ -51,16 +51,16 @@ public class Button extends Object {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        if(enabled && isPressed(e.getX(),e.getY())) {
+        if (enabled && isPressed(e.getX(), e.getY())) {
             pressed = true;
         }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        if(enabled && pressed) {
+        if (enabled && pressed) {
             pressed = false;
-            if(isPressed(e.getX(),e.getY())) {
+            if (isPressed(e.getX(), e.getY())) {
                 listener.actionPerformed(new ActionEvent(this, 0, "ButtonAction"));
             }
         }
@@ -70,32 +70,40 @@ public class Button extends Object {
     public boolean isEnabled() {
         return enabled;
     }
+
     public int getCornerRounds() {
         return CornerRounds;
     }
+
     public Color getBackgroundColor() {
         return backgroundColor;
     }
+
     public String getText() {
         return text;
     }
+
     public Font getFont() {
-        return  font;
+        return font;
     }
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
+
     public void setCornerRounds(int cornerRounds) {
         this.CornerRounds = cornerRounds;
     }
+
     public void setBackgroundColor(Color backgroundColor) {
         this.backgroundColor = backgroundColor;
         pressedColor = backgroundColor.darker();
     }
+
     public void setText(String text) {
         this.text = text;
     }
+
     public void setFont(Font font) {
         this.font = font;
     }

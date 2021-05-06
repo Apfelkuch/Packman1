@@ -46,15 +46,15 @@ public class Text {
     public static String ButtonContinue = "continue";
 
     // FONTS GAME
-    public static Font GameOverFont = new Font(Font.MONOSPACED,Font.BOLD,50);
-    public static Font BreakFont = new Font(Font.MONOSPACED,Font.BOLD,50);
-    public static Font DotFont = new Font(Font.MONOSPACED,Font.BOLD,36);
+    public static Font GameOverFont = new Font(Font.MONOSPACED, Font.BOLD, 50);
+    public static Font BreakFont = new Font(Font.MONOSPACED, Font.BOLD, 50);
+    public static Font DotFont = new Font(Font.MONOSPACED, Font.BOLD, 36);
     // FONTS MENU
-    public static Font MenuTitleFontMain = new Font(Font.MONOSPACED,Font.BOLD,100);
-    public static Font MenuTitleFontOption = new Font(Font.MONOSPACED,Font.BOLD,50);
-    public static Font MenuTitleFontExit = new Font(Font.MONOSPACED,Font.BOLD,50);
-    public static Font MenuButtonFont = new Font(Font.MONOSPACED,Font.BOLD,30);
-    public static Font MenuTextFont = new Font(Font.MONOSPACED, Font.BOLD,30);
+    public static Font MenuTitleFontMain = new Font(Font.MONOSPACED, Font.BOLD, 100);
+    public static Font MenuTitleFontOption = new Font(Font.MONOSPACED, Font.BOLD, 50);
+    public static Font MenuTitleFontExit = new Font(Font.MONOSPACED, Font.BOLD, 50);
+    public static Font MenuButtonFont = new Font(Font.MONOSPACED, Font.BOLD, 30);
+    public static Font MenuTextFont = new Font(Font.MONOSPACED, Font.BOLD, 30);
 
     // save path
     public static String SavePath = "res/save/save.txt";

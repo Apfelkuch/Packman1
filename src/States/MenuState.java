@@ -48,7 +48,7 @@ public class MenuState extends State implements ActionListener {
 
     @Override
     public void tick() {
-        if(menuStatus == MENU) {
+        if (menuStatus == MENU) {
             title.tick();
         } else if (menuStatus == OPTION) {
             handler.getSound().setVolume(soundVolume.getValue());
@@ -58,7 +58,7 @@ public class MenuState extends State implements ActionListener {
 
     @Override
     public void secTick() {
-        if(menuStatus == MENU) {
+        if (menuStatus == MENU) {
         } else if (menuStatus == OPTION) {
         } else if (menuStatus == EXIT) {
         }
@@ -67,9 +67,9 @@ public class MenuState extends State implements ActionListener {
     @Override
     public void render(Graphics g) {
         // background
-        g.drawImage(Assets.menuBackground,0,0,null);
+        g.drawImage(Assets.menuBackground, 0, 0, null);
 
-        if(this.menuStatus == MENU) {
+        if (this.menuStatus == MENU) {
             // title
             title.render(g);
 
@@ -82,7 +82,7 @@ public class MenuState extends State implements ActionListener {
             g.setColor(Color.BLACK);
             g.setFont(Text.MenuTitleFontOption);
             int stringWidth = g.getFontMetrics().stringWidth(Text.OPTION);
-            g.drawString(Text.OPTION,handler.getWindow().getCanvas().getSize().width / 2 - stringWidth / 2,handler.getWindow().getCanvas().getSize().height / 4);
+            g.drawString(Text.OPTION, handler.getWindow().getCanvas().getSize().width / 2 - stringWidth / 2, handler.getWindow().getCanvas().getSize().height / 4);
             // button
             back.render(g);
             soundVolume.render(g);
@@ -90,7 +90,7 @@ public class MenuState extends State implements ActionListener {
             g.setColor(Color.BLACK);
             g.setFont(Text.MenuTitleFontExit);
             int stringWidth = g.getFontMetrics().stringWidth(Text.ExitMassage);
-            g.drawString(Text.ExitMassage,handler.getWindow().getCanvas().getSize().width / 2 - stringWidth / 2,handler.getWindow().getCanvas().getSize().height / 2);
+            g.drawString(Text.ExitMassage, handler.getWindow().getCanvas().getSize().width / 2 - stringWidth / 2, handler.getWindow().getCanvas().getSize().height / 2);
             // button
             yes.render(g);
             no.render(g);
@@ -118,7 +118,7 @@ public class MenuState extends State implements ActionListener {
     // mouse input handling
     @Override
     public void mousePressed(MouseEvent e) {
-        if(menuStatus == MENU) {
+        if (menuStatus == MENU) {
             play.mousePressed(e);
             option.mousePressed(e);
             exit.mousePressed(e);
@@ -130,9 +130,10 @@ public class MenuState extends State implements ActionListener {
             no.mousePressed(e);
         }
     }
+
     @Override
     public void mouseReleased(MouseEvent e) {
-        if(menuStatus == MENU) {
+        if (menuStatus == MENU) {
             play.mouseReleased(e);
             option.mouseReleased(e);
             exit.mouseReleased(e);
@@ -144,14 +145,16 @@ public class MenuState extends State implements ActionListener {
             no.mouseReleased(e);
         }
     }
+
     @Override
     public void mouseDragged(MouseEvent e) {
-        if(menuStatus == MENU) {
+        if (menuStatus == MENU) {
         } else if (menuStatus == OPTION) {
             soundVolume.mouseDragged(e);
         } else if (menuStatus == EXIT) {
         }
     }
+
     @Override
     public void mouseClicked(MouseEvent e) {
         title.mouseClicked(e);
@@ -171,15 +174,15 @@ public class MenuState extends State implements ActionListener {
         int ButtonPosX = (handler.getWindow().getCanvas().getSize().width / 2) - (ButtonWidth / 2);
         int ButtonDifferenceY = ((handler.getWindow().getCanvas().getSize().height / 2) / 3);
         // Play
-        play = new Button(this, Text.ButtonPlay,ButtonPosX,handler.getWindow().getCanvas().getSize().height - ButtonDifferenceY * 3,ButtonWidth,ButtonHeight);
+        play = new Button(this, Text.ButtonPlay, ButtonPosX, handler.getWindow().getCanvas().getSize().height - ButtonDifferenceY * 3, ButtonWidth, ButtonHeight);
         play.setFont(Text.MenuButtonFont);
         play.setCornerRounds(cornerRounds);
         // Option
-        option = new Button(this, Text.ButtonOption,ButtonPosX,handler.getWindow().getCanvas().getSize().height - ButtonDifferenceY * 2,ButtonWidth,ButtonHeight);
+        option = new Button(this, Text.ButtonOption, ButtonPosX, handler.getWindow().getCanvas().getSize().height - ButtonDifferenceY * 2, ButtonWidth, ButtonHeight);
         option.setFont(Text.MenuButtonFont);
         option.setCornerRounds(cornerRounds);
         // Exit
-        exit = new Button(this, Text.ButtonExit,ButtonPosX,handler.getWindow().getCanvas().getSize().height - ButtonDifferenceY,ButtonWidth,ButtonHeight);
+        exit = new Button(this, Text.ButtonExit, ButtonPosX, handler.getWindow().getCanvas().getSize().height - ButtonDifferenceY, ButtonWidth, ButtonHeight);
         exit.setFont(Text.MenuButtonFont);
         exit.setCornerRounds(cornerRounds);
 
@@ -193,7 +196,7 @@ public class MenuState extends State implements ActionListener {
 
         // sound volume slider
         int sliderPosX = (handler.getWindow().getCanvas().getSize().width / 2) - (sliderWidth / 2);
-        soundVolume = new Slider(handler, Text.VOLUME, 0, sliderPosX,handler.getWindow().getCanvas().getSize().height - ButtonDifferenceY * 3,sliderWidth,sliderHeight);
+        soundVolume = new Slider(handler, Text.VOLUME, 0, sliderPosX, handler.getWindow().getCanvas().getSize().height - ButtonDifferenceY * 3, sliderWidth, sliderHeight);
         soundVolume.setCornerRounds(10);
         soundVolume.setTextFont(Text.MenuTextFont);
 

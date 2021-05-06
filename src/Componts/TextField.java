@@ -46,20 +46,20 @@ public class TextField extends Object {
     @Override
     public void tick() {
         // edit the content
-        if(edit) {
+        if (edit) {
 //            System.out.println("edit");
             KeyEvent key = input.getKeyEventTyped();
             if (key == null) return;
 //            System.out.println("TextField.tick: " + key.getKeyCode());
-            if(key.getKeyCode() == KeyEvent.VK_DELETE | key.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+            if (key.getKeyCode() == KeyEvent.VK_DELETE | key.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
 //                System.out.println("TextField.tick:delete");
                 content.deleteCharAt(content.length() - 1);
                 changes = true;
-            } else if(key.getKeyCode() >= 44 && key.getKeyCode() <= 111) { // characters which are possible to typ
+            } else if (key.getKeyCode() >= 44 && key.getKeyCode() <= 111) { // characters which are possible to typ
 //                System.out.println("TextField.tick:add");
                 content.append(key.getKeyChar());
                 changes = true;
-            } else if(key.getKeyCode() == KeyEvent.VK_ENTER || key.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            } else if (key.getKeyCode() == KeyEvent.VK_ENTER || key.getKeyCode() == KeyEvent.VK_ESCAPE) {
 //                System.out.println("TextField.tick:exit");
                 edit = false;
             }
@@ -73,7 +73,7 @@ public class TextField extends Object {
         g.setColor(color);
 
         // set Text position
-        if(changes)
+        if (changes)
             this.setTextPosition(g);
 
         // draw String
@@ -104,7 +104,7 @@ public class TextField extends Object {
     @Override
     public void mouseClicked(MouseEvent e) {
 //        System.out.print("TextField.mouseClicked");
-        if(!editable) return;
+        if (!editable) return;
         edit = intersect(new Rectangle(textOffsetX, y - height, width, height), e.getPoint());
 //        System.out.println("TextField.mouseClicked: edit = " + edit);
         input.getKeyEventTyped();

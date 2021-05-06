@@ -11,7 +11,7 @@ import java.awt.*;
 
 public class WorldGenerator {
     private int[][] worldGrid;
-    private int width,height;
+    private int width, height;
     private int spawnX, spawnY;
     private int ghostSpawnX, ghostSpawnY;
     private int ghostCount;
@@ -20,7 +20,7 @@ public class WorldGenerator {
     private PowerupManager powerupManager;
 
     /////////////////////////////////////////////////////////Class
-    public WorldGenerator(String path, Handler handler){
+    public WorldGenerator(String path, Handler handler) {
         this.handler = handler;
         tiles = new Tiles(); // initialize the Tiles
         genWorld(path); // generate the world
@@ -30,9 +30,10 @@ public class WorldGenerator {
     /**
      * generates the world from a file, which hold the world data.
      * Then the world is modify via {Methode: modifyWorld()}
+     *
      * @param path: the file-path of the Data file
      */
-    public void genWorld(String path){
+    public void genWorld(String path) {
         String file = CustomFileReader.loadFileAsString(path);
         String[] tokens = file.split("\\s+"); // split on one or many whitespaces
         width = Integer.parseInt(tokens[0]);
@@ -43,43 +44,44 @@ public class WorldGenerator {
         ghostSpawnY = Integer.parseInt(tokens[5]) * Assets.TILEHEIGHT;
         ghostCount = Integer.parseInt(tokens[6]);
         worldGrid = new int[width][height];
-        for (int y = 0 ; y< height; y++){
-            for (int x = 0; x< width; x++){
-                worldGrid[x][y] = Integer.parseInt(tokens[(x + y* width)+7]);
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                worldGrid[x][y] = Integer.parseInt(tokens[(x + y * width) + 7]);
             }
         }
         modifyWorld(worldGrid);
     }
 
-    public void tick(){
+    public void tick() {
 
     }
 
     /**
      * Returns the Tile in the worldGrid at the given location(x,y)
+     *
      * @param x: x-location
      * @param y: y-location
      * @return Tile at the given location.
      */
-    public Tile getTile (int x ,int y){
-        if(TileManager.TILES == null || TileManager.TILES.size() == 0) {
+    public Tile getTile(int x, int y) {
+        if (TileManager.TILES == null || TileManager.TILES.size() == 0) {
             System.out.println("[WorldGenerator/getTile] Tile-List-size = 0 or Tiles == null");
         }
 //        System.out.println("[WorldGenerator/getTile] " + worldGrid[x][y]);
 //        System.out.println("[WorldGenerator/getTile] Tiles.size:" + TileManager.TILES.size());
-        if(TileManager.TILES.size() == 0) return null;
+        if (TileManager.TILES.size() == 0) return null;
         Tile t = TileManager.TILES.get(worldGrid[x][y]);
-        if (t == null ) {
+        if (t == null) {
             System.out.println("[WorldGenerator/getTile] Tile is null at x:" + x + " ,y:" + y);
             return TileManager.TILES.get(0);
         }
         return t;
     }
 
-    public void render(Graphics g){
-        for (int y = 0 ; y< height; y++){
-            for (int x = 0; x< width; x++){
-                getTile(x,y).render(g,x * Assets.TILEWIDTH,y * Assets.TILEHEIGHT);
+    public void render(Graphics g) {
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                getTile(x, y).render(g, x * Assets.TILEWIDTH, y * Assets.TILEHEIGHT);
             }
         }
         powerupManager.render(g);
@@ -87,6 +89,7 @@ public class WorldGenerator {
 
     /**
      * Modify the world to chose the perfect tile at every location.
+     *
      * @param world: the world as 2d int-Array, which is to by modified.
      */
     public void modifyWorld(int[][] world) {
@@ -94,37 +97,37 @@ public class WorldGenerator {
         String pattern = "";// wall = LEFT RIGHT UP DOWN
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                if (world[x][y]!= 0) {
-                    if ( x == 0) {
+                if (world[x][y] != 0) {
+                    if (x == 0) {
                         pattern += 0;
-                    }else{
-                        if ( world[x - 1][y] != 0) { // check Wall Left
+                    } else {
+                        if (world[x - 1][y] != 0) { // check Wall Left
                             pattern += 1;
                         } else {
                             pattern += 0;
                         }
                     }
-                    if (x == width -1) {
+                    if (x == width - 1) {
                         pattern += 0;
-                    }else {
-                        if ( world[x + 1][y] != 0 ){ // check Wall Right
+                    } else {
+                        if (world[x + 1][y] != 0) { // check Wall Right
                             pattern += 1;
-                        } else{
+                        } else {
                             pattern += 0;
                         }
                     }
-                    if ( y == 0) {
+                    if (y == 0) {
                         pattern += 0;
-                    }else {
+                    } else {
                         if (world[x][y - 1] != 0) { // check Wall Up
                             pattern += 1;
                         } else {
                             pattern += 0;
                         }
                     }
-                    if ( y == height - 1 ) {
+                    if (y == height - 1) {
                         pattern += 0;
-                    }else {
+                    } else {
                         if (world[x][y + 1] != 0) { // check Wall Down
                             pattern += 1;
                         } else {
@@ -133,44 +136,51 @@ public class WorldGenerator {
                     }
                     worldGrid[x][y] = getIdFromPattern(pattern);
 //                    System.out.println("[WorldGenerator/modifyWorld] At x: " + x + ", y: " + y + "is the pattern: " + pattern);
-                    pattern ="";
+                    pattern = "";
                 }
             }
         }
     }
 
-    public int getIdFromPattern (String pattern){
+    public int getIdFromPattern(String pattern) {
         //wall = LEFT RIGHT UP DOWN
         return Integer.parseInt(pattern, 2);
     }
-
 
 
     //GETTER & SETTER
     public int getSpawnX() {
         return spawnX;
     }
+
     public int getSpawnY() {
         return spawnY;
     }
+
     public int getGhostSpawnX() {
         return ghostSpawnX;
     }
+
     public int getGhostSpawnY() {
         return ghostSpawnY;
     }
+
     public int getGhostCount() {
         return ghostCount;
     }
+
     public int[][] getWorldGrid() {
         return worldGrid;
     }
+
     public int getWidth() {
         return width;
     }
+
     public int getHeight() {
         return height;
     }
+
     public PowerupManager getPowerUpManager() {
         return powerupManager;
     }

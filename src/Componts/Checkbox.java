@@ -28,18 +28,18 @@ public class Checkbox extends Object {
     @Override
     public void render(Graphics g) {
         super.render(g);
-        if(style == circleStyle) {
+        if (style == circleStyle) {
             // draw border
             g.setColor(foregroundColor);
             g.fillOval(x, y, width, height);
             // draw background
             g.setColor(backgroundColor);
-            g.fillOval(x + (width / 10), y + (width / 10), (width * 8)  / 10, (height * 8) / 10);
+            g.fillOval(x + (width / 10), y + (width / 10), (width * 8) / 10, (height * 8) / 10);
             // draw checked background
             if (checked) {
-                if(inverted) {
+                if (inverted) {
                     g.setColor(foregroundColor);
-                    g.fillOval(x + (width / 10), y + (width / 10), (width * 8)  / 10, (height * 8) / 10);
+                    g.fillOval(x + (width / 10), y + (width / 10), (width * 8) / 10, (height * 8) / 10);
                     g.setColor(backgroundColor);
                 } else {
                     g.setColor(foregroundColor);
@@ -53,12 +53,12 @@ public class Checkbox extends Object {
             g.fillRect(x, y, width, height);
             // draw background
             g.setColor(backgroundColor);
-            g.fillRect(x + (width / 10), y + (width / 10), (width * 8)  / 10, (height * 8) / 10);
+            g.fillRect(x + (width / 10), y + (width / 10), (width * 8) / 10, (height * 8) / 10);
             // draw checked background
             if (checked) {
-                if(inverted) {
+                if (inverted) {
                     g.setColor(foregroundColor);
-                    g.fillRect(x + (width / 10), y + (width / 10), (width * 8)  / 10, (height * 8) / 10);
+                    g.fillRect(x + (width / 10), y + (width / 10), (width * 8) / 10, (height * 8) / 10);
                     g.setColor(backgroundColor);
                 } else {
                     g.setColor(foregroundColor);
@@ -72,7 +72,7 @@ public class Checkbox extends Object {
     @Override
     public void mouseClicked(MouseEvent e) {
         super.mouseClicked(e);
-        if(intersect(new Rectangle(x, y, width, height), e.getPoint())) { // the checked is inverted if the mouse is clicked above the checkbox
+        if (intersect(new Rectangle(x, y, width, height), e.getPoint())) { // the checked is inverted if the mouse is clicked above the checkbox
             checked = !checked;
         }
     }
@@ -82,15 +82,19 @@ public class Checkbox extends Object {
     public boolean isChecked() {
         return checked;
     }
+
     public boolean isInverted() {
         return inverted;
     }
+
     public Color getForegroundColor() {
         return foregroundColor;
     }
+
     public Color getBackgroundColor() {
         return backgroundColor;
     }
+
     public Color getBorderColor() {
         return borderColor;
     }
@@ -98,15 +102,19 @@ public class Checkbox extends Object {
     public void setChecked(boolean checked) {
         this.checked = checked;
     }
+
     public void setInverted(boolean inverted) {
         this.inverted = inverted;
     }
+
     public void setForegroundColor(Color foregroundColor) {
         this.foregroundColor = foregroundColor;
     }
+
     public void setBackgroundColor(Color backgroundColor) {
         this.backgroundColor = backgroundColor;
     }
+
     public void setBorderColor(Color borderColor) {
         this.borderColor = borderColor;
     }

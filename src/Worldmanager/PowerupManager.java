@@ -31,19 +31,19 @@ public class PowerupManager {
         initDots();
     }
 
-    public void initDots(){
-        for (Vector2D v : emptyTiles){
-            items.add(new Dot(handler,v.getX() * Assets.TILEHEIGHT + Assets.TILEWIDTH / 2, v.getY() * Assets.TILEHEIGHT + Assets.TILEHEIGHT / 2, Dot));
+    public void initDots() {
+        for (Vector2D v : emptyTiles) {
+            items.add(new Dot(handler, v.getX() * Assets.TILEHEIGHT + Assets.TILEWIDTH / 2, v.getY() * Assets.TILEHEIGHT + Assets.TILEHEIGHT / 2, Dot));
             dotCount++;
         }
     }
 
 
-    public void findEmptySpaces(){
+    public void findEmptySpaces() {
         for (int x = 0; x < world.getWidth(); x++) {
-            for (int y = 0; y <world.getHeight() ; y++) {
-                if(world.getWorldGrid()[x][y] ==  0){
-                   emptyTiles.add(new Vector2D(x, y));
+            for (int y = 0; y < world.getHeight(); y++) {
+                if (world.getWorldGrid()[x][y] == 0) {
+                    emptyTiles.add(new Vector2D(x, y));
                 }
             }
         }
@@ -61,9 +61,9 @@ public class PowerupManager {
     }
 
     public void removeItem(Item item) {
-        if(item == null)
+        if (item == null)
             return;
-        if(item.getClass() == Dot.class) {
+        if (item.getClass() == Dot.class) {
             dotCount--;
         }
         items.remove(item);
@@ -73,12 +73,15 @@ public class PowerupManager {
     public ArrayList<Item> getItems() {
         return items;
     }
+
     public ArrayList<Item> getEmptyPlaces() {
         return emptyPlaces;
     }
+
     public int getDotCount() {
         return dotCount;
     }
+
     public int getPowerUpCout() {
         return powerUpCout;
     }

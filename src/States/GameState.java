@@ -42,15 +42,15 @@ public class GameState extends State implements ActionListener {
     public static int LOST = 2;
     public static int BREAK = 3;
 
-    public GameState(Handler handler){
+    public GameState(Handler handler) {
         super(handler);
     }
 
     @Override
     public boolean initState() {
-        world = new WorldGenerator("res/worlds/world1.txt",handler);
+        world = new WorldGenerator("res/worlds/world1.txt", handler);
         handler.getWindow().setSize(new Dimension(world.getWidth() * Assets.TILEWIDTH + 16, world.getHeight() * Assets.TILEHEIGHT + 39));
-        player = new Player(handler, world.getSpawnX(),world.getSpawnY(),4.0f);
+        player = new Player(handler, world.getSpawnX(), world.getSpawnY(), 4.0f);
         ghosts = new Ghost[world.getGhostCount()];
         ghostSpawnDelay = 2;
         currentGhostSpawnDelay = 0;
@@ -62,14 +62,14 @@ public class GameState extends State implements ActionListener {
 
     @Override
     public void tick() {
-        if(handler.getInput().keyJustPressed_TickBased(KeyEvent.VK_ESCAPE)) {
+        if (handler.getInput().keyJustPressed_TickBased(KeyEvent.VK_ESCAPE)) {
             this.gameStatus = BREAK;
         }
-        if(gameStatus == PLAY) {
+        if (gameStatus == PLAY) {
             world.tick();
             player.tick();
             for (Ghost ghost : ghosts) {
-                if(ghost != null) {
+                if (ghost != null) {
                     ghost.tick();
                 }
             }
@@ -78,11 +78,11 @@ public class GameState extends State implements ActionListener {
 
     @Override
     public void secTick() {
-        if(ghostCount > 0) {
-            if(currentGhostSpawnDelay > 0) {
-                currentGhostSpawnDelay --;
+        if (ghostCount > 0) {
+            if (currentGhostSpawnDelay > 0) {
+                currentGhostSpawnDelay--;
             }
-            if(currentGhostSpawnDelay == 0) {
+            if (currentGhostSpawnDelay == 0) {
                 currentGhostSpawnDelay = ghostSpawnDelay;
                 ghostCount--;
                 spawnGhost(ghostCount);
@@ -95,12 +95,12 @@ public class GameState extends State implements ActionListener {
         world.render(g);
         player.render(g);
         for (Ghost ghost : ghosts) {
-            if(ghost != null) {
+            if (ghost != null) {
                 ghost.render(g);
             }
         }
-        if(gameStatus == BREAK) {
-            g.drawImage(Assets.gameOverWindow, windowX,windowY,null);
+        if (gameStatus == BREAK) {
+            g.drawImage(Assets.gameOverWindow, windowX, windowY, null);
             proceed.render(g);
             exit.render(g);
 
@@ -109,23 +109,23 @@ public class GameState extends State implements ActionListener {
             g.setFont(Text.BreakFont);
 
             int stringWidth = g.getFontMetrics().stringWidth(Text.BREAK);
-            g.drawString(Text.BREAK,windowX + windowWidth / 2 - stringWidth / 2,windowY + buttonDiffYInWindow / 2 + buttonHeight);
+            g.drawString(Text.BREAK, windowX + windowWidth / 2 - stringWidth / 2, windowY + buttonDiffYInWindow / 2 + buttonHeight);
         }
-        if(gameStatus == WIN || gameStatus == LOST) {
-            g.drawImage(Assets.gameOverWindow,windowX,windowY,null);
+        if (gameStatus == WIN || gameStatus == LOST) {
+            g.drawImage(Assets.gameOverWindow, windowX, windowY, null);
             play.render(g);
             exit.render(g);
 
             //title
             g.setColor(Color.WHITE);
             g.setFont(Text.GameOverFont);
-            
-            if(gameStatus == WIN) {
+
+            if (gameStatus == WIN) {
                 int stringWidth = g.getFontMetrics().stringWidth(Text.WIN);
-                g.drawString(Text.WIN,windowX + windowWidth / 2 - stringWidth / 2,windowY + buttonDiffYInWindow / 2 + buttonHeight);
-            } else if(gameStatus == LOST) {
+                g.drawString(Text.WIN, windowX + windowWidth / 2 - stringWidth / 2, windowY + buttonDiffYInWindow / 2 + buttonHeight);
+            } else if (gameStatus == LOST) {
                 int stringWidth = g.getFontMetrics().stringWidth(Text.LOST);
-                g.drawString(Text.LOST,windowX + windowHeight / 2 - stringWidth / 2,windowY + buttonDiffYInWindow / 2 + buttonHeight);
+                g.drawString(Text.LOST, windowX + windowHeight / 2 - stringWidth / 2, windowY + buttonDiffYInWindow / 2 + buttonHeight);
             } else {
                 System.out.println("[ERROR] invalid gameOverStatus");
             }
@@ -134,9 +134,9 @@ public class GameState extends State implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == play) {
+        if (e.getSource() == play) {
             State.changeState(Game.gameState);
-        } else  if(e.getSource() == exit) {
+        } else if (e.getSource() == exit) {
             State.changeState(Game.menuState);
         } else if (e.getSource() == proceed) {
             gameStatus = PLAY;
@@ -148,21 +148,21 @@ public class GameState extends State implements ActionListener {
      */
     @Override
     public void mousePressed(MouseEvent e) {
-        if(gameStatus == WIN || gameStatus == LOST)
+        if (gameStatus == WIN || gameStatus == LOST)
             play.mousePressed(e);
-        if(gameStatus != PLAY)
-           exit.mousePressed(e);
-        if(gameStatus == BREAK)
+        if (gameStatus != PLAY)
+            exit.mousePressed(e);
+        if (gameStatus == BREAK)
             proceed.mousePressed(e);
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        if(gameStatus == WIN || gameStatus == LOST)
+        if (gameStatus == WIN || gameStatus == LOST)
             play.mouseReleased(e);
-        if(gameStatus != PLAY)
+        if (gameStatus != PLAY)
             exit.mouseReleased(e);
-        if(gameStatus == BREAK)
+        if (gameStatus == BREAK)
             proceed.mouseReleased(e);
     }
 
@@ -175,11 +175,11 @@ public class GameState extends State implements ActionListener {
         windowX = handler.getWindow().getCanvas().getWidth() / 2 - windowWidth / 2;
         windowY = handler.getWindow().getCanvas().getHeight() / 2 - windowHeight / 2;
         int cornerRounds = 20;
-        play = new Button(this, Text.ButtonPlay,windowX + buttonXInWindow,windowY + buttonDiffYInWindow + buttonDiffYInWindow / 2 - buttonHeight / 2,buttonWidth,buttonHeight);
+        play = new Button(this, Text.ButtonPlay, windowX + buttonXInWindow, windowY + buttonDiffYInWindow + buttonDiffYInWindow / 2 - buttonHeight / 2, buttonWidth, buttonHeight);
         play.setCornerRounds(cornerRounds);
-        proceed = new Button(this, Text.ButtonContinue,windowX + buttonXInWindow,windowY + buttonDiffYInWindow + buttonDiffYInWindow / 2 - buttonHeight / 2, buttonWidth, buttonHeight);
+        proceed = new Button(this, Text.ButtonContinue, windowX + buttonXInWindow, windowY + buttonDiffYInWindow + buttonDiffYInWindow / 2 - buttonHeight / 2, buttonWidth, buttonHeight);
         proceed.setCornerRounds(cornerRounds);
-        exit = new Button(this, Text.ButtonExit,windowX + buttonXInWindow,windowY + 2 * buttonDiffYInWindow + buttonDiffYInWindow / 2 - buttonHeight / 2,buttonWidth,buttonHeight);
+        exit = new Button(this, Text.ButtonExit, windowX + buttonXInWindow, windowY + 2 * buttonDiffYInWindow + buttonDiffYInWindow / 2 - buttonHeight / 2, buttonWidth, buttonHeight);
         exit.setCornerRounds(cornerRounds);
     }
 
@@ -191,18 +191,23 @@ public class GameState extends State implements ActionListener {
     public Player getPlayer() {
         return player;
     }
+
     public Ghost[] getGhosts() {
         return ghosts;
     }
+
     public WorldGenerator getWorld() {
         return world;
     }
+
     public int getGhostCount() {
         return ghostCount;
     }
+
     public int getCurrentGhostSpawnDelay() {
         return currentGhostSpawnDelay;
     }
+
     public int getGhostSpawnDelay() {
         return ghostSpawnDelay;
     }

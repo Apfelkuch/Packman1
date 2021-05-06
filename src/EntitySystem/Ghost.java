@@ -13,6 +13,7 @@ public class Ghost extends Creature {
     private enum Edirections {
         Up, Right, Down, Left
     }
+
     private Edirections direction;
     private BufferedImage img;
     private int imgID;
@@ -23,7 +24,7 @@ public class Ghost extends Creature {
         direction = Edirections.Down;
 
         int r = 1;
-        if(handler.getGameState().getGhostCount() >= (handler.getGhosts().length - 6)) {
+        if (handler.getGameState().getGhostCount() >= (handler.getGhosts().length - 6)) {
             boolean possible = false;
             while (!possible) {
                 possible = true;
@@ -77,6 +78,7 @@ public class Ghost extends Creature {
 
     /**
      * Translate a direction as int, in a direction from {@link Edirections}
+     *
      * @param dir = direction as int
      * @return = direction as {@link Edirections}
      */
@@ -103,10 +105,10 @@ public class Ghost extends Creature {
     private int generatingDirection(int maxDirections, int forerunnerDirection) {
         int dir = (new Random().nextInt(maxDirections) - 1);
         dir = forerunnerDirection + dir;
-        if(dir == -1) {
+        if (dir == -1) {
             dir = 3;
         }
-        if(dir == 4) {
+        if (dir == 4) {
             dir = 0;
         }
         return dir;
@@ -116,22 +118,22 @@ public class Ghost extends Creature {
      * set direction to the next direction from the path-Array
      */
     public void setDirection(boolean motionZero) {
-        if(motionZero) {
+        if (motionZero) {
             int collide = 0;
             boolean[] freeSpaces = new boolean[4];
-            if(collide(0,-SPEED) == NoCollision) { // Up
+            if (collide(0, -SPEED) == NoCollision) { // Up
                 collide++;
                 freeSpaces[0] = true;
             }
-            if(collide(SPEED,0) == NoCollision) { // Right
+            if (collide(SPEED, 0) == NoCollision) { // Right
                 collide++;
                 freeSpaces[1] = true;
             }
-            if(collide(0,SPEED) == NoCollision) { // Down
+            if (collide(0, SPEED) == NoCollision) { // Down
                 collide++;
                 freeSpaces[2] = true;
             }
-            if(collide(-SPEED,0) == NoCollision) { // Left
+            if (collide(-SPEED, 0) == NoCollision) { // Left
                 collide++;
                 freeSpaces[3] = true;
             }
@@ -141,8 +143,8 @@ public class Ghost extends Creature {
 
             if (collide == 1) { // if only one possible direction
                 // set direction to the only free direction
-                for(int i=0;i< freeSpaces.length;i++) {
-                    if(freeSpaces[i]) {
+                for (int i = 0; i < freeSpaces.length; i++) {
+                    if (freeSpaces[i]) {
                         direction = dirInEdirection(i);
                     }
                 }
@@ -157,7 +159,7 @@ public class Ghost extends Creature {
             }
         } else {
             // generating direction
-            int dir = generatingDirection(3,direction.ordinal());
+            int dir = generatingDirection(3, direction.ordinal());
             // set direction to the new direction
             direction = dirInEdirection(dir);
         }
@@ -167,7 +169,7 @@ public class Ghost extends Creature {
      * Testing if move is possible,
      * If it is impossible move is the Motion.
      * If it is not possible moveOLD is the Motion.
-     *
+     * <p>
      * Adjust the looking.
      */
     public void move() {
@@ -204,7 +206,7 @@ public class Ghost extends Creature {
     /**
      * OLDMove is the current move
      * if the motion of the entity has changed
-     *  setDirection is called and return out of the function that setDirection can finish before the product is called
+     * setDirection is called and return out of the function that setDirection can finish before the product is called
      */
     private void setMove() {
         // set MoveOLD to the current Move
@@ -271,6 +273,7 @@ public class Ghost extends Creature {
     public BufferedImage getImg() {
         return img;
     }
+
     public int getImgID() {
         return imgID;
     }

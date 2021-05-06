@@ -31,36 +31,37 @@ public class Game {
     public static MenuState menuState;
     public static GameState gameState;
 
-    public  static int fps = 60;
+    public static int fps = 60;
+
     //////////////////////////////////////////////////////////////////////
-    public Game(){
+    public Game() {
         gameLoop();
     }
 
     /**
      * This Methode is the main gameloop and on this Methode the rest of the game is build.
      */
-    public void gameLoop(){
+    public void gameLoop() {
         // TODO loading screen parallel to the loading
         init(); // if the method is used nothing else is used. No parallel loading-Screen
-        double timePerTick = 1000000000/fps;
+        double timePerTick = 1000000000 / fps;
         double delta = 0;
         long now;
         long lastTime = System.nanoTime();
         long timer = 0;
         long ticks = 0;
-        while(running) {
+        while (running) {
             now = System.nanoTime();
             delta += (now - lastTime) / timePerTick;
             timer += now - lastTime;
             lastTime = now;
-            if(delta >=1) {
+            if (delta >= 1) {
                 tick();
                 render();
                 ticks++;
                 delta--;
             }
-            if(timer >= 1000000000) {
+            if (timer >= 1000000000) {
                 System.out.println("Ticks and Frames: " + ticks);
                 secTick();
                 ticks = 0;
@@ -74,7 +75,7 @@ public class Game {
     /**
      * Initialisation of all parameters for the game to function and run.
      */
-    private void init(){
+    private void init() {
         // start the loading
         loading = true;
 
@@ -122,19 +123,19 @@ public class Game {
      */
     public void render() {
         bs = window.getCanvas().getBufferStrategy();
-        if(window.getCanvas().getBufferStrategy() == null){
+        if (window.getCanvas().getBufferStrategy() == null) {
             window.getCanvas().createBufferStrategy(3);
             return;
         }
 
         g = bs.getDrawGraphics();
-        g.clearRect(0,0, window.getWidth(), window.getHeight());
+        g.clearRect(0, 0, window.getWidth(), window.getHeight());
 
         // STATE
-        if(State.getState() != null && State.getState().isDoneLoading() && !loading) {
+        if (State.getState() != null && State.getState().isDoneLoading() && !loading) {
             State.getState().render(g);
         }
-        if(State.getState() != null && !State.getState().isDoneLoading() && loading) {
+        if (State.getState() != null && !State.getState().isDoneLoading() && loading) {
             loadOverlay.render(g);
         }
 
@@ -147,15 +148,15 @@ public class Game {
      */
     public void tick() {
         // MUSIC
-        if(!sound.isPlay()) {
+        if (!sound.isPlay()) {
             sound.playSound(Sound.BACKGROUND_MUSIC);
         }
 
         // STATE
-        if(State.getState() != null && State.getState().isDoneLoading() && !loading) {
+        if (State.getState() != null && State.getState().isDoneLoading() && !loading) {
             State.getState().tick();
         }
-        if(State.getState() != null && !State.getState().isDoneLoading() && loading) {
+        if (State.getState() != null && !State.getState().isDoneLoading() && loading) {
             loadOverlay.tick();
         }
 
@@ -167,7 +168,7 @@ public class Game {
      * This methode is called 1 time per second and caa be used in the game logic.
      */
     public void secTick() {
-        if(State.getState() != null && State.getState().isDoneLoading()) {
+        if (State.getState() != null && State.getState().isDoneLoading()) {
             State.getState().secTick();
         }
     }
@@ -176,18 +177,23 @@ public class Game {
     public Window getWindow() {
         return window;
     }
+
     public GameState getGameState() {
         return gameState;
     }
+
     public MenuState getMenuState() {
         return menuState;
     }
+
     public MListener getMListener() {
         return mListener;
     }
+
     public Input getInput() {
         return input;
     }
+
     public Sound getSound() {
         return sound;
     }
