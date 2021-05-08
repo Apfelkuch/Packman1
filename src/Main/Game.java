@@ -10,7 +10,7 @@ import States.LoadOverlay;
 import States.MenuState;
 import States.State;
 import Text.Text;
-import music.Sound;
+import Music.Sound;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -149,7 +149,7 @@ public class Game {
     public void tick() {
         // MUSIC
         if (!sound.isPlay()) {
-            sound.playSound(Sound.BACKGROUND_MUSIC);
+            sound.playSoundWithKey("background.wav");
         }
 
         // STATE

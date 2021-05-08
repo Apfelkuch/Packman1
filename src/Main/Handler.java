@@ -9,7 +9,7 @@ import States.MenuState;
 import States.State;
 import Worldmanager.WorldGenerator;
 import Input.MListener;
-import music.Sound;
+import Music.Sound;
 
 public class Handler {
 

@@ -1,16 +1,17 @@
-package music;
+package Music;
 
 import javax.sound.sampled.*;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
 
 public class Sound {
 
-    public static String BACKGROUND_MUSIC = "res/sound/background.wav";
-    private ArrayList<Song> songs;
+    //    public static String BACKGROUND_MUSIC = "res/sound/background.wav";
+//    private ArrayList<Song> songs;
+    private HashMap<String, String> songs;
 
     /**
      * BACKGROUND_MUSIC = offset: 40
@@ -36,30 +37,34 @@ public class Sound {
                     int i = fileName.lastIndexOf('.');
                     if (i > 0 && i < fileName.length() - 1) {
                         String desiredExtension = fileName.substring(i + 1).toLowerCase(Locale.ENGLISH);
-                        if (desiredExtension.equals("wav")) {
-                            return true;
-                        }
+                        return desiredExtension.equals("wav");
                     }
                 }
                 return false;
             }
         });
-//        System.out.println("Sound.Sound:soundFiles");
-        songs = new ArrayList<Song>();
-        for (File f : files) {
-//            System.out.println(f.getName());
-            if (f != null) {
-                songs.add(new Song(f.getName(), f.getPath()));
+        songs = new HashMap<String, String>();
+        if (files == null) {
+            throw new IllegalArgumentException("file directory 'res/sound' have not sounds");
+        }
+        for (File file : files) {
+            if (file != null) {
+                songs.put(file.getName(), file.getPath());
             }
         }
 
     }
 
+    public void playSoundWithKey(String keyAsFilename) {
+        playSound(songs.get(keyAsFilename));
+    }
+
     public void playSound(String soundFile) {
         try {
             // set offset
-            if (soundFile.equals(BACKGROUND_MUSIC))
+            if (soundFile.equals(songs.get("background.wav"))) {
                 offset = 40;
+            }
 
             currentSoundFile = new File(soundFile);
             AudioInputStream audioIn = AudioSystem.getAudioInputStream(currentSoundFile.toURI().toURL());
@@ -100,8 +105,9 @@ public class Sound {
     }
 
     // GETTER && SETTER
+
     public boolean isPlay() {
-        return clip.isRunning();
+        return clip != null && clip.isRunning();
     }
 
     public Clip getClip() {

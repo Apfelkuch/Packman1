@@ -24,7 +24,7 @@ public class MenuState extends State implements ActionListener {
     private Button exit;
     // OPTION UI
     private Button back;
-    private Slider soundVolume;
+    private Slider sliderSoundVolume;
     // EXIT UI
     private Button yes;
     private Button no;
@@ -51,7 +51,7 @@ public class MenuState extends State implements ActionListener {
         if (menuStatus == MENU) {
             title.tick();
         } else if (menuStatus == OPTION) {
-            handler.getSound().setVolume(soundVolume.getValue());
+            handler.getSound().setVolume(sliderSoundVolume.getValue());
         } else if (menuStatus == EXIT) {
         }
     }
@@ -85,7 +85,7 @@ public class MenuState extends State implements ActionListener {
             g.drawString(Text.OPTION, handler.getWindow().getCanvas().getSize().width / 2 - stringWidth / 2, handler.getWindow().getCanvas().getSize().height / 4);
             // button
             back.render(g);
-            soundVolume.render(g);
+            sliderSoundVolume.render(g);
         } else if (this.menuStatus == EXIT) {
             g.setColor(Color.BLACK);
             g.setFont(Text.MenuTitleFontExit);
@@ -124,7 +124,7 @@ public class MenuState extends State implements ActionListener {
             exit.mousePressed(e);
         } else if (menuStatus == OPTION) {
             back.mousePressed(e);
-            soundVolume.mousePressed(e);
+            sliderSoundVolume.mousePressed(e);
         } else if (menuStatus == EXIT) {
             yes.mousePressed(e);
             no.mousePressed(e);
@@ -139,7 +139,7 @@ public class MenuState extends State implements ActionListener {
             exit.mouseReleased(e);
         } else if (menuStatus == OPTION) {
             back.mouseReleased(e);
-            soundVolume.mouseReleased(e);
+            sliderSoundVolume.mouseReleased(e);
         } else if (menuStatus == EXIT) {
             yes.mouseReleased(e);
             no.mouseReleased(e);
@@ -150,7 +150,7 @@ public class MenuState extends State implements ActionListener {
     public void mouseDragged(MouseEvent e) {
         if (menuStatus == MENU) {
         } else if (menuStatus == OPTION) {
-            soundVolume.mouseDragged(e);
+            sliderSoundVolume.mouseDragged(e);
         } else if (menuStatus == EXIT) {
         }
     }
@@ -196,9 +196,9 @@ public class MenuState extends State implements ActionListener {
 
         // sound volume slider
         int sliderPosX = (handler.getWindow().getCanvas().getSize().width / 2) - (sliderWidth / 2);
-        soundVolume = new Slider(handler, Text.VOLUME, 0, sliderPosX, handler.getWindow().getCanvas().getSize().height - ButtonDifferenceY * 3, sliderWidth, sliderHeight);
-        soundVolume.setCornerRounds(10);
-        soundVolume.setTextFont(Text.MenuTextFont);
+        sliderSoundVolume = new Slider(handler, Text.VOLUME, 0, sliderPosX, handler.getWindow().getCanvas().getSize().height - ButtonDifferenceY * 3, sliderWidth, sliderHeight);
+        sliderSoundVolume.setCornerRounds(10);
+        sliderSoundVolume.setTextFont(Text.MenuTextFont);
 
         //// EXIT
         ButtonPosX = (handler.getWindow().getCanvas().getSize().width / 3) - (ButtonWidth / 2);
@@ -215,7 +215,7 @@ public class MenuState extends State implements ActionListener {
     }
 
     // GETTER && SETTER
-    public Slider getSoundVolume() {
-        return soundVolume;
+    public Slider getSliderSoundVolume() {
+        return sliderSoundVolume;
     }
 }

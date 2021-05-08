@@ -3,7 +3,6 @@ package Save;
 import Main.Handler;
 import Text.Text;
 import Utility.CustomFileReader;
-import music.Sound;
 
 import java.io.File;
 
@@ -24,14 +23,17 @@ public class Load {
         String[] parts = loadString.split("\n");
 
         for (int i = 0; i < parts.length; i++) {
-            if (parts[i].split(":")[0].equals("class music.Sound")) {
-                handler.getSound().fromString(parts[i]);
-                handler.getSound().playSound(Sound.BACKGROUND_MUSIC);
-                handler.getMenuState().getSoundVolume().setValue(handler.getSound().getCurrentPercent());
+            System.out.println(parts[i].split(":")[0]);
+//            if (parts[i].split(":")[0].equals("class Music.Sound")) {
+            switch (parts[i].split(":")[0]) { // adjust if the classname is changed.
+                case "class Music.Sound" -> {
+                    handler.getSound().fromString(parts[i]);
+                    handler.getSound().playSoundWithKey("background.wav");
+                    handler.getMenuState().getSliderSoundVolume().setValue(handler.getSound().getCurrentPercent());
+                }
             }
         }
         return true;
     }
-
 
 }
