@@ -103,7 +103,7 @@ public class Slider extends Object {
     /**
      * Arrange the "value" between start and end return this value.
      * If start and end are equal, the result is the start parameter.
-     * start < end, otherwise the result is always 0.
+     * If start is smaller than end the value is calculated, if not the result is always 0.
      * The methode only works if the range is 1, otherwise the result is always 0.
      * The "value" variable is not changed.
      *

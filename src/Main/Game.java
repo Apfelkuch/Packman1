@@ -136,7 +136,7 @@ public class Game {
     }
 
     /**
-     * This methode is called {@value fps} (fps) times per second and repaint the screen.
+     * This methode is called fps value times per second and repaint the screen.
      */
     public void render() {
         bs = window.getCanvas().getBufferStrategy();
@@ -161,7 +161,7 @@ public class Game {
     }
 
     /**
-     * This methode is called {@value fps} (fps) times per second and can be used in the game logic.
+     * This methode is called fps value times per second and can be used in the game logic.
      */
     public void tick() {
         // MUSIC

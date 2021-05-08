@@ -116,6 +116,8 @@ public class Ghost extends Creature {
 
     /**
      * set direction to the next direction from the path-Array
+     *
+     * @param motionZero True if their is currently not motion, otherwise false.
      */
     public void setDirection(boolean motionZero) {
         if (motionZero) {

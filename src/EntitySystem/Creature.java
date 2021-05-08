@@ -41,6 +41,8 @@ public abstract class Creature extends Entity {
     /**
      * Test if Entity is colliding in the next move
      *
+     * @param XMOVE Movement in x direction.
+     * @param YMOVE Movement in y direction.
      * @return true if Entity collide, otherwise false
      */
     protected int collide(float XMOVE, float YMOVE) {
@@ -107,9 +109,10 @@ public abstract class Creature extends Entity {
     }
 
     /**
-     * test if a Creature(c) is in front of the current Creature and the current Creature will intersect in the next move with the other Creature(c).
+     * Test if a Creature(c) is in front of the current Creature and the current Creature will intersect in the next move with the other Creature(c).
      *
-     * @return true: Creature is in front && false: Creature is not in front
+     * @param c The tested Creature.
+     * @return True if the Creature is in front and false if the Creature is not in front.
      */
     protected boolean creatureInFront(Creature c) {
         switch (this.currentLooking) {

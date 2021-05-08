@@ -14,8 +14,9 @@ public class TileManager {
     /**
      * Add a Tile to the TILES-SET
      *
-     * @param name: The name of the Tile
-     * @param img:  The BufferedImage which presents the Tile
+     * @param name  The name of the Tile
+     * @param img   The BufferedImage which presents the Tile
+     * @param solid True if the Tile is solid, otherwise false.
      * @return true: Tile is added, false: Tile is not added because the class is not instantiated or the parameters are null or the name is redundant.
      */
     public boolean addTile(String name, BufferedImage img, boolean solid) {

@@ -29,7 +29,7 @@ public class Input implements KeyListener {
      * Update the key pressing on every tick and check if the key is recently pressed.
      *
      * @param keyCode: key which is pressed
-     * @return true: key just pressed & false: key not just pressed
+     * @return True if the key is just pressed and false if the key is not just pressed.
      */
     public boolean keyJustPressed_TickBased(int keyCode) {
         if (keyCode < 0 || keyCode > keys.length)
@@ -41,7 +41,7 @@ public class Input implements KeyListener {
      * Update the key pressing every time a key is pressed and check if the key is pressed.
      *
      * @param keyCode: key which is pressed
-     * @return true: key just pressed & false: key not just pressed
+     * @return True if the key is just pressed and false if the key is not just pressed.
      */
     public boolean keyJustPressed_PressedBased(int keyCode) {
         if (keyCode < 0 || keyCode > keys.length)

@@ -43,7 +43,7 @@ public class Sound {
                 return false;
             }
         });
-        songs = new HashMap<String, String>();
+        songs = new HashMap<String, String>(); // filename, file path to play the sound
         if (files == null) {
             throw new IllegalArgumentException("file directory 'res/sound' have not sounds");
         }
@@ -53,10 +53,6 @@ public class Sound {
             }
         }
 
-    }
-
-    public void playSoundWithKey(String keyAsFilename) {
-        playSound(songs.get(keyAsFilename));
     }
 
     public void playSound(String soundFile) {
@@ -76,6 +72,10 @@ public class Sound {
         } catch (LineUnavailableException | UnsupportedAudioFileException | IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void playSoundWithKey(String keyAsFilename) {
+        playSound(songs.get(keyAsFilename));
     }
 
     /**
@@ -98,14 +98,6 @@ public class Sound {
         if (!s.split(":")[0].equals(this.getClass().toString()))
             return false;
         volume = Float.parseFloat(s.split(":")[1]);
-        if (floatControl != null) {
-            floatControl.setValue(volume);
-        }
-        return true;
-    }
-
-    public boolean fromString(float v) {
-        volume = v;
         if (floatControl != null) {
             floatControl.setValue(volume);
         }
