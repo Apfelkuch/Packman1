@@ -9,7 +9,7 @@ public class FileStorage {
     private File storageFile;
     private HashMap<String, Object> storageMap;
 
-    public FileStorage (File file) throws IOException, IllegalArgumentException {
+    public FileStorage (File file) throws IllegalArgumentException, IOException {
         this.storageFile = file;
 
         if(storageFile.isDirectory()) {
@@ -65,7 +65,7 @@ public class FileStorage {
         return storageMap;
     }
 
-    public void printlAll() {
+    public void printAll() {
         for(String key : storageMap.keySet()) {
             System.out.println(key + " :: " + storageMap.get(key));
         }

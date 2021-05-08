@@ -9,31 +9,36 @@ import java.io.File;
 public class Load {
 
     /**
-     * Load the content from the save-file into the game.
-     *
-     * @param handler The handler to load the content into the game.
-     * @param path    The path from the save-file.
-     * @return true if the process was successful, otherwise false.
+     * Load the file date in the game.
+     * @param handler Handler to access the game and load the data values.
+     * @param fileStorage The fileStorage in which is the  transition between the save file and the program.
+     * @return True when the loading is finished. False if the one of the parameters is null.
      */
-    public static boolean load(Handler handler, String path) {
-        if (!(new File(path).isFile())) {
+    public static boolean load(Handler handler, FileStorage fileStorage) {
+        if(fileStorage == null || handler == null)
             return false;
-        }
-        String loadString = CustomFileReader.loadFileAsString(Text.SavePath);
-        String[] parts = loadString.split("\n");
+        // load sound
+        handler.getSound().fromString(String.valueOf(fileStorage.get("Sound.Volume")));
+        handler.getSound().playSoundWithKey("background.wav");
+        handler.getMenuState().getSliderSoundVolume().setValue(handler.getSound().getCurrentPercent());
+        // load ...
 
-        for (int i = 0; i < parts.length; i++) {
-            System.out.println(parts[i].split(":")[0]);
-//            if (parts[i].split(":")[0].equals("class Music.Sound")) {
-            switch (parts[i].split(":")[0]) { // adjust if the classname is changed.
-                case "class Music.Sound" -> {
-                    handler.getSound().fromString(parts[i]);
-                    handler.getSound().playSoundWithKey("background.wav");
-                    handler.getMenuState().getSliderSoundVolume().setValue(handler.getSound().getCurrentPercent());
-                }
-            }
-        }
         return true;
     }
 
+    /**
+     * Load default values in the game.
+     * @param handler Handler to access the game and load the default values
+     * @return True when the loading is finished. False if the parameter is null.
+     */
+    public static boolean loadDefault(Handler handler) {
+        if(handler == null)
+            return false;
+        // load sound
+        handler.getSound().playSoundWithKey("background.wav");
+        handler.getMenuState().getSliderSoundVolume().setValue(handler.getSound().getCurrentPercent());
+        // load ...
+
+        return true;
+    }
 }

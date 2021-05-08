@@ -104,6 +104,14 @@ public class Sound {
         return true;
     }
 
+    public boolean fromString(float v) {
+        volume = v;
+        if (floatControl != null) {
+            floatControl.setValue(volume);
+        }
+        return true;
+    }
+
     // GETTER && SETTER
 
     public boolean isPlay() {

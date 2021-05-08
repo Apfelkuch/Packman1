@@ -4,6 +4,7 @@ import ImageLoad.Assets;
 import Input.Input;
 import Input.MListener;
 import PackmanUi.Window;
+import Save.FileStorage;
 import Save.Load;
 import States.GameState;
 import States.LoadOverlay;
@@ -14,6 +15,8 @@ import Music.Sound;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.io.File;
+import java.io.IOException;
 
 public class Game {
     private Window window;
@@ -32,6 +35,8 @@ public class Game {
     public static GameState gameState;
 
     public static int fps = 60;
+
+    private FileStorage fileStorage;
 
     //////////////////////////////////////////////////////////////////////
     public Game() {
@@ -96,9 +101,21 @@ public class Game {
         State.changeState(menuState);
 
         // load the save file
-        if ((Load.load(handler, Text.SavePath))) {
-            System.out.println("Game.init: load file exists");
+        File f = new File(Text.SavePath);
+        boolean saveFile = f.isFile();
+        try {
+            fileStorage = new FileStorage(f);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (saveFile) {
+            if ((Load.load(handler, fileStorage))) {
+                System.out.println("Game.init: load file exists");
+            } else {
+                System.out.println("Game.init: load file does not exists.");
+            }
         } else {
+            Load.loadDefault(handler);
             System.out.println("Game.init: load file does not exists.");
         }
 
@@ -196,5 +213,9 @@ public class Game {
 
     public Sound getSound() {
         return sound;
+    }
+
+    public FileStorage getFileStorage() {
+        return fileStorage;
     }
 }

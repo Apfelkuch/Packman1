@@ -6,8 +6,6 @@ import Componts.TextField;
 import ImageLoad.Assets;
 import Main.Game;
 import Main.Handler;
-import Save.Save;
-import Save.SaveObject;
 import Text.Text;
 
 import java.awt.*;
@@ -106,7 +104,9 @@ public class MenuState extends State implements ActionListener {
         } else if (e.getSource() == exit) {
             this.menuStatus = EXIT;
         } else if (e.getSource() == back) {
-            Save.save(Text.SavePath, SaveObject.getSaveString(handler));
+//            Save.save(Text.SavePath, SaveObject.getSaveString(handler));
+            // save
+            handler.getGame().getFileStorage().store("Sound.Volume", handler.getSound().toString());
             this.menuStatus = MENU;
         } else if (e.getSource() == yes) {
             System.exit(1);
