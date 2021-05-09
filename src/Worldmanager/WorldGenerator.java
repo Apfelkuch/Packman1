@@ -87,6 +87,28 @@ public class WorldGenerator {
         powerupManager.render(g);
     }
 
+    public void render(Graphics g, float xPos, float yPos, float width, float height) {
+        System.out.println("xPos = " + xPos);
+        System.out.println("yPos = " + yPos);
+        System.out.println("width = " + width);
+        System.out.println("height = " + height);
+        int lowerX = (int) Math.floor(xPos) / Assets.TILEWIDTH;
+        int lowerY = (int) Math.floor(yPos) / Assets.TILEHEIGHT;
+        int upperX = (int) Math.ceil(xPos + width) / Assets.TILEWIDTH;
+        int upperY = (int) Math.ceil(yPos + height) / Assets.TILEHEIGHT;
+        System.out.println("lowerX = " + lowerX);
+        System.out.println("upperX = " + upperX);
+        System.out.println("lowerY = " + lowerY);
+        System.out.println("upperY = " + upperY);
+        for (int y = lowerY; y < upperY; y++) {
+            for (int x = lowerX; x < upperX; x++) {
+                System.out.println(x + " :: " + y);
+                getTile(x, y).render(g, x * Assets.TILEWIDTH, y * Assets.TILEHEIGHT);
+            }
+        }
+        powerupManager.render(g, xPos, yPos, width, height);
+    }
+
     /**
      * Modify the world to chose the perfect tile at every location.
      *

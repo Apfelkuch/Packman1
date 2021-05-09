@@ -9,8 +9,9 @@ import java.util.Locale;
 
 public class Sound {
 
-    //    public static String BACKGROUND_MUSIC = "res/sound/background.wav";
-//    private ArrayList<Song> songs;
+    /**
+     * The Hashmap in which the path is saved with the sound file name from the "res/sound" directory as the key.
+     */
     private HashMap<String, String> songs;
 
     /**
@@ -18,14 +19,30 @@ public class Sound {
      */
     private float offset = 0;
 
+    /**
+     * The volume of the sound.
+     */
     private float volume = 0.0f;
 
+    /**
+     * The current sound file which is played.
+     */
     private File currentSoundFile = null;
+
+    /**
+     * The clip.
+     */
     private Clip clip = null;
+
+    /**
+     * The floatControl.
+     */
     private FloatControl floatControl = null;
 
+    /**
+     * Initialize the sound class and load the path of all sound from the "res/sound" directory into the songs Hashmap.
+     */
     public Sound() {
-        // TODO need to be completed.
         File[] files = new File("res/sound").listFiles(new FileFilter() {
             @Override
             public boolean accept(File f) { // accept all files with a wav extension and ignore the rest
@@ -55,6 +72,11 @@ public class Sound {
 
     }
 
+    /**
+     * Play the sound given in the file.
+     *
+     * @param soundFile The path of the file with the sound.
+     */
     public void playSound(String soundFile) {
         try {
             // set offset
@@ -74,6 +96,11 @@ public class Sound {
         }
     }
 
+    /**
+     * Play a sound with the key, with is in the songs Hashmap.
+     *
+     * @param keyAsFilename The key from the sound in the Hashmap.
+     */
     public void playSoundWithKey(String keyAsFilename) {
         playSound(songs.get(keyAsFilename));
     }
@@ -106,18 +133,38 @@ public class Sound {
 
     // GETTER && SETTER
 
+    /**
+     * Check if the current clip is playing.
+     *
+     * @return True if the clip is running, otherwise false.
+     */
     public boolean isPlay() {
         return clip != null && clip.isRunning();
     }
 
+    /**
+     * Getter for the clip.
+     *
+     * @return The clip.
+     */
     public Clip getClip() {
         return clip;
     }
 
+    /**
+     * Getter for the volume.
+     *
+     * @return The volume.
+     */
     public float getVolume() {
         return volume;
     }
 
+    /**
+     * Getter for the floatControl.
+     *
+     * @return The floatControl.
+     */
     public FloatControl getFloatControl() {
         return floatControl;
     }
@@ -135,7 +182,7 @@ public class Sound {
     }
 
     /**
-     * Find the current percent ratio between the current sound value and the area, in which the value can go.
+     * Find the current percent ratio between the current sound value and the area, in which the value can go.<br>
      * (minimum bis current - offset) / (maximum - minimum - offset)
      *
      * @return The ratio between the current and all possible values.

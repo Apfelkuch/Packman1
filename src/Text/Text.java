@@ -14,16 +14,15 @@ public class Text {
         for (File file : files) {
             try {
                 graphicsEnvironment.registerFont(Font.createFont(Font.TRUETYPE_FONT, file));
-//                System.out.println("Font: " + file.getName() + " is loaded.");
             } catch (FontFormatException e) {
-//                System.out.println("Font: " + file.getName() + " is not loaded.");
                 e.printStackTrace();
             } catch (IOException e) {
-//                System.out.println("Font: " + file.getName() + " is not loaded.");
                 e.printStackTrace();
             }
         }
     }
+
+    //// TEXT
 
     // MENU
     public static String TITLE = "Packmann";
@@ -45,16 +44,21 @@ public class Text {
     public static String ButtonNo = "no";
     public static String ButtonContinue = "continue";
 
+    //// FONT
+    private static final String fontName = "arial";
+
     // FONTS GAME
-    public static Font GameOverFont = new Font(Font.MONOSPACED, Font.BOLD, 50);
-    public static Font BreakFont = new Font(Font.MONOSPACED, Font.BOLD, 50);
-    public static Font DotFont = new Font(Font.MONOSPACED, Font.BOLD, 36);
+    public static Font GameOverFont = new Font(fontName, Font.BOLD, 50);
+    public static Font BreakFont = new Font(fontName, Font.BOLD, 50);
+    public static Font DotFont = new Font(fontName, Font.BOLD, 36);
     // FONTS MENU
-    public static Font MenuTitleFontMain = new Font(Font.MONOSPACED, Font.BOLD, 100);
-    public static Font MenuTitleFontOption = new Font(Font.MONOSPACED, Font.BOLD, 50);
-    public static Font MenuTitleFontExit = new Font(Font.MONOSPACED, Font.BOLD, 50);
-    public static Font MenuButtonFont = new Font(Font.MONOSPACED, Font.BOLD, 30);
-    public static Font MenuTextFont = new Font(Font.MONOSPACED, Font.BOLD, 30);
+    public static Font MenuTitleFontMain = new Font(fontName, Font.BOLD, 100);
+    public static Font MenuTitleFontOption = new Font(fontName, Font.BOLD, 50);
+    public static Font MenuTitleFontExit = new Font(fontName, Font.BOLD, 50);
+    public static Font MenuButtonFont = new Font(fontName, Font.BOLD, 30);
+    public static Font MenuTextFont = new Font(fontName, Font.BOLD, 30);
+
+    //// PATHS
 
     // save path
     public static String SavePath = "res/save/save.txt";

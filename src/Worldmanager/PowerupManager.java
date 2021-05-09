@@ -52,11 +52,23 @@ public class PowerupManager {
     public void render(Graphics g) {
         for (Item i : items) {
             i.render(g);
-//            // collisionBox Dots
-//            if(i.getItemType() == Dot) {
-//                g.setColor(Color.RED);
-//                g.drawRect(i.getCollisionBOX().x, i.getCollisionBOX().y, i.getCollisionBOX().width, i.getCollisionBOX().height);
-//            }
+//            renderItemCollisionBox(g, i);
+        }
+    }
+
+    public void render(Graphics g, float xPos, float yPos, float width, float height) {
+        for (Item i : items) {
+            if (i.getPosX() > xPos && i.getPosY() > yPos && i.getPosX() < (xPos + width) && i.getPosY() > (xPos + height)) {
+                i.render(g);
+//                renderItemCollisionBox(g, i);
+            }
+        }
+    }
+
+    private void renderItemCollisionBox(Graphics g, Item item) {
+        if (item.getItemType() == Dot) {
+            g.setColor(Color.RED);
+            g.drawRect(item.getCollisionBOX().x, item.getCollisionBOX().y, item.getCollisionBOX().width, item.getCollisionBOX().height);
         }
     }
 
