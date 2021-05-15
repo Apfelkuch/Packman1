@@ -1,7 +1,5 @@
 package Tiles;
 
-import ImageLoad.Assets;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -23,8 +21,9 @@ public class Tile {
 
     }
 
-    public void render(Graphics g, int x, int y) {
-        g.drawImage(texture, x, y, Assets.TILEWIDTH, Assets.TILEHEIGHT, null);
+    public void render(Graphics g, int x, int y, int width, int height) {
+//        g.drawImage(texture, x, y, Assets.TILEWIDTH, Assets.TILEHEIGHT, null);
+        g.drawImage(texture, x, y, width, height, null);
     }
 
     // GETTER & SETTER

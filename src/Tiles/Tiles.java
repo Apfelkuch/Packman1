@@ -2,9 +2,11 @@ package Tiles;
 
 import ImageLoad.Assets;
 
+import java.util.ArrayList;
+
 public class Tiles {
 
-    TileManager tileManager = new TileManager();
+    private TileManager tileManager = new TileManager();
 
     public Tiles() {
         tileManager.addTile("groundTile", Assets.ground, false);
@@ -23,5 +25,15 @@ public class Tiles {
         tileManager.addTile("upperWallTile", Assets.upperWall, true);
         tileManager.addTile("lowerWallTile", Assets.lowerWall, true);
         tileManager.addTile("allWall", Assets.allWall, true);
+    }
+
+    // GETTER && SETTER
+
+    public TileManager getTileManager() {
+        return tileManager;
+    }
+
+    public ArrayList<Tile> getTiles() {
+        return tileManager.getTiles();
     }
 }

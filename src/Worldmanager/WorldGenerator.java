@@ -3,7 +3,6 @@ package Worldmanager;
 import ImageLoad.Assets;
 import Main.Handler;
 import Tiles.Tile;
-import Tiles.TileManager;
 import Tiles.Tiles;
 import Utility.CustomFileReader;
 
@@ -15,16 +14,16 @@ public class WorldGenerator {
     private int spawnX, spawnY;
     private int ghostSpawnX, ghostSpawnY;
     private int ghostCount;
-    private Handler handler;
-    private Tiles tiles;
-    private PowerupManager powerupManager;
+    private final Handler handler;
+    private final Tiles tiles;
+    private final PowerUpManager powerupManager;
 
-    /////////////////////////////////////////////////////////Class
+    /////////////////////////////////////////////////////////
     public WorldGenerator(String path, Handler handler) {
         this.handler = handler;
         tiles = new Tiles(); // initialize the Tiles
-        genWorld(path); // generate the world
-        powerupManager = new PowerupManager(this, handler);
+        genWorld(path); // generate the world1
+        powerupManager = new PowerUpManager(this, handler);
     }
 
     /**
@@ -64,16 +63,16 @@ public class WorldGenerator {
      * @return Tile at the given location.
      */
     public Tile getTile(int x, int y) {
-        if (TileManager.TILES == null || TileManager.TILES.size() == 0) {
+        if (tiles.getTiles() == null || tiles.getTiles().size() == 0) {
             System.out.println("[WorldGenerator/getTile] Tile-List-size = 0 or Tiles == null");
         }
 //        System.out.println("[WorldGenerator/getTile] " + worldGrid[x][y]);
-//        System.out.println("[WorldGenerator/getTile] Tiles.size:" + TileManager.TILES.size());
-        if (TileManager.TILES.size() == 0) return null;
-        Tile t = TileManager.TILES.get(worldGrid[x][y]);
+//        System.out.println("[WorldGenerator/getTile] Tiles.size:" + tiles.getTiles().size());
+        if (tiles.getTiles().size() == 0) return null;
+        Tile t = tiles.getTiles().get(worldGrid[x][y]);
         if (t == null) {
             System.out.println("[WorldGenerator/getTile] Tile is null at x:" + x + " ,y:" + y);
-            return TileManager.TILES.get(0);
+            return tiles.getTiles().get(0);
         }
         return t;
     }
@@ -81,32 +80,19 @@ public class WorldGenerator {
     public void render(Graphics g) {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                getTile(x, y).render(g, x * Assets.TILEWIDTH, y * Assets.TILEHEIGHT);
+                getTile(x, y).render(g, x * Assets.TILEWIDTH, y * Assets.TILEHEIGHT, Assets.TILEWIDTH, Assets.TILEHEIGHT);
             }
         }
         powerupManager.render(g);
     }
 
-    public void render(Graphics g, float xPos, float yPos, float width, float height) {
-        System.out.println("xPos = " + xPos);
-        System.out.println("yPos = " + yPos);
-        System.out.println("width = " + width);
-        System.out.println("height = " + height);
-        int lowerX = (int) Math.floor(xPos) / Assets.TILEWIDTH;
-        int lowerY = (int) Math.floor(yPos) / Assets.TILEHEIGHT;
-        int upperX = (int) Math.ceil(xPos + width) / Assets.TILEWIDTH;
-        int upperY = (int) Math.ceil(yPos + height) / Assets.TILEHEIGHT;
-        System.out.println("lowerX = " + lowerX);
-        System.out.println("upperX = " + upperX);
-        System.out.println("lowerY = " + lowerY);
-        System.out.println("upperY = " + upperY);
-        for (int y = lowerY; y < upperY; y++) {
-            for (int x = lowerX; x < upperX; x++) {
-                System.out.println(x + " :: " + y);
-                getTile(x, y).render(g, x * Assets.TILEWIDTH, y * Assets.TILEHEIGHT);
+    public void render(Graphics g, int topLeftX, int topLeftY, int downRightX, int downRightY, int tileWidth, int tileHeight) {
+        for (int y = topLeftY; y < downRightY; y++) {
+            for (int x = topLeftX; x < downRightX; x++) {
+                getTile(x, y).render(g, x * tileWidth, y * tileHeight, tileWidth, tileHeight);
             }
         }
-        powerupManager.render(g, xPos, yPos, width, height);
+        powerupManager.render(g, topLeftX, topLeftY, downRightX, downRightY);
     }
 
     /**
@@ -203,7 +189,7 @@ public class WorldGenerator {
         return height;
     }
 
-    public PowerupManager getPowerUpManager() {
+    public PowerUpManager getPowerUpManager() {
         return powerupManager;
     }
 }

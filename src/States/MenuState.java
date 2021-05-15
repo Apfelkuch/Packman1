@@ -39,6 +39,8 @@ public class MenuState extends State implements ActionListener {
 
     @Override
     public boolean initState() {
+//        System.out.println("MenuState.initState: " + Assets.menuBackground);
+//        handler.getWindow().setSize(new Dimension(Assets.menuBackground.getWidth(), Assets.menuBackground.getHeight()));
         initUI();
         this.menuStatus = MENU;
         return true;

@@ -61,5 +61,5 @@ public class Text {
     //// PATHS
 
     // save path
-    public static String SavePath = "res/save/save.txt";
+    public static String SavePath = "res/saves/save.txt";
 }

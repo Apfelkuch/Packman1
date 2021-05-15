@@ -19,6 +19,11 @@ public abstract class Entity {
         this.collisionBOX = new Rectangle((int) posX, (int) posY, CBwidth, CBheight);
     }
 
+    public void renderCollisionBox(Graphics g) {
+        g.setColor(Color.MAGENTA);
+        g.drawRect(collisionBOX.x, collisionBOX.y, collisionBOX.width, collisionBOX.height);
+    }
+
     public abstract void render(Graphics g);
 
     public abstract void tick();
@@ -35,6 +40,14 @@ public abstract class Entity {
 
     public Rectangle getCollisionBOX() {
         return collisionBOX;
+    }
+
+    public int getCBwidth() {
+        return CBwidth;
+    }
+
+    public int getCBheight() {
+        return CBheight;
     }
 }
 

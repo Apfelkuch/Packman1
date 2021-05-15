@@ -5,10 +5,10 @@ import java.util.ArrayList;
 
 public class TileManager {
 
-    public static ArrayList<Tile> TILES;
+    private ArrayList<Tile> tiles;
 
     public TileManager() {
-        TILES = new ArrayList<Tile>();
+        tiles = new ArrayList<Tile>();
     }
 
     /**
@@ -20,18 +20,23 @@ public class TileManager {
      * @return true: Tile is added, false: Tile is not added because the class is not instantiated or the parameters are null or the name is redundant.
      */
     public boolean addTile(String name, BufferedImage img, boolean solid) {
-        if (TILES == null || name == null || img == null) return false; // check if tiles & the Tile is creatable
+        if (tiles == null || name == null || img == null) return false; // check if tiles & the Tile is creatable
 
-        for (Tile t : TILES) { // check if the id or the name is already used
+        for (Tile t : tiles) { // check if the id or the name is already used
             if (t.name.equals(name))
                 return false;
         }
 
-        int id = TILES.size();
+        int id = tiles.size();
 
-        TILES.add(new Tile(name, id, img, solid));
+        tiles.add(new Tile(name, id, img, solid));
 
         return true;
     }
 
+    // GETTER && SETTER
+
+    public ArrayList<Tile> getTiles() {
+        return tiles;
+    }
 }

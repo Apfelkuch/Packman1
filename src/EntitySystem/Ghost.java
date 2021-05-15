@@ -65,8 +65,7 @@ public class Ghost extends Creature {
         g.drawImage(img, (int) posX, (int) posY, width, height, null);
 
 //        //collisionBOX
-//        g.setColor(Color.MAGENTA);
-//        g.drawRect(collisionBOX.x, collisionBOX.y, collisionBOX.width, collisionBOX.height);
+//        renderCollisionBox(g);
     }
 
     public void tick() {

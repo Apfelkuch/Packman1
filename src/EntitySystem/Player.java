@@ -40,8 +40,7 @@ public class Player extends Creature {
         g.drawString("" + this.dotCounter, (handler.getWorld().getWidth() - 2) * Assets.TILEWIDTH, (int) (Assets.TILEHEIGHT * 0.80));
 
 //        //collisionBox packman
-//        g.setColor(Color.RED);
-//        g.drawRect(collisionBOX.x,collisionBOX.y,collisionBOX.width,collisionBOX.height);
+//        renderCollisionBox(g);
     }
 
     @Override

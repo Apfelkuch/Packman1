@@ -92,6 +92,9 @@ public class Game {
         text = new Text();
         sound = new Sound();
 
+        // initialize the assets
+        Assets.init();
+
         // initialize the states
         loadOverlay = new LoadOverlay(handler);
         gameState = new GameState(handler);
@@ -118,9 +121,6 @@ public class Game {
             Load.loadDefault(handler);
             System.out.println("Game.init: load file does not exists.");
         }
-
-        // initialize the assets
-        Assets.init();
 
         // add the listeners to the canvas
         window.getCanvas().addKeyListener(input);

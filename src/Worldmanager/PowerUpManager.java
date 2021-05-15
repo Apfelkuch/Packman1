@@ -8,19 +8,19 @@ import Main.Handler;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class PowerupManager {
+public class PowerUpManager {
     private ArrayList<Item> items;
     private ArrayList<Item> emptyPlaces;
     private WorldGenerator world;
     private ArrayList<Vector2D> emptyTiles;
     private Handler handler;
     private int dotCount = 0;
-    private int powerUpCout = 0;
+    private int powerUpCount = 0;
 
     // itemType
     private final char Dot = 'D';
 
-    public PowerupManager(WorldGenerator world, Handler handler) {
+    public PowerUpManager(WorldGenerator world, Handler handler) {
         this.world = world;
         this.handler = handler;
         emptyTiles = new ArrayList<Vector2D>();
@@ -33,7 +33,7 @@ public class PowerupManager {
 
     public void initDots() {
         for (Vector2D v : emptyTiles) {
-            items.add(new Dot(handler, v.getX() * Assets.TILEHEIGHT + Assets.TILEWIDTH / 2, v.getY() * Assets.TILEHEIGHT + Assets.TILEHEIGHT / 2, Dot));
+            items.add(new Dot(handler, v.getX() * Assets.TILEWIDTH + Assets.TILEWIDTH / 2, v.getY() * Assets.TILEHEIGHT + Assets.TILEHEIGHT / 2, Dot));
             dotCount++;
         }
     }
@@ -52,23 +52,17 @@ public class PowerupManager {
     public void render(Graphics g) {
         for (Item i : items) {
             i.render(g);
-//            renderItemCollisionBox(g, i);
+//            i.renderCollisionBox(g);
         }
     }
 
-    public void render(Graphics g, float xPos, float yPos, float width, float height) {
+
+    public void render(Graphics g, int topLeftX, int topLeftY, int downRightX, int downRightY) {
         for (Item i : items) {
-            if (i.getPosX() > xPos && i.getPosY() > yPos && i.getPosX() < (xPos + width) && i.getPosY() > (xPos + height)) {
+            if ((i.getPosX() / Assets.TILEWIDTH) > topLeftX && (i.getPosY() / Assets.TILEHEIGHT) > topLeftY && (i.getPosX() / Assets.TILEWIDTH) < downRightX && (i.getPosY() / Assets.TILEHEIGHT) < downRightY) {
+//                i.renderCollisionBox(g);
                 i.render(g);
-//                renderItemCollisionBox(g, i);
             }
-        }
-    }
-
-    private void renderItemCollisionBox(Graphics g, Item item) {
-        if (item.getItemType() == Dot) {
-            g.setColor(Color.RED);
-            g.drawRect(item.getCollisionBOX().x, item.getCollisionBOX().y, item.getCollisionBOX().width, item.getCollisionBOX().height);
         }
     }
 
@@ -94,7 +88,7 @@ public class PowerupManager {
         return dotCount;
     }
 
-    public int getPowerUpCout() {
-        return powerUpCout;
+    public int getPowerUpCount() {
+        return powerUpCount;
     }
 }
