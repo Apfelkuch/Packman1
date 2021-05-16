@@ -7,7 +7,7 @@ import Worldmanager.WorldGenerator;
 import java.awt.*;
 
 // TODO camera
-public class Camera2DWorldGrid {
+public class Camera2DWorldGrid extends Camera{
 
     private float x;
     private float y;
@@ -118,14 +118,18 @@ public class Camera2DWorldGrid {
         }
     }
 
+    @Override
     public void render(Graphics g) {
         if (noCamera) {
             worldGenerator.render(g);
         } else {
-            worldGenerator.render(g, topLeftX, topLeftY, downRightX, downRightY, windowWidth / verticalTileCount, windowHeight / horizontalTileCount);
+            g.fillRect(0, 0, windowWidth, windowHeight);
+//            worldGenerator.render(g, topLeftX, topLeftY, downRightX, downRightY, windowWidth / verticalTileCount, windowHeight / horizontalTileCount);
+            worldGenerator.render(g, topLeftX, topLeftY, downRightX, downRightY, 48, 48);
         }
     }
 
+    @Override
     public void renderEntities(Graphics g, Entity entity) {
         if (noCamera) {
             entity.render(g);

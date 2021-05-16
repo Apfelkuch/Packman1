@@ -53,6 +53,7 @@ public class Player extends Creature {
             if (g != null) {
                 if (this.creatureInFront(g)) { // player eats the ghost if the player will intersect in the next move with the ghost.
                     eatGhost(g);
+                    System.out.println("Player.tick: The player eat a ghost.");
                 }
             }
         }

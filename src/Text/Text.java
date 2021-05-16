@@ -62,4 +62,11 @@ public class Text {
 
     // save path
     public static String SavePath = "res/saves/save.txt";
+
+
+    //// COLORS
+
+    // Game
+    public static Color backgroundColor = Color.BLACK;
+
 }
