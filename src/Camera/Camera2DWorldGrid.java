@@ -20,10 +20,10 @@ public class Camera2DWorldGrid extends Camera{
     private int oldDownRightX = -1;
     private int oldDownRightY = -1;
 
-    private int topLeftX;
-    private int topLeftY;
-    private int downRightX;
-    private int downRightY;
+    private int startX;
+    private int startY;
+    private int endX;
+    private int endY;
 
     private int windowWidth;
     private int windowHeight;
@@ -59,61 +59,61 @@ public class Camera2DWorldGrid extends Camera{
         y = (yPos / Assets.TILEHEIGHT) - horizontalTileCount / 2;
 
         // Set the borders for the Tiles that needs to be rendered.
-        topLeftX = (int) Math.floor(x);
-        topLeftY = (int) Math.floor(y);
-        downRightX = (int) Math.ceil(x + verticalTileCount);
-        downRightY = (int) Math.ceil(y + horizontalTileCount);
+        startX = (int) Math.floor(x);
+        startY = (int) Math.floor(y);
+        endX = (int) Math.ceil(x + verticalTileCount);
+        endY = (int) Math.ceil(y + horizontalTileCount);
 
         // Adjust the render border for the tiles whit a certain format.
         // The format is given with the methode.
         if (format == CameraFormat1) {
             // The filled is always th size of viewedTilesInWidth * viewedTilesInHeight and xPos, yPos is in this.
             // If the camera view collides with a border the camera view is not moved.
-            if (topLeftX < 0) {
+            if (startX < 0) {
                 if (oldDownRightX != -1) {
-                    downRightX = oldDownRightX;
+                    endX = oldDownRightX;
                 }
-                topLeftX = 0;
+                startX = 0;
             } else {
-                oldDownRightX = downRightX;
+                oldDownRightX = endX;
             }
-            if (topLeftY < 0) {
+            if (startY < 0) {
                 if (oldDownRightY != -1) {
-                    downRightY = oldDownRightY;
+                    endY = oldDownRightY;
                 }
-                topLeftY = 0;
+                startY = 0;
             } else {
-                oldDownRightY = downRightY;
+                oldDownRightY = endY;
             }
-            if (downRightX > (worldGenerator.getWorldGrid().length)) {
+            if (endX > (worldGenerator.getWorldGrid().length)) {
                 if (oldTopLeftX != -1) {
-                    topLeftX = oldTopLeftX;
+                    startX = oldTopLeftX;
                 }
-                downRightX = worldGenerator.getWorldGrid().length;
+                endX = worldGenerator.getWorldGrid().length;
             } else {
-                oldTopLeftX = topLeftX;
+                oldTopLeftX = startX;
             }
-            if (downRightY > (worldGenerator.getWorldGrid()[0].length)) {
+            if (endY > (worldGenerator.getWorldGrid()[0].length)) {
                 if (oldTopLeftY != -1) {
-                    topLeftY = oldTopLeftY;
+                    startY = oldTopLeftY;
                 }
-                downRightY = worldGenerator.getWorldGrid()[0].length;
+                endY = worldGenerator.getWorldGrid()[0].length;
             } else {
-                oldTopLeftY = topLeftY;
+                oldTopLeftY = startY;
             }
         } else { // format == CameraFormat is the default
             // Set the render border to the max if the border is greater than the max border.
-            if (topLeftX < 0) {
-                topLeftX = 0;
+            if (startX < 0) {
+                startX = 0;
             }
-            if (topLeftY < 0) {
-                topLeftY = 0;
+            if (startY < 0) {
+                startY = 0;
             }
-            if (downRightX > (worldGenerator.getWorldGrid().length)) {
-                downRightX = worldGenerator.getWorldGrid().length;
+            if (endX > (worldGenerator.getWorldGrid().length)) {
+                endX = worldGenerator.getWorldGrid().length;
             }
-            if (downRightY > (worldGenerator.getWorldGrid()[0].length)) {
-                downRightY = worldGenerator.getWorldGrid()[0].length;
+            if (endY > (worldGenerator.getWorldGrid()[0].length)) {
+                endY = worldGenerator.getWorldGrid()[0].length;
             }
         }
     }
@@ -125,7 +125,7 @@ public class Camera2DWorldGrid extends Camera{
         } else {
             g.fillRect(0, 0, windowWidth, windowHeight);
 //            worldGenerator.render(g, topLeftX, topLeftY, downRightX, downRightY, windowWidth / verticalTileCount, windowHeight / horizontalTileCount);
-            worldGenerator.render(g, topLeftX, topLeftY, downRightX, downRightY, 48, 48);
+            worldGenerator.render(g, startX, startY, endX, endY, 48, 48);
         }
     }
 
@@ -134,10 +134,10 @@ public class Camera2DWorldGrid extends Camera{
         if (noCamera) {
             entity.render(g);
         } else {
-            if(entity.getPosX() / Assets.TILEWIDTH > topLeftX - entityRenderExtra &&
-                    entity.getPosY() / Assets.TILEHEIGHT > topLeftY -entityRenderExtra &&
-                    (entity.getPosX() + entity.getCBwidth()) / Assets.TILEWIDTH < downRightX +entityRenderExtra &&
-                    (entity.getPosY() + entity.getCBheight()) / Assets.TILEHEIGHT < downRightY + entityRenderExtra) {
+            if(entity.getPosX() / Assets.TILEWIDTH > startX - entityRenderExtra &&
+                    entity.getPosY() / Assets.TILEHEIGHT > startY -entityRenderExtra &&
+                    (entity.getPosX() + entity.getCBwidth()) / Assets.TILEWIDTH < endX +entityRenderExtra &&
+                    (entity.getPosY() + entity.getCBheight()) / Assets.TILEHEIGHT < endY + entityRenderExtra) {
                 entity.render(g);
             }
         }

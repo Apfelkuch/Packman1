@@ -86,13 +86,31 @@ public class WorldGenerator {
         powerupManager.render(g);
     }
 
-    public void render(Graphics g, int topLeftX, int topLeftY, int downRightX, int downRightY, int tileWidth, int tileHeight) {
-        for (int y = topLeftY; y < downRightY; y++) {
-            for (int x = topLeftX; x < downRightX; x++) {
+    public void render(Graphics g, int startX, int startY, int endX, int endY, int tileWidth, int tileHeight) {
+        for (int y = startY; y < endY; y++) {
+            for (int x = startX; x < endX; x++) {
                 getTile(x, y).render(g, x * tileWidth, y * tileHeight, tileWidth, tileHeight);
             }
         }
-        powerupManager.render(g, topLeftX, topLeftY, downRightX, downRightY);
+        powerupManager.render(g, startX, startY, endX, endY);
+    }
+
+    public void render(Graphics g, int offsetX, int offsetY, int startX, int startY, int endX, int endY, int tileWidth, int tileHeight) {
+        System.out.println("WorldGenerator.render");
+        System.out.println("offsetX = " + offsetX);
+        System.out.println("offsetY = " + offsetY);
+        System.out.println("startX = " + startX);
+        System.out.println("startY = " + startY);
+        System.out.println("endX = " + endX);
+        System.out.println("endY = " + endY);
+        System.out.println("tileWidth = " + tileWidth);
+        System.out.println("tileHeight = " + tileHeight);
+        for (int y = startY; y < endY; y++) {
+            for (int x = startX; x < endX; x++) {
+                getTile(x, y).render(g, (x * tileWidth) + offsetX, (y * tileHeight) + offsetY, tileWidth, tileHeight);
+            }
+        }
+        powerupManager.render(g, offsetX, offsetY, startX, startY, endX, endY);
     }
 
     /**
