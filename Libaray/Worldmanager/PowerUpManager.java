@@ -56,6 +56,25 @@ public class PowerUpManager {
         }
     }
 
+
+    public void render(Graphics g, int startX, int startY, int endX, int endY) {
+        for (Item i : items) {
+            if ((i.getPosX() / Assets.TILEWIDTH) > startX && (i.getPosY() / Assets.TILEHEIGHT) > startY && (i.getPosX() / Assets.TILEWIDTH) < endX && (i.getPosY() / Assets.TILEHEIGHT) < endY) {
+//                i.renderCollisionBox(g);
+                i.render(g);
+            }
+        }
+    }
+
+    public void render(Graphics g, int offsetX, int offsetY, int startX, int startY, int endX, int endY) {
+        for (Item i : items) {
+            if ((i.getPosX() / Assets.TILEWIDTH) > startX && (i.getPosY() / Assets.TILEHEIGHT) > startY && (i.getPosX() / Assets.TILEWIDTH) < endX && (i.getPosY() / Assets.TILEHEIGHT) < endY) {
+//                i.renderCollisionBox(g);
+                i.render(g);
+            }
+        }
+    }
+
     public void removeItem(Item item) {
         if (item == null)
             return;

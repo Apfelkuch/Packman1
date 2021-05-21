@@ -1,6 +1,5 @@
 package States;
 
-import Camera.CameraBeta;
 import Componts.Button;
 import EntitySystem.Ghost;
 import EntitySystem.Player;
@@ -20,8 +19,6 @@ public class GameState extends State implements ActionListener {
 
     private Player player;
     private WorldGenerator world;
-//    private Camera2DWorldGrid camera2DWorldGrid;
-    private CameraBeta cameraBeta;
     private Ghost[] ghosts;
     private int ghostSpawnDelay;
     private int currentGhostSpawnDelay;
@@ -54,9 +51,6 @@ public class GameState extends State implements ActionListener {
     @Override
     public boolean initState() {
         world = new WorldGenerator("res/worlds/world1.txt", handler);
-//        camera2DWorldGrid = new Camera2DWorldGrid(world, world.getSpawnX(), world.getSpawnY(), 8, 8, handler.getWindow().getWidth(), handler.getWindow().getHeight());
-//        camera2DWorldGrid = new Camera2DWorldGrid(world);
-        cameraBeta = new CameraBeta(world, 0, 0, 8, 8, handler.getWindow().getWidth(), handler.getWindow().getHeight());
         handler.getWindow().setSize(new Dimension(world.getWidth() * Assets.TILEWIDTH + 16, world.getHeight() * Assets.TILEHEIGHT + 39));
         player = new Player(handler, world.getSpawnX(), world.getSpawnY(), 4.0f);
         ghosts = new Ghost[world.getGhostCount()];
@@ -76,8 +70,6 @@ public class GameState extends State implements ActionListener {
         if (gameStatus == PLAY) {
             world.tick();
             player.tick();
-//            camera2DWorldGrid.showAround(player.getPosX(), player.getPosY(), Camera2DWorldGrid.CameraFormat);
-            cameraBeta.move(player.getPosX(), player.getPosY());
             for (Ghost ghost : ghosts) {
                 if (ghost != null) {
                     ghost.tick();
@@ -102,14 +94,11 @@ public class GameState extends State implements ActionListener {
 
     @Override
     public void render(Graphics g) {
-//        camera2DWorldGrid.render(g);
-//        camera2DWorldGrid.renderEntities(g, player);
-        cameraBeta.render(g);
-        cameraBeta.renderEntities(g, player);
+        world.render(g);
+        player.render(g);
         for (Ghost ghost : ghosts) {
             if (ghost != null) {
-//                camera2DWorldGrid.renderEntities(g, ghost);
-                cameraBeta.renderEntities(g, ghost);
+                ghost.render(g);
             }
         }
         if (gameStatus == BREAK) {

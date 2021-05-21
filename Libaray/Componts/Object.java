@@ -25,10 +25,6 @@ public class Object {
         return r.contains((int) p.getX(), (int) p.getY());
     }
 
-    public void renderCollisionBox(Graphics g) {
-        g.setColor(Color.CYAN);
-        g.drawRect(x, y, width, height);
-    }
     // extra Methods
     public void tick() {
     }

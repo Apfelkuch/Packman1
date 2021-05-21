@@ -106,7 +106,6 @@ public class MenuState extends State implements ActionListener {
         } else if (e.getSource() == exit) {
             this.menuStatus = EXIT;
         } else if (e.getSource() == back) {
-//            Save.save(Text.SavePath, SaveObject.getSaveString(handler));
             // save
             handler.getGame().getFileStorage().store("Sound.Volume", handler.getSound().toString());
             this.menuStatus = MENU;
@@ -171,7 +170,6 @@ public class MenuState extends State implements ActionListener {
         //// MENU
         // Title
         title = new TextField(handler.getInput(), handler.getWindow().getCanvas().getSize().width / 2, handler.getWindow().getCanvas().getSize().height / 4, Text.TITLE, TextField.CENTER, Text.MenuTitleFontMain, Color.BLACK);
-        title.setEditable(true); // only for test purposes
 
         int ButtonPosX = (handler.getWindow().getCanvas().getSize().width / 2) - (ButtonWidth / 2);
         int ButtonDifferenceY = ((handler.getWindow().getCanvas().getSize().height / 2) / 3);
