@@ -10,7 +10,7 @@ public class Spritsheet {
         this.bufferedImage = bufferedImage;
     }
 
-    public BufferedImage getTile(int x, int y, int width, int height){
-        return bufferedImage.getSubimage(x,y,width,height);
+    public BufferedImage getTile(int x, int y, int width, int height) {
+        return bufferedImage.getSubimage(x, y, width, height);
     }
 }

@@ -3,9 +3,9 @@ package EntitySystem;
 import ImageLoad.Assets;
 import Main.Handler;
 import States.GameState;
-import Tiles.Tile;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.Random;
 
 public class Ghost extends Creature {
@@ -13,36 +13,71 @@ public class Ghost extends Creature {
     private enum Edirections {
         Up, Right, Down, Left
     }
-    private Edirections direction;
 
-    //CONTROL VARIABLES
-//    int u = 0, r = 0, d = 0, l = 0; // u=0,r=1,d=2,l=3
+    private Edirections direction;
+    private BufferedImage img;
+    private int imgID;
 
     //////////////////////////////////
     public Ghost(Handler handler, float posX, float posY, float pSPEED) {
-        super(handler, posX, posY, Tile.TILEWIDTH, Tile.TILEHEIGHT, pSPEED);
+        super(handler, posX, posY, Assets.TILEWIDTH, Assets.TILEHEIGHT, 40, 40, pSPEED);
         direction = Edirections.Down;
+
+        int r = 1;
+        if (handler.getGameState().getGhostCount() >= (handler.getGhosts().length - 6)) {
+            boolean possible = false;
+            while (!possible) {
+                possible = true;
+                r = (int) (Math.random() * 6);
+                for (Ghost g : handler.getGhosts()) {
+                    if (g == null) continue;
+                    if (r == g.getImgID()) possible = false;
+                }
+            }
+        } else {
+            r = (int) (Math.random() * 6);
+        }
+
+        imgID = r;
+        switch (r) {
+            case 0:
+                img = Assets.ghost1;
+                break;
+            case 1:
+                img = Assets.ghost2;
+                break;
+            case 2:
+                img = Assets.ghost3;
+                break;
+            case 3:
+                img = Assets.ghost4;
+                break;
+            case 4:
+                img = Assets.ghost5;
+                break;
+            case 5:
+                img = Assets.ghost6;
+                break;
+        }
     }
 
     public void render(Graphics g) {
-        g.drawImage(Assets.ghost1, (int) posX, (int) posY, width, height, null);
-        /*
-        { //collisionBOX
-            g.setColor(Color.MAGENTA);
-            g.fillRect(collisionBOX.x, collisionBOX.y, collisionBOX.width, collisionBOX.height);
-        }
-        */
+        g.drawImage(img, (int) posX, (int) posY, width, height, null);
+
+//        //collisionBOX
+//        renderCollisionBox(g);
     }
 
     public void tick() {
         setMove();
         move();
-        if (this.collisionBOX.intersects(handler.getGame().getGameState().getPlayer().collisionBOX))
+        if (this.collisionBOX.intersects(handler.getPlayer().collisionBOX)) // ghost eat the player, if the player and the ghost intersect.
             eatPlayer();
     }
 
     /**
      * Translate a direction as int, in a direction from {@link Edirections}
+     *
      * @param dir = direction as int
      * @return = direction as {@link Edirections}
      */
@@ -67,105 +102,80 @@ public class Ghost extends Creature {
      * generating a random direction based on the forerunner direction
      */
     private int generatingDirection(int maxDirections, int forerunnerDirection) {
-//        System.out.println("max directions: " + maxDirections);
         int dir = (new Random().nextInt(maxDirections) - 1);
-//        System.out.println("next direction: " + dir);
-//        System.out.println("before direction: " + forerunnerDirection);
-//        System.out.println("new direction: " + (forerunnerDirection + dir));
         dir = forerunnerDirection + dir;
-//        System.out.println("normalized direction: " + dir);
-        if(dir == -1) {
+        if (dir == -1) {
             dir = 3;
         }
-        if(dir == 4) {
+        if (dir == 4) {
             dir = 0;
         }
-//        System.out.println("final direction: " + dir);
         return dir;
     }
 
     /**
      * set direction to the next direction from the path-Array
+     *
+     * @param motionZero True if their is currently not motion, otherwise false.
      */
     public void setDirection(boolean motionZero) {
-        if(motionZero) {
-//            System.out.println("Collide in the direction.");
+        if (motionZero) {
             int collide = 0;
             boolean[] freeSpaces = new boolean[4];
-            if(collide(0,-SPEED) == NoCollision) { // Up
+            if (collide(0, -SPEED) == NoCollision) { // Up
                 collide++;
                 freeSpaces[0] = true;
             }
-            if(collide(SPEED,0) == NoCollision) { // Right
+            if (collide(SPEED, 0) == NoCollision) { // Right
                 collide++;
                 freeSpaces[1] = true;
             }
-            if(collide(0,SPEED) == NoCollision) { // Down
+            if (collide(0, SPEED) == NoCollision) { // Down
                 collide++;
                 freeSpaces[2] = true;
             }
-            if(collide(-SPEED,0) == NoCollision) { // Left
+            if (collide(-SPEED, 0) == NoCollision) { // Left
                 collide++;
                 freeSpaces[3] = true;
             }
-/*
-            { // print the freeSpaces-Array to the console
-                System.out.print("freeSpaces-Array: ");
-                for (boolean fs : freeSpaces) {
-                    System.out.print(fs + " | ");
-                }
-                System.out.println();
-            }
-*/
             // remove current direction from freeSpaces
-//            System.out.println("current backward looking : " + currentLookingBack);
-//            System.out.println("current backward direction in freeSpaces: " + freeSpaces[currentLookingBack]);
             freeSpaces[currentLookingBack] = false;
             collide--;
-//            System.out.println("current backward direction in freeSpaces: " + freeSpaces[currentLookingBack]);
-/*
-            // print the freeSpaces-Array to the console
-            System.out.print("freeSpaces-Array: ");
-            for (boolean fs : freeSpaces) {
-                System.out.print(fs + " | ");
-            }
-            System.out.println();
-*/
+
             if (collide == 1) { // if only one possible direction
                 // set direction to the only free direction
-                for(int i=0;i< freeSpaces.length;i++) {
-                    if(freeSpaces[i]) {
+                for (int i = 0; i < freeSpaces.length; i++) {
+                    if (freeSpaces[i]) {
                         direction = dirInEdirection(i);
                     }
                 }
+            } else if (collide == -1) {
+                direction = Edirections.Down;
+                resetMove();
             } else {
-//                System.out.println("More than one possible direction");
                 // generating direction
                 int dir = generatingDirection(collide, direction.ordinal());
                 // set direction to the new direction
                 direction = dirInEdirection(dir);
             }
-//            System.out.println("new generated direction: " + direction.name());
         } else {
-//            System.out.println("Change direction after turning.");
             // generating direction
-            int dir = generatingDirection(3,direction.ordinal());
+            int dir = generatingDirection(3, direction.ordinal());
             // set direction to the new direction
             direction = dirInEdirection(dir);
         }
     }
 
     /**
-     * testing if move is possible,
-     * if it is impossible move is the Motion.
-     * if it is not possible OLDmove is the Motion.
-     *
-     * adjust looking
+     * Testing if move is possible,
+     * If it is impossible move is the Motion.
+     * If it is not possible moveOLD is the Motion.
+     * <p>
+     * Adjust the looking.
      */
     public void move() {
         // collision
         if (super.collide(xMove, yMove) != NoCollision) { //test if collision
-//            System.out.println("COLLIDE");
             if (super.xMove == super.xMoveOLD) // canceling xMove, if collide
                 super.xMove = 0;
             else // set xMove to xMoveOLD, if collision was not on the x-Axis
@@ -177,29 +187,27 @@ public class Ghost extends Creature {
                 super.yMove = super.yMoveOLD;
 
         }
-//        System.out.println("xM: " + xMove + ", yM: " + yMove + ", xMO: " + xMoveOLD + ", yMO: " + yMoveOLD);
         if (collide(xMoveOLD, yMoveOLD) != NoCollision) {
             xMove = 0;
             yMove = 0;
         }
         if (xMove == 0 && yMove == 0 && xMoveOLD == 0 && yMoveOLD == 0) { // detect if direction is not possible and change the direction to a possible direction
-//            System.out.println("xM: " + xMove + ", yM: " + yMove);
-//            System.out.println("change dir(move)");
             setDirection(true);
             return;
         }
-        //adjust looking
+        // adjust looking
         super.adjustLooking();
         // change the position with xMove and yMove
         posX += xMove;
         posY += yMove;
-        super.collisionBOX.setLocation((int) posX, (int) posY);
+        //adjust collisionBOX
+        super.adjustCollisionBOX();
     }
 
     /**
      * OLDMove is the current move
      * if the motion of the entity has changed
-     *  setDirection is called and return out of the function that setDirection can finish before the product is called
+     * setDirection is called and return out of the function that setDirection can finish before the product is called
      */
     private void setMove() {
         // set MoveOLD to the current Move
@@ -207,8 +215,6 @@ public class Ghost extends Creature {
         super.yMoveOLD = super.yMove;
 
         // setDir
-//        System.out.println("Dir: " + direction);
-        //          the direction          &&   move
         if (direction.equals(Edirections.Up) && yMove < 0) {
             setDirection(false);
             return;
@@ -251,9 +257,25 @@ public class Ghost extends Creature {
      * set the game to gameOver and call the GameOverWindow
      */
     public void eatPlayer() {
-        //System.exit(999);
-        System.out.println("YOU HAVE LOST");
-        handler.getGameState().gameOver(GameState.LOST);
+        handler.getGameState().setGameStatus(GameState.LOST);
     }
 
+    /**
+     * set all Move-Attributes to 0
+     */
+    public void resetMove() {
+        xMove = 0;
+        xMoveOLD = 0;
+        yMove = 0;
+        yMoveOLD = 0;
+    }
+
+    // GETTER && SETTER
+    public BufferedImage getImg() {
+        return img;
+    }
+
+    public int getImgID() {
+        return imgID;
+    }
 }

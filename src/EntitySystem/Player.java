@@ -1,10 +1,9 @@
 package EntitySystem;
 
 import ImageLoad.Assets;
-import Input.Input;
 import Main.Handler;
 import States.GameState;
-import Tiles.Tile;
+import Text.Text;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -13,8 +12,8 @@ public class Player extends Creature {
     //Attributes for the Dots
     private int dotCounter = 0;
 
-    public Player(Handler handler,int spawnX, int spwanY, float pSPEED) {
-        super(handler, spawnX, spwanY, Tile.TILEWIDTH, Tile.TILEHEIGHT, pSPEED);
+    public Player(Handler handler, int spawnX, int spawnY, float pSPEED) {
+        super(handler, spawnX, spawnY, Assets.TILEWIDTH, Assets.TILEHEIGHT, 48, 48, pSPEED);
         currentLooking = lookingRIGHT; // starting view direction
     }
 
@@ -23,34 +22,25 @@ public class Player extends Creature {
         // paint packman with his viewing direction (lookingAT)
         switch (currentLooking) {
             case lookingRIGHT:
-                g.drawImage(Assets.packman_RIGHT,(int) posX,(int) posY,width,height,null);
+                g.drawImage(Assets.packman_RIGHT, (int) posX, (int) posY, width, height, null);
                 break;
             case lookingLEFT:
-                g.drawImage(Assets.packman_LEFT,(int) posX,(int) posY,width,height,null);
+                g.drawImage(Assets.packman_LEFT, (int) posX, (int) posY, width, height, null);
                 break;
             case lookingUP:
-                g.drawImage(Assets.packman_UP,(int) posX,(int) posY,width,height,null);
+                g.drawImage(Assets.packman_UP, (int) posX, (int) posY, width, height, null);
                 break;
             case lookingDOWN:
-                g.drawImage(Assets.packman_DOWN,(int) posX,(int) posY,width,height,null);
+                g.drawImage(Assets.packman_DOWN, (int) posX, (int) posY, width, height, null);
                 break;
         }
-        //DotCounter on Sreen
+        //DotCounter on Screen
         g.setColor(Color.YELLOW);
-        g.setFont(new Font("Arial",Font.BOLD,36));
-        g.drawString("" + this.dotCounter,(handler.getWorld().getWitdh() - 2) * Tile.TILEWIDTH,(int) (Tile.TILEHEIGHT * 0.80));
-        /* //CollisionBOX showing
-        {
-            // collisionBox Packman
-            g.setColor(Color.RED);
-            g.drawRect(collisionBOX.x,collisionBOX.y,collisionBOX.width,collisionBOX.height);
-            // collisionBox Dots
-            for (Item d : handler.getWorld().getPowerupManager().getDots()) {
-                g.setColor(Color.GREEN);
-                g.drawOval(d.collisionBOX.x,d.collisionBOX.y,d.collisionBOX.width,d.collisionBOX.height);
-            }
-        }
-        */
+        g.setFont(Text.DotFont);
+        g.drawString("" + this.dotCounter, (handler.getWorld().getWidth() - 2) * Assets.TILEWIDTH, (int) (Assets.TILEHEIGHT * 0.80));
+
+//        //collisionBox packman
+//        renderCollisionBox(g);
     }
 
     @Override
@@ -59,7 +49,14 @@ public class Player extends Creature {
         this.move();
         this.win();
         this.eatDot();
-        //TODO player eating ghosts
+        for (Ghost g : handler.getGhosts()) {
+            if (g != null) {
+                if (this.creatureInFront(g)) { // player eats the ghost if the player will intersect in the next move with the ghost.
+                    eatGhost(g);
+                    System.out.println("Player.tick: The player eat a ghost.");
+                }
+            }
+        }
     }
 
     /**
@@ -67,18 +64,18 @@ public class Player extends Creature {
      * otherwise nothing happened
      */
     public void eatDot() {
-        if (super.handler.getWorld().getPowerupManager().getItems() == null)
+        if (super.handler.getWorld().getPowerUpManager().getItems() == null)
             return;
         Dot removedDot = null;
-        for (Item d : super.handler.getWorld().getPowerupManager().getItems()) {
-            if(d.getClass() == Dot.class) {
+        for (Item d : super.handler.getWorld().getPowerUpManager().getItems()) {
+            if (d.getClass() == Dot.class) {
                 if (this.collisionBOX.intersects(d.collisionBOX)) {
                     this.dotCounter += 1;
                     removedDot = (Dot) d;
                 }
             }
         }
-        handler.getWorld().getPowerupManager().removeItem(removedDot);
+        handler.getWorld().getPowerUpManager().removeItem(removedDot);
     }
 
     /**
@@ -94,7 +91,7 @@ public class Player extends Creature {
             else // set xMove to xMoveOLD, if collision was not on the x-Axis
                 super.xMove = super.xMoveOLD;
 
-            if(super.yMove == super.yMoveOLD) // canceling yMove, if collide
+            if (super.yMove == super.yMoveOLD) // canceling yMove, if collide
                 super.yMove = 0;
             else // set yMove to yMoveOLD, if collision was not on the y-Axis
                 super.yMove = super.yMoveOLD;
@@ -104,7 +101,8 @@ public class Player extends Creature {
         // change the position with xMove and yMove
         super.posX += super.xMove;
         super.posY += super.yMove;
-        super.collisionBOX.setLocation((int) posX,(int) posY);
+        //adjust collisionBOX
+        super.adjustCollisionBOX();
     }
 
     /**
@@ -135,10 +133,20 @@ public class Player extends Creature {
     }
 
     public void win() {
-//        System.out.println(handler.getWorld().getPowerupManager().getDotCount());
-        if(handler.getWorld().getPowerupManager().getDotCount() == 0) {
+        if (handler.getWorld().getPowerUpManager().getDotCount() == 0) {
             System.out.println("help");
-            handler.getGameState().gameOver(GameState.WIN);
+            handler.getGameState().setGameStatus(GameState.WIN);
+        }
+    }
+
+    public void eatGhost(Ghost g) {
+        if (g == null) return;
+        this.killCount++;
+        for (int i = 0; i < handler.getGhosts().length; i++) {
+            if (handler.getGhosts()[i] == g) {
+                handler.getGhosts()[i] = null;
+                return;
+            }
         }
     }
 }

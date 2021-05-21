@@ -9,6 +9,7 @@ import States.MenuState;
 import States.State;
 import Worldmanager.WorldGenerator;
 import Input.MListener;
+import Music.Sound;
 
 public class Handler {
 
@@ -22,31 +23,44 @@ public class Handler {
     public Game getGame() {
         return game;
     }
-    public WorldGenerator getWorld(){
+
+    public WorldGenerator getWorld() {
         return game.getGameState().getWorld();
     }
+
     public Player getPlayer() {
         return game.getGameState().getPlayer();
     }
+
     public Ghost[] getGhosts() {
         return game.getGameState().getGhosts();
     }
+
     public Window getWindow() {
         return game.getWindow();
     }
-    public MListener getmListener() {
-        return game.getmListener();
+
+    public MListener getMListener() {
+        return game.getMListener();
     }
+
     public State getState() {
         return State.getState();
     }
+
     public GameState getGameState() {
         return game.getGameState();
     }
+
     public MenuState getMenuState() {
         return game.getMenuState();
     }
+
     public Input getInput() {
         return game.getInput();
+    }
+
+    public Sound getSound() {
+        return game.getSound();
     }
 }
