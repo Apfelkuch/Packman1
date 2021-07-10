@@ -93,7 +93,8 @@ public class WorldGenerator {
      */
     public void modifyWorld(int[][] world) {
         // 1 = wall // 0 = free
-        String pattern = "";// wall = LEFT RIGHT UP DOWN
+//        String pattern = "";// wall = LEFT RIGHT UP DOWN
+        byte pattern = 0;
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 if (world[x][y] != 0) {
@@ -106,6 +107,7 @@ public class WorldGenerator {
                             pattern += 0;
                         }
                     }
+                    pattern <<= 1;
                     if (x == width - 1) {
                         pattern += 0;
                     } else {
@@ -115,6 +117,7 @@ public class WorldGenerator {
                             pattern += 0;
                         }
                     }
+                    pattern <<= 1;
                     if (y == 0) {
                         pattern += 0;
                     } else {
@@ -124,6 +127,7 @@ public class WorldGenerator {
                             pattern += 0;
                         }
                     }
+                    pattern <<= 1;
                     if (y == height - 1) {
                         pattern += 0;
                     } else {
@@ -133,9 +137,10 @@ public class WorldGenerator {
                             pattern += 0;
                         }
                     }
-                    worldGrid[x][y] = getIdFromPattern(pattern);
+//                    worldGrid[x][y] = getIdFromPattern(pattern);
+                    world[x][y] = pattern;
 //                    System.out.println("[WorldGenerator/modifyWorld] At x: " + x + ", y: " + y + "is the pattern: " + pattern);
-                    pattern = "";
+                    pattern = 0;
                 }
             }
         }
